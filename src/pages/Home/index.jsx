@@ -3,7 +3,7 @@ import React from "react";
 import Glass from "../../components/Glass";
 import Header from "../../components/Header";
 
-import homeImg1 from "../../assets/worker.1.svg";
+import homeImg1 from "../../assets/worker2.svg";
 
 import { Container, Content, TextContent, Button } from "./styles";
 
@@ -16,13 +16,15 @@ const Home = () => {
           <TextContent>
             <p>
               A maneira mais rápida e eficiente de conectar quem precisa de um
-              serviço e quem oferece um serviço.{" "}
-              <b>Entre na plataforma e conecte-se com quem pode te ajudar</b>
+              serviço e quem oferece um serviço.
+              <span>
+                Entre na plataforma e conecte-se com quem pode te ajudar
+              </span>
             </p>
 
             <div>
               <Button>Login</Button>
-              <button>Explorar</button>
+              <button className="secondary">Explorar</button>
             </div>
           </TextContent>
           <img src={homeImg1} alt="Worker" />

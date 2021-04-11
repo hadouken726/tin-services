@@ -15,4 +15,10 @@ export const Container = styled.div`
   padding: 2rem;
 
   border-radius: 16px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
