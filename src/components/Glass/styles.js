@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 80%;
-  height: 80%;
+  width: ${(props) => `${props.size}%`};
+  height: ${(props) => `${props.size}%`};
   background: linear-gradient(
     103.6deg,
     rgba(255, 255, 255, 0.4) 0%,

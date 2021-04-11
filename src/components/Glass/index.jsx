@@ -2,8 +2,8 @@ import React from "react";
 
 import { Container } from "./styles";
 
-const Glass = ({ children }) => {
-  return <Container>{children}</Container>;
+const Glass = ({ children, size }) => {
+  return <Container size={size}>{children}</Container>;
 };
 
 export default Glass;
