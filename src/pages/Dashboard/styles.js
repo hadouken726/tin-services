@@ -11,8 +11,8 @@ export const Container = styled.div`
 export const Header = styled.div`
   margin: 0 auto;
   position: relative;
-  top: -40px;
   display: flex;
+  top: -10px;
   align-items: center;
   justify-content: space-between;
   width: 90%;
@@ -40,8 +40,8 @@ export const Logo = styled.div`
 `;
 
 export const LogoImage = styled.img`
-  width: 200px;
-  height: 55px;
+  width: 100px;
+  height: 35px;
   border: none;
   
 
@@ -62,7 +62,7 @@ export const LogoImage = styled.img`
 `;
 
 export const LogoAvatar = styled.img`
-  width: 55px;
+  width: 30px;
   border: none;
   border-radius: 50%;
 

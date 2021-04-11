@@ -1,13 +1,21 @@
-// import { useEffect } from "react";
-import { DivCardDashBoard } from "./styled";
+import {
+  DivCardDashBoard,
+  UserAvatarContainer,
+  ProviderAvatar,
+  DivName,
+} from "./styled";
 
 const CardDashBoard = ({ setUsers, users, setOrders, orders }) => {
   return (
     <DivCardDashBoard>
-      <div width="150px">
-        <h4>{`${users.name}   `}</h4>
-        <h4>Anúncios</h4>
-      </div>
+      <UserAvatarContainer>
+        <ProviderAvatar src={'users.url-avatar'} draggable="false" />
+      </UserAvatarContainer>
+
+      <DivName width="150px">
+        <h4>{users.name}</h4>
+        <h4>{"users.cartegories.name"}</h4>
+      </DivName>
     </DivCardDashBoard>
   );
 };

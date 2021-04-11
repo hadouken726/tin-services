@@ -45,7 +45,7 @@ export const DashBoardContent = styled.div`
 
   background: rgba(38, 86, 181, 0.38);
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
+  border-radius: 15px;
 
   overflow-y: scroll;
 

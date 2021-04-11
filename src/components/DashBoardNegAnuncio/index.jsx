@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import api from "../../../src/services/api";
-import CardDashBoard from "../CardDashBoard"
+import CardDashBoard from "../CardDashBoard";
 
 import {
   DashBoardContainer,
@@ -14,6 +14,9 @@ import {
 // import { useHistory } from "react-router";
 
 const DashBoardNegAnuncio = () => {
+  
+
+
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState({}); // ou Context API
   // const [anuncio, setAnuncio] = useState({});  // ou Context API
@@ -26,7 +29,7 @@ const DashBoardNegAnuncio = () => {
   let user = {
     id: 3,
     token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNlbGluaG9AbWFpbC5jb20iLCJpYXQiOjE2MTgxNzI0NjIsImV4cCI6MTYxODE3NjA2Miwic3ViIjoiMyJ9.6sZDhFpBtk4_5Q3MtOA49j3Y5NmGTxbNja0-mTD2fGc",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmNlbGluaG9AbWFpbC5jb20iLCJpYXQiOjE2MTgxODAxOTYsImV4cCI6MTYxODE4Mzc5Niwic3ViIjoiMyJ9.gKco5JUsjK-ZgngDZAFXDqtDPy6jXt-FM8e1bHLNm98",
   };
 
   // https://tin-services-api.herokuapp.com/users?_embed=orders&_embed=avaliations&_embed=categories
@@ -55,11 +58,6 @@ const DashBoardNegAnuncio = () => {
   };
 
   return (
-    <>
-      {/* <Modal handleClose={handleClose} open={open}>
-        <CardDashBoard anuncio={anuncio} close={handleClose} />
-      </Modal> */}
-
       <DashBoardContainer>
         <DivHeader>
           <LinkText>
@@ -81,11 +79,14 @@ const DashBoardNegAnuncio = () => {
         </DivHeader>
 
         <DashBoardContent>
-          <CardDashBoard setUsers={setUsers} users={users} setOrders={setOrders} orders={orders} />
+          <CardDashBoard
+            setUsers={setUsers}
+            users={users}
+            setOrders={setOrders}
+            orders={orders}
+          />
         </DashBoardContent>
-        
       </DashBoardContainer>
-    </>
   );
 };
 

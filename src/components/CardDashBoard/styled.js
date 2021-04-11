@@ -36,3 +36,19 @@ export const DivCardDashBoard = styled.div`
     margin-bottom: 8px;
   } */
 `;
+
+export const UserAvatarContainer = styled.div`
+  width: 43px;
+  margin-right: 20px;
+`;
+
+export const ProviderAvatar = styled.img`
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  border: none;
+`;
+
+export const DivName = styled.div`
+  
+`;
