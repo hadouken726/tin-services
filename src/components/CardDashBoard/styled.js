@@ -52,3 +52,11 @@ export const ProviderAvatar = styled.img`
 export const DivName = styled.div`
   
 `;
+
+export const DivDate = styled.div`
+  
+`;
+
+export const DivStatus = styled.div`
+  
+`;
