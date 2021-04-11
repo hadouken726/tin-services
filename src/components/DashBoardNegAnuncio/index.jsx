@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import api from "../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
 
-import {
+import { 
   DashBoardContainer,
   DashBoardContent,
   LinkText,
@@ -14,7 +14,7 @@ import {
 // import { useHistory } from "react-router";
 
 const DashBoardNegAnuncio = () => {
-  
+
 
 
   const [input, setInput] = useState("");
