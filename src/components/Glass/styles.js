@@ -12,7 +12,7 @@ export const Container = styled.div`
 
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-left: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 80px;
+  padding: 2rem;
 
   border-radius: 16px;
 `;

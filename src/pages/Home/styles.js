@@ -7,3 +7,9 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const Content = styled.div``;
+
+export const TextContent = styled.div``;
+
+export const Button = styled.div``;
