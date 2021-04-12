@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import Glass from "../../components/Glass";
 import Header from "../../components/Header";
@@ -8,6 +9,8 @@ import homeImg1 from "../../assets/worker2.svg";
 import { Container, Content, TextContent, Button } from "./styles";
 
 const Home = () => {
+  const history = useHistory();
+
   return (
     <Container>
       <Glass size={90}>
@@ -23,7 +26,7 @@ const Home = () => {
             </p>
 
             <div>
-              <Button>Login</Button>
+              <Button onClick={() => history.push("/login")}>Login</Button>
               <button className="secondary">Explorar</button>
             </div>
           </TextContent>
