@@ -2,9 +2,14 @@ import styled from "styled-components";
 
 export const DashBoardContainer = styled.div`
   position: relative;
-  display: flex;
+  display:flex;
   flex-direction: column;
+  
   align-items: center;
+  justify-content: space-between;
+
+ 
+
   width: 100%;
   height: 100%;
   margin: 10px auto;

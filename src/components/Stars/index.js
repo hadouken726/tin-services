@@ -13,14 +13,13 @@ export default function Stars() {
     color: "black",
     activeColor: "yellow",
     onChange: (newValue) => {
-      // console.log(`Example 3: new value is ${newValue}`);
+      console.log(`new value is ${newValue}`);
       setStar(newValue);
     },
   };
   return (
     <>
-        <ReactStars {...stars} />
-        <h1>{star}</h1>
+        <ReactStars size="100px" {...stars} />
     </>
   );
 }

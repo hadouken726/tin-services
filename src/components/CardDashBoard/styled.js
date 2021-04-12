@@ -3,9 +3,13 @@ import styled from "styled-components";
 // import { HiOutlineMail, HiUserGroup } from "react-icons/hi";
 export const DivCardDashBoard = styled.div`
   display:flex;
+  flex-direction: row;
+  flex: wrap;
+  align-items: center;
+  justify-content: space-between;
+
     h4{
       font-size: 10px;
-      width:210px;
     }
   /* width: 25vw;
   height: auto;
@@ -51,11 +55,11 @@ export const ProviderAvatar = styled.img`
 `;
 
 export const DivName = styled.div`
-  
+  width: 150px;
 `;
 
 export const DivDate = styled.div`
-  
+  width: 100px;
 `;
 
 export const DivStatus = styled.div`
@@ -63,5 +67,10 @@ export const DivStatus = styled.div`
 `;
 
 export const DivStars = styled.div`
+  
+`;
+
+
+export const DivCompartilhar = styled.div`
   
 `;

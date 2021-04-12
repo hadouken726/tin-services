@@ -30,7 +30,7 @@ const Dashboard = () => {
           </Avatar>
         </Header>
 
-        <DashBoardNegAnuncio />
+        <DashBoardNegAnuncio  />
       </Glass>
     </Container>
   );
