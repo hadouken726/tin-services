@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <Container>
       <Glass size={90}>
-        <Header />
+        <Header current="home" />
         <Content>
           <TextContent>
             <p>
