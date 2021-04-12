@@ -1,3 +1,4 @@
+import Stars from "../Stars";
 import {
   DivCardDashBoard,
   UserAvatarContainer,
@@ -5,6 +6,7 @@ import {
   DivName,
   DivDate,
   DivStatus,
+  DivStars
 } from "./styled";
 
 const CardDashBoard = ({ setUsers, users, setOrders, orders }) => {
@@ -28,6 +30,12 @@ const CardDashBoard = ({ setUsers, users, setOrders, orders }) => {
         <h4>{"users.orders.status"}</h4>
         <h4>{" "}</h4>
       </DivStatus>
+
+      <DivStars width="150px">
+      <Stars />
+      </DivStars>
+
+
       
 
     </DivCardDashBoard>

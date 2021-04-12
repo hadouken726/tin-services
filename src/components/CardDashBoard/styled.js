@@ -2,10 +2,11 @@ import styled from "styled-components";
 // import { FiInfo, FiX, FiTag, FiBookmark } from "react-icons/fi";
 // import { HiOutlineMail, HiUserGroup } from "react-icons/hi";
 export const DivCardDashBoard = styled.div`
-  h4{
-    font-size: 10px;
-    width:210px;
-  }
+  display:flex;
+    h4{
+      font-size: 10px;
+      width:210px;
+    }
   /* width: 25vw;
   height: auto;
   background-color: #130f40;
@@ -58,5 +59,9 @@ export const DivDate = styled.div`
 `;
 
 export const DivStatus = styled.div`
+  
+`;
+
+export const DivStars = styled.div`
   
 `;
