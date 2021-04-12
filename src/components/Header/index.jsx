@@ -4,15 +4,18 @@ import logo from "../../assets/logo.png";
 
 import { Container, Content, Button } from "./styles";
 
-const Header = () => {
+const Header = ({ current }) => {
   return (
     <Container>
       <img src={logo} alt="Tin Services" />
       <Content>
-        <Link className="link active" to="/">
+        <Link className={current === "home" ? "link active" : "link"} to="/">
           Home
         </Link>
-        <Link className="link" to="/">
+        <Link
+          className={current === "about" ? "link active" : "link"}
+          to="/about"
+        >
           Sobre nós
         </Link>
         <Button>Registre-se</Button>
