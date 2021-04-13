@@ -2,13 +2,11 @@ import styled from "styled-components";
 
 export const DashBoardContainer = styled.div`
   position: relative;
-  display:flex;
+  display: flex;
   flex-direction: column;
-  
+
   align-items: center;
   justify-content: space-between;
-
- 
 
   width: 100%;
   height: 100%;
@@ -43,47 +41,41 @@ export const DashBoardContainer = styled.div`
   }
 `;
 
+export const DivScrool = styled.div`
+  position: relative;
+  width: 97%;
+
+  overflow-y: scroll;
+
+  /* width */
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+`;
+
 export const DashBoardContent = styled.div`
   width: 95%;
   flex-direction: row;
-  padding: 15px;
+  padding: 10px;
+  margin-bottom: 5px;
 
   background: rgba(38, 86, 181, 0.38);
   box-shadow: 4px 4px 24px rgba(0, 0, 0, 0.25);
   border-radius: 15px;
-
-  overflow-y: scroll;
-
-  ::-webkit-scrollbar {
-    border-radius: 50px;
-  }
-
-  /* @media (min-width: 700px) {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between;
-
-    max-height: 69vh;
-
-    h1 {
-      top: 0;
-      position: relative;
-      text-align: left;
-      font-size: 1rem;
-      width: 30%;
-      background-color: var(--dark-primary);
-      color: var(--text);
-    }
-
-    p {
-      display: block;
-      font-size: 0.7rem;
-      text-align: center;
-      color: var(--text);
-    }
-  } */
 `;
 
 export const DivHeader = styled.div`
@@ -104,40 +96,6 @@ export const DivHeader = styled.div`
     margin-left: 70%;
     margin-top: -45px;
     width: 15rem;
-    /* margin: 15px 0; */
-
-    @media (min-width: 1900px) {
-      margin-left: 75%;
-      margin-top: -45px;
-    }
-
-    @media (max-width: 1255px) {
-      margin-left: 60%;
-      margin-top: -45px;
-    }
-
-    @media (max-width: 998px) {
-      margin-left: 50%;
-      margin-top: -45px;
-    }
-
-    @media (max-width: 983px) {
-      margin-left: 0;
-      margin-top: 0;
-      width: 35rem;
-    }
-
-    @media (max-width: 604px) {
-      margin-top: 8px;
-    }
-
-    @media (max-width: 555px) {
-      width: 30rem;
-    }
-
-    @media (max-width: 484px) {
-      /* margin-top: 15px; */
-    }
   }
 
   input#search {
@@ -159,7 +117,7 @@ export const DivHeader = styled.div`
       color: var(--blue-400);
     }
 
-    @media (max-width: 983px) {
+    /* @media (max-width: 983px) {
       width: 35rem;
     }
     @media (max-width: 970px) {
@@ -205,7 +163,7 @@ export const DivHeader = styled.div`
 
     @media (max-width: 484px) {
       width: 8rem;
-    }
+    } */
   }
 
   div#buttonSearch {
@@ -237,7 +195,30 @@ export const LinkText = styled.div`
   color: var(--text);
   margin-bottom: 20px;
 
-  @media (max-width: 998px) {
+  .ButtonNegisNegociationtrue {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+  }
+
+  .ButtonNegisNegociationfalse {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+  }
+  .ButtonPostisNegociationfalse {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+  }
+
+  .ButtonPostisNegociationtrue {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+  }
+
+  /* @media (max-width: 998px) {
     h1 {
       font-size: 0.8rem;
     }
@@ -291,7 +272,7 @@ export const LinkText = styled.div`
 
   @media (max-width: 450px) {
     width: 34vw;
-  }
+  } */
 `;
 
 export const UserAvatarContainer = styled.div`
