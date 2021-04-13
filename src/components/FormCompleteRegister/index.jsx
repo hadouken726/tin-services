@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Form, Input, InputBox } from "./styles";
 
 const FormCompleteRegister = () => {
   // const [isSuccess, setIsSuccess] = useState(true);
   const [currentZipCode, setCurrentZipCode] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
+  const [adressData, setAdressData] = useState({});
 
   let zipCodeSchema = yup.object().shape({
     zipcode: yup
@@ -31,7 +33,9 @@ const FormCompleteRegister = () => {
       .then((_) => {
         axios
           .get(`https://api.pagar.me/1/zipcodes/${cep}`)
-          .then((response) => console.log(response))
+          .then((response) => {
+            setAdressData(response.data);
+          })
           .catch("Erro!");
       })
       .catch(function (err) {
@@ -39,34 +43,54 @@ const FormCompleteRegister = () => {
       });
   };
 
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(schema),
   });
 
   const handleData = (data) => {
     console.log("Data ==>", data);
-    // console.log("Zip Code ==>", data.zipcode);
-    // setCurrentZipCode(data.zipcode);
-    // console.log("currentZipCode! ==>", currentZipCode);
-    // setIsSuccess(true);
   };
 
   useEffect(() => {
-    console.log(currentZipCode);
+    console.log(adressData);
   }, [currentZipCode]);
 
   return (
-    <form onSubmit={handleSubmit(handleData)}>
-      <div>
-        <input
+    <Form onSubmit={handleSubmit(handleData)}>
+      <p>Complete seu registro</p>
+      <InputBox>
+        <Input
           placeholder="CEP"
           name="zipcode"
           value={currentZipCode}
           onChange={(e) => setCurrentZipCode(e.target.value)}
           onBlur={() => getAdressData(currentZipCode)}
         />
-      </div>
-    </form>
+      </InputBox>
+      <InputBox>
+        <Input name="street" value={adressData.street} placeholder="Rua" />
+      </InputBox>
+      <InputBox>
+        <Input name="number" placeholder="Número" />
+      </InputBox>
+      <InputBox>
+        <Input name="complement" placeholder="Complemento" />
+      </InputBox>
+      <InputBox>
+        <Input
+          name="neighborhood"
+          value={adressData.neighborhood}
+          placeholder="Bairro"
+        />
+      </InputBox>
+      <InputBox>
+        <Input name="city" value={adressData.city} placeholder="Cidade" />
+      </InputBox>
+      <InputBox>
+        <Input name="state" value={adressData.state} placeholder="Estado" />
+      </InputBox>
+      {/* Primary Button */}
+    </Form>
   );
 };
 
