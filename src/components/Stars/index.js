@@ -1,3 +1,4 @@
+// https://www.npmjs.com/package/react-rating-stars-component
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
@@ -9,7 +10,7 @@ export default function Stars() {
     alingn: "center",
     count: 5,
     isHalf: false,
-    value: 3,
+    value: star,
     color: "black",
     activeColor: "yellow",
     onChange: (newValue) => {
@@ -19,7 +20,7 @@ export default function Stars() {
   };
   return (
     <>
-        <ReactStars size="100px" {...stars} />
+      <ReactStars size="100px" {...stars} />
     </>
   );
 }

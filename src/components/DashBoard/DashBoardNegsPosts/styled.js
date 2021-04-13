@@ -45,11 +45,13 @@ export const DivScrool = styled.div`
   position: relative;
   width: 97%;
 
+  border-radius: 16px;
+
   overflow-y: scroll;
 
   /* width */
   ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
   }
   /* Track */
   ::-webkit-scrollbar-track {
@@ -80,6 +82,12 @@ export const DashBoardContent = styled.div`
 
 export const DivHeader = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: space-between;
+
   padding: 24px 25px 5px 25px;
   width: 100%;
 
@@ -119,51 +127,8 @@ export const DivHeader = styled.div`
 
     /* @media (max-width: 983px) {
       width: 35rem;
-    }
-    @media (max-width: 970px) {
-      width: 30rem;
-    }
-
-    @media (max-width: 955px) {
-      width: 26rem;
-    }
-
-    @media (max-width: 878px) {
-      width: 23rem;
-    }
-
-    @media (max-width: 838px) {
-      width: 20rem;
-    }
-
-    @media (max-width: 778px) {
-      width: 17rem;
-    }
-
-    @media (max-width: 635px) {
-      width: 15rem;
-    }
-
-    @media (max-width: 597px) {
-      width: 12rem;
-    }
-
-    @media (max-width: 555px) {
-      width: 11rem;
-      font-size: 0.7rem;
-    }
-
-    @media (max-width: 543px) {
-      width: 10rem;
-    }
-
-    @media (max-width: 500px) {
-      width: 9rem;
-    }
-
-    @media (max-width: 484px) {
-      width: 8rem;
-    } */
+    }*/
+ 
   }
 
   div#buttonSearch {
@@ -186,10 +151,8 @@ export const DivHeader = styled.div`
 `;
 
 export const LinkText = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 25vw;
+  
+  width: 50vw;
   height: 20px;
   font-size: 2.4rem;
   color: var(--text);
@@ -222,57 +185,8 @@ export const LinkText = styled.div`
     h1 {
       font-size: 0.8rem;
     }
-  }
-
-  @media (max-width: 983px) {
-    width: 50vw;
-    h1 {
-      font-size: 1.4rem;
-    }
-  }
-
-  @media (max-width: 780px) {
-    width: 45vw;
-    h1 {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 604px) {
-    width: 43vw;
-    h1 {
-      font-size: 1rem;
-    }
-  }
-
-  @media (max-width: 604px) {
-    display: block;
-    text-align: center;
-    h1 {
-      font-size: 1.4rem;
-    }
-  }
-
-  @media (max-width: 555px) {
-    h1 {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 543px) {
-    width: 40vw;
-  }
-
-  @media (max-width: 500px) {
-    width: 37vw;
-    h1 {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (max-width: 450px) {
-    width: 34vw;
-  } */
+  }*/
+  
 `;
 
 export const UserAvatarContainer = styled.div`

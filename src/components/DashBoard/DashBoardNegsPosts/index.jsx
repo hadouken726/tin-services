@@ -1,7 +1,7 @@
 // import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import api from "../../../src/services/api";
+import api from "../../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
 
 import {
@@ -9,11 +9,11 @@ import {
   DashBoardContent,
   LinkText,
   DivHeader,
-  DivScrool
+  DivScrool,
 } from "./styled";
 // import { useHistory } from "react-router";
 
-const DashBoardNegAnuncio = () => {
+const DashBoardNegsPosts = () => {
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState([]);
   const [IsNegociation, setIsNegociation] = useState(true);
@@ -22,13 +22,13 @@ const DashBoardNegAnuncio = () => {
   // const [open, setOpen] = useState(false);  // para o Modal do Cadastro de Anuncios e Avaliação
 
   // const history = useHistory();
-  // const token = JSON.parse(localStorage.getItem("token"));  // Nosso token
+  // const token = JSON.parse(localStorage.getItem("token"));
 
   let user = {
-    id: 2,
-    type: "client",
+    id: 1,
+    type: "provider",
     token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1c3Rhdm9AbWFpbC5jb20iLCJpYXQiOjE2MTgyNzQyNjYsImV4cCI6MTYxODI3Nzg2Niwic3ViIjoiMiJ9.2e7dIcnGgpk3kVitDrUxdMPtkhXJNbTEH0_nERsd5hI",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1c3Rhdm9AbWFpbC5jb20iLCJpYXQiOjE2MTgzMjQ1NTcsImV4cCI6MTYxODMyODE1Nywic3ViIjoiMiJ9.Qq2zMJVIexcYoC04gn8HDc-e77_LGVs64S6OY4CwxdQ",
   };
 
   useEffect(() => {
@@ -36,9 +36,12 @@ const DashBoardNegAnuncio = () => {
       const { data } = await api.get(
         user.type === "provider" && IsNegociation
           ? `providers/${user.id}/orders?_expand=user`
-          : user.type === "client" && IsNegociation ? `clients/${user.id}/orders?_expand=user`
-          : user.type === "provider" && IsNegociation === false ? `providers/${user.id}/posts?_expand=user`
-          :  `providers/${user.id}/posts?_expand=user`,
+          : user.type === "client" && IsNegociation
+          ? `clients/${user.id}/orders?_expand=user`
+          : user.type === "provider" && IsNegociation === false
+          ? `providers/${user.id}/posts?_expand=user`
+          : `providers/${user.id}/posts?_expand=user`,
+
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
       console.log(data);
@@ -74,7 +77,7 @@ const DashBoardNegAnuncio = () => {
             className={`ButtonPostisNegociation${IsNegociation}`}
             onClick={getPosts}
           >
-            Anúncios 
+            Anúncios
           </h1>
         </LinkText>
         <div>
@@ -92,44 +95,49 @@ const DashBoardNegAnuncio = () => {
           </div>
         </div>
       </DivHeader>
+
       <DivScrool>
-      {user.type === "provider" &&
-        IsNegociation &&
-        orders.map((order, index) => (
-          <DashBoardContent key={index}>
-            <CardDashBoard
-              order={order}
-              type={user.type}
-              IsNegociation={IsNegociation}
-            />
-          </DashBoardContent>
-        ))}
+        {user.type === "provider" &&
+          IsNegociation &&
+          orders.map((order, index) => (
+            <DashBoardContent key={index}>
+              <CardDashBoard
+                order={order}
+                type={user.type}
+                IsNegociation={IsNegociation}
+              />
+            </DashBoardContent>
+          ))}
 
-      {user.type === "client" &&
-        IsNegociation &&
-        orders.map((order, index) => (
-          <DashBoardContent key={index}>
-            <CardDashBoard
-              order={order}
-              type={user.type}
-              IsNegociation={IsNegociation}
-            />
-          </DashBoardContent>
-        ))}
+        {user.type === "client" &&
+          IsNegociation &&
+          orders
+            .filter((order) =>
+              order.user.name?.toLowerCase().includes(input.toLowerCase())
+            )
+            .sort((a, b) => a.user.name - b.user.name)
+            .map((order, index) => (
+              <DashBoardContent key={index}>
+                <CardDashBoard
+                  order={order}
+                  type={user.type}
+                  IsNegociation={IsNegociation}
+                />
+              </DashBoardContent>
+            ))}
 
-      {user.type === "provider" &&
-        IsNegociation === false &&
-        orders.map((order, index) => (
-          <DashBoardContent key={index}>
-            <CardDashBoard
-              order={order}
-              type={user.type}
-              IsNegociation={IsNegociation}
-            />
-          </DashBoardContent>
-        ))}
+        {user.type === "provider" &&
+          IsNegociation === false &&
+          orders.map((order, index) => (
+            <DashBoardContent key={index}>
+              <CardDashBoard
+                order={order}
+                type={user.type}
+                IsNegociation={IsNegociation}
+              />
+            </DashBoardContent>
+          ))}
 
-      
         {user.type === "client" &&
           IsNegociation === true &&
           orders.map((order, index) => (
@@ -146,4 +154,4 @@ const DashBoardNegAnuncio = () => {
   );
 };
 
-export default DashBoardNegAnuncio;
+export default DashBoardNegsPosts;

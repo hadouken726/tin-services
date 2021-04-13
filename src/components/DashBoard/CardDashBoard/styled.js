@@ -47,3 +47,7 @@ export const DivStars = styled.div`
 export const DivCompartilhar = styled.div`
   
 `;
+
+export const DivClose = styled.div`
+  
+`;

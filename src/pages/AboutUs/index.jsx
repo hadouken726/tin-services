@@ -76,7 +76,7 @@ const AboutUs = () => {
               </p>
             </div>
             <div className="imageBox">
-              <img src={globe} alt="Globe" />
+              <img src={globe} alt="Globe" draggable="false" />
             </div>
           </Mission>
           <Mission className="benefits">
@@ -90,7 +90,7 @@ const AboutUs = () => {
                 <Tilt className="tilt" options={options}>
                   <Glass size={100}>
                     <div className="benefit">
-                      <img src={visibility} alt="Visibilidade" />
+                      <img src={visibility} alt="Visibilidade" draggable="false" />
                       <span>Visibilidade</span>
                     </div>
                   </Glass>
@@ -101,7 +101,7 @@ const AboutUs = () => {
                 <Tilt options={options}>
                   <Glass size={100}>
                     <div className="benefit">
-                      <img src={wallet} alt="Facilidade" />
+                      <img src={wallet} alt="Facilidade" draggable="false" />
                       <span>Facilidade</span>
                     </div>
                   </Glass>
@@ -111,7 +111,7 @@ const AboutUs = () => {
                 <Tilt options={options}>
                   <Glass size={100}>
                     <div className="benefit">
-                      <img src={security} alt="Segurança" />
+                      <img src={security} alt="Segurança" draggable="false" />
                       <span>Segurança</span>
                     </div>
                   </Glass>
@@ -121,7 +121,7 @@ const AboutUs = () => {
                 <Tilt options={options}>
                   <Glass size={100}>
                     <div className="benefit">
-                      <img src={agility} alt="Agilidade" />
+                      <img src={agility} alt="Agilidade" draggable="false" />
                       <span>Agilidade</span>
                     </div>
                   </Glass>
