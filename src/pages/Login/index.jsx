@@ -2,6 +2,7 @@ import React from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import jwt_decode from "jwt-decode";
 
 import Glass from "../../components/Glass";
 import Header from "../../components/Header";
@@ -9,6 +10,8 @@ import { Link } from "react-router-dom";
 import { FiMail, FiLock, FiLogIn, FiAlertTriangle } from "react-icons/fi";
 
 import loginImg from "../../assets/login.svg";
+
+import api from "../../services/api";
 
 import {
   Container,
@@ -25,11 +28,7 @@ const Login = () => {
     email: yup.string("Somente texto").email().required("Campo obrigatório"),
     password: yup
       .string()
-      .min(8, "Mínimo de 8 dígitos")
-      .matches(
-        /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
-        "Senha deve conter ao menos uma letra maiúscula, uma minúscula, um número e um caracter especial!"
-      )
+      .min(5, "Mínimo de 8 dígitos")
       .required("Campo obrigatório"),
   });
 
@@ -41,7 +40,14 @@ const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleForm = (data) => console.log(data, errors);
+  const handleForm = async (data) => {
+    const response = await api.post("login", data);
+    const token = response.data.accessToken;
+    const { userId } = jwt_decode(JSON.stringify(token));
+
+    localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("id", userId);
+  };
 
   return (
     <Container>
