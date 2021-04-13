@@ -7,7 +7,7 @@ import { Container, Content, Button } from "./styles";
 const Header = ({ current }) => {
   return (
     <Container>
-      <img src={logo} alt="Tin Services" />
+      <img src={logo} alt="Tin Services" draggable="false" />
       <Content>
         <Link className={current === "home" ? "link active" : "link"} to="/">
           Home

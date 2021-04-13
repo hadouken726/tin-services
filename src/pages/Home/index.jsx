@@ -30,7 +30,7 @@ const Home = () => {
               <button className="secondary">Explorar</button>
             </div>
           </TextContent>
-          <img src={homeImg1} alt="Worker" />
+          <img src={homeImg1} alt="Worker" draggable="false" />
         </Content>
       </Glass>
     </Container>

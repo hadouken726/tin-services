@@ -54,7 +54,7 @@ const Login = () => {
       <Glass size={90}>
         <Header />
         <Content>
-          <img src={loginImg} alt="Login" />
+          <img src={loginImg} alt="Login" draggable="false" />
           <Form onSubmit={handleSubmit(handleForm)}>
             <p>Faça seu login</p>
             <InputBox>
