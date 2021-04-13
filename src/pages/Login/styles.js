@@ -90,8 +90,12 @@ export const Input = styled.input`
   flex: 1;
   height: 2rem;
   background-color: transparent;
-  font-size: 1.2rem;
-  color: #eee;
+  font-size: 1rem;
+  width: 100%;
+  color: #eeee;
+  &:valid {
+    background-color: transparent;
+  }
 `;
 
 export const IconBox = styled.div`
