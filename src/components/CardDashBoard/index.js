@@ -14,8 +14,8 @@ import {
 } from "./styled";
 
 const CardDashBoard = ({ order = null, type, IsNegociation }) => {
-  // console.log("Array: ", orders);
 
+  // PROVIDER EM NEGOCIAÇÕES
   return type === "provider" && IsNegociation ? (
     <DivCardDashBoard>
       <UserAvatarContainer>
@@ -46,8 +46,9 @@ const CardDashBoard = ({ order = null, type, IsNegociation }) => {
         <MdShare color={"#24FF00"} />
       </DivCompartilhar>
     </DivCardDashBoard>
-  ) : type === "client" && IsNegociation ? (
-    //CLIENT
+  ) 
+  // CLIENT EM NEGOCIAÇÃO
+  : type === "client" && IsNegociation ? (
     <DivCardDashBoard>
       <UserAvatarContainer>
         <ProviderAvatar src={order.urlAvatar} draggable="false" />
@@ -78,10 +79,42 @@ const CardDashBoard = ({ order = null, type, IsNegociation }) => {
       </DivCompartilhar>
     </DivCardDashBoard>
   ) : type === "client" && IsNegociation === false ? (
-    <h1>Cliente Anuncio</h1>)
-    : ( <h1>Provider Anuncio</h1>)
 
-  // return(<h1>Oi</h1>)
+    <h1>Cliente Anuncio</h1>)
+
+    : 
+    // PROVIDER PODE VER POSTS E ENCAMINHAR UMA MENSAGEM AO CLIENTE
+    ( 
+      <DivCardDashBoard>
+        <UserAvatarContainer>
+          <ProviderAvatar src={order.user.urlAvatar} draggable="false" />
+          <h4>{order.user.id}</h4>
+        </UserAvatarContainer>
+  
+        <DivName>
+          <h4>{"Tipo de Serviço:"}</h4>
+          <h4>{`${order.desc}`}</h4>
+        </DivName>
+  
+        <DivDate>
+          <h4>{(new Date(order.changedAt).toDateString())}</h4>
+          <h4> </h4>
+        </DivDate>
+  
+        <DivStatus>
+          <h4>{order.status}</h4>
+          <h4> </h4>
+        </DivStatus>
+  
+        <DivStars>
+          {/* <Stars /> */}
+        </DivStars>
+  
+        <DivCompartilhar>
+          <MdShare color={"#24FF00"} />
+        </DivCompartilhar>
+      </DivCardDashBoard>
+    )
 };
 
 export default CardDashBoard;

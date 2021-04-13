@@ -25,8 +25,8 @@ const DashBoardNegAnuncio = () => {
   // const token = JSON.parse(localStorage.getItem("token"));  // Nosso token
 
   let user = {
-    id: 1,
-    type: "provider",
+    id: 2,
+    type: "client",
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1c3Rhdm9AbWFpbC5jb20iLCJpYXQiOjE2MTgyNzQyNjYsImV4cCI6MTYxODI3Nzg2Niwic3ViIjoiMiJ9.2e7dIcnGgpk3kVitDrUxdMPtkhXJNbTEH0_nERsd5hI",
   };
