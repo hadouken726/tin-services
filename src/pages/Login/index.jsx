@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 
 import Glass from "../../components/Glass";
 import Header from "../../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FiMail, FiLock, FiLogIn, FiAlertTriangle } from "react-icons/fi";
 
 import loginImg from "../../assets/login.svg";
@@ -24,6 +24,8 @@ import {
 } from "./styles";
 
 const Login = () => {
+  const history = useHistory();
+
   const schema = yup.object().shape({
     email: yup.string("Somente texto").email().required("Campo obrigatório"),
     password: yup
@@ -47,6 +49,8 @@ const Login = () => {
 
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("id", userId);
+
+    history.push("/clientmap");
   };
 
   return (
