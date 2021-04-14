@@ -4,4 +4,6 @@ const api = axios.create({
   baseURL: "https://tin-services-api.herokuapp.com",
 });
 
-export default api;
+export default api
+
+
