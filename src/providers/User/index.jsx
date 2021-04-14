@@ -9,11 +9,9 @@ export const UserProvider = ({children}) => {
         const userId = JSON.parse(localStorage.getItem("userId"))
         api
             .get(`users/${userId}`, {headers: {Authorization: `Bearer ${token}`}})
-            .then(response => {
-                setUser(response.data)
-                localStorage.setItem("userData", JSON.stringify(response.data))
-            }).catch(err => setError(true));
+            .then(response => setUser(response.data)).catch(err => setError(true));
+
     }
-    return <UserContext.Provider value={{user, setUser}}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{user, setUser, getUser}}>{children}</UserContext.Provider>
 }
 export const useUser = () => useContext(UserContext);
