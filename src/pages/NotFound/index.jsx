@@ -1,7 +1,8 @@
-import { Main } from "./styled";
+import { Container } from "./styled";
 import { FiLogIn } from "react-icons/fi";
 import { Link, useHistory } from "react-router-dom";
 import Glass from "../../components/Glass";
+import img from "../../assets/error404.svg";
 
 const NotFound = () => {
   const history = useHistory();
@@ -16,17 +17,17 @@ const NotFound = () => {
   };
 
   return (
-    <Glass size={90}>
-      <Main>
+    <Container>
+      <Glass size={95}>
         <header>
-          <h1>Ooops... nada por aqui dev</h1>
+          <h1>Ooops... nada por aqui...</h1>
           <Link className="fi-log" onClick={sendTo}>
             <FiLogIn />
           </Link>
         </header>
-        <img src="./assets/not-found.svg" alt="404 error" />
-      </Main>
-    </Glass>
+        <img src={img} alt="404 error" />
+      </Glass>
+    </Container>
   );
 };
 
