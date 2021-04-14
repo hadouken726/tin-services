@@ -7,7 +7,7 @@ import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import { FiMail, FiLock, FiLogIn, FiAlertTriangle } from "react-icons/fi";
 import loginImg from "../../assets/login.svg";
-import api from "../../services/api";
+import {signIn} from "../../services/auth"
 import {useHistory} from "react-router-dom"
 import {
   Container,
@@ -18,7 +18,6 @@ import {
   IconBox,
   Button,
 } from "./styles";
-import {useAuth} from "../../providers/Auth"
 
 const Login = () => {
     const schema = yup.object().shape({
@@ -35,7 +34,6 @@ const Login = () => {
     } = useForm({
         resolver: yupResolver(schema),
     });
-    const {signIn} = useAuth()
     const history = useHistory()
     const [fetchError, setFetchError] = useState(false);
 

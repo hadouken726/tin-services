@@ -1,13 +1,11 @@
 import { Redirect, Route as ReactDOMRoute } from "react-router-dom";
-import { useAuth } from "../providers/Auth";
 const Route = ({ isPrivate = false, component: Component, ...rest }) => {
-    const { auth } = useAuth();
-
+    const token = JSON.parse(localStorage.getItem("token")) || ""
     return (
         <ReactDOMRoute
             {...rest}
             render={() => {
-                return isPrivate === !!auth.token ? (
+                return isPrivate === !!token ? (
                     <Component />
                 ) : (
                     <Redirect
