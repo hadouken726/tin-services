@@ -4,6 +4,7 @@ export default function CreatePosts() {
   const [categoryId, setCategoryId] = useState(2);
   const [desc, setDesc] = useState("");
   const [post, setPost] = useState({});
+  
   const status = "active";
   const dateNow = new Date();
 
@@ -29,9 +30,16 @@ export default function CreatePosts() {
   };
 
   useEffect(() => {
-    if(post) {
+    if (JSON.stringify(post) !== "{}"){
       console.log(post);
+    } 
+    if (JSON.stringify(post) !== "{}" && post.desc === ""){
+      console.log("Favor digitar uma descrição !");
+    } 
+    if (JSON.stringify(post) !== "{}" && post.desc !== ""){
+      console.log("Anúncio enviado com sucesso !");
     }
+    
   },[post])
 
   return (
