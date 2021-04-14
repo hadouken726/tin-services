@@ -67,18 +67,24 @@ const DashBoardNegsPosts = () => {
     <DashBoardContainer>
       <DivHeader>
         <LinkText>
-          <h1
-            className={`ButtonNegisNegociation${IsNegociation}`}
-            onClick={getNegociation}
-          >
-            Minhas negociações
-          </h1>
-          <h1
-            className={`ButtonPostisNegociation${IsNegociation}`}
-            onClick={getPosts}
-          >
-            Anúncios
-          </h1>
+          <div>
+            <h1
+              className={`ButtonNegisNegociation${IsNegociation}`}
+              onClick={getNegociation}
+            >
+              Minhas negociações
+            </h1>
+          </div>
+          </LinkText>
+          <LinkText>
+          <div>
+            <h1
+              className={`ButtonPostisNegociation${IsNegociation}`}
+              onClick={getPosts}
+            >
+              Anúncios
+            </h1>
+          </div>
         </LinkText>
         <div>
           <div id="searchGroup">

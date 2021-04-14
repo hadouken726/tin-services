@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import AboutUs from "../pages/AboutUs";
 import Login from "../pages/Login";
 import CompleteRegister from "../pages/CompleteRegister";
+import NotFound from "../pages/NotFound";
 
 const Routes = () => {
   return (
@@ -14,6 +15,7 @@ const Routes = () => {
       <Route exact path="/login" component={Login} />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/completeregister" component={CompleteRegister} />
+      <Route component={NotFound} />
     </Switch>
   );
 };
