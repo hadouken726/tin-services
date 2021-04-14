@@ -43,10 +43,10 @@ const Login = () => {
   const handleForm = async (data) => {
     const response = await api.post("login", data);
     const token = response.data.accessToken;
-    const { userId } = jwt_decode(JSON.stringify(token));
+    const { sub } = jwt_decode(token);
 
     localStorage.setItem("token", JSON.stringify(token));
-    localStorage.setItem("id", userId);
+    localStorage.setItem("id", JSON.stringify(sub));
   };
 
   return (
