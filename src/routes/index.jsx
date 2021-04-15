@@ -1,9 +1,11 @@
 import { Switch, Route } from "react-router-dom";
+import { PrivateRoute } from "./route";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import AboutUs from "../pages/AboutUs";
 import Login from "../pages/Login";
-import ClientMap from "../pages/ClientMap";
+import CompleteRegister from "../pages/CompleteRegister";
+import NotFound from "../pages/NotFound";
 
 const Routes = () => {
   return (
@@ -11,8 +13,9 @@ const Routes = () => {
       <Route exact path="/" component={Home} />
       <Route exact path="/about" component={AboutUs} />
       <Route exact path="/login" component={Login} />
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/clientmap" component={ClientMap} />
+      <PrivateRoute exact path="/dashboard" component={Dashboard} />
+      <Route exact path="/completeregister" component={CompleteRegister} />
+      <Route component={NotFound} />
     </Switch>
   );
 };
