@@ -22,12 +22,12 @@ export default function ComboBox() {
   const onSubmit = (data) => {
     data.preventDefault();
     setPost({
-      userId: 1,
-      categoryId: categoryId,
+      userId: 1, // ID cliente logado
+      category: categoryId,
       desc: desc,
       status: status,
-      changedAt: dateNow,
-    }); // valor cliente logado
+      changedAt: dateNow.toString(),
+    });
   };
 
   useEffect(() => {
@@ -48,14 +48,16 @@ export default function ComboBox() {
       <DivBox>
         <form onSubmit={onSubmit}>
           <h1>Anúncio</h1>
+          <h3>Categoria</h3>
 
-          <label>
-            Categoria:
+          <div id="appearance-select">
             <select value={categoryId} onChange={handleCategoryIdChange}>
-              <option value="1">jardinagem</option>
+              <option value="1" selected="true">
+                jardinagem
+              </option>
               <option value="2">diarista</option>
             </select>
-          </label>
+          </div>
 
           <h2>Tipo de Serviço</h2>
 
