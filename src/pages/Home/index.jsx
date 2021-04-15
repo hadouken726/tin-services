@@ -52,6 +52,7 @@ const Home = () => {
           ipsum magni. Deserunt quasi provident in tenetur eos, nam rerum ea
           odit!
         </p>
+        
       </GlobalModal>
     </Container>
   );
