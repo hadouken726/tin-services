@@ -4,9 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Form, Input, InputBox, SelectBox } from "./styles";
 import PrimaryButton from "../../components/PrimaryButton";
+import { useFormData } from "../../providers/FormData";
 
 const FormInitialRegister = () => {
   const [initialDataRegister, setInitialDataRegister] = useState({});
+  const { setFormData } = useFormData();
   const [isProvider, setIsProvider] = useState(false);
 
   let schema = yup.object().shape({
@@ -30,7 +32,7 @@ const FormInitialRegister = () => {
   });
 
   const handleForm = (data) => {
-    setInitialDataRegister(data);
+    setFormData(data);
   };
 
   return (

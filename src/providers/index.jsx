@@ -1,8 +1,21 @@
-import {AuthProvider} from "./Auth/index"
+import {UserProvider} from "./User"
+import {FormDataProvider} from "./FormData"
+import {ClientsProvider} from "./Clients";
+import {ProvidersProvider} from "./Providers";
 
 const Providers = ({children}) => {
     return (
-        <AuthProvider>{children}</AuthProvider>
-    )
-}
-export default Providers
+        <UserProvider>
+            <ProvidersProvider>
+                <ClientsProvider>
+                    <FormDataProvider>
+                        {children}
+                    </FormDataProvider>
+                </ClientsProvider>
+            </ProvidersProvider>
+        </UserProvider>
+    );
+};
+export default Providers;
+
+

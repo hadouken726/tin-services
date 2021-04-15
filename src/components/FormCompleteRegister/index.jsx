@@ -4,12 +4,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import axios from "axios";
 import { Form, Input, InputBox } from "./styles";
+import { useFormData } from "../../providers/FormData";
+import api from "../../services/api";
 
 const FormCompleteRegister = () => {
   // const [isSuccess, setIsSuccess] = useState(true);
   const [currentZipCode, setCurrentZipCode] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
   const [adressData, setAdressData] = useState({});
+  const { formData } = useFormData();
 
   let zipCodeSchema = yup.object().shape({
     zipcode: yup
@@ -43,12 +46,15 @@ const FormCompleteRegister = () => {
       });
   };
 
-  const { register, handleSubmit, errors  } = useForm({
+  const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
 
   const handleData = (data) => {
-    console.log("Data ==>", data);
+    api
+      .post("/register", { ...formData, ...data })
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log("ERROR post!"));
   };
 
   return (
