@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Form, Input, InputBox } from "./styles";
 
@@ -43,17 +43,13 @@ const FormCompleteRegister = () => {
       });
   };
 
-  const { register, handleSubmit, errors, setValue } = useForm({
+  const { register, handleSubmit, errors  } = useForm({
     resolver: yupResolver(schema),
   });
 
   const handleData = (data) => {
     console.log("Data ==>", data);
   };
-
-  useEffect(() => {
-    console.log(adressData);
-  }, [currentZipCode]);
 
   return (
     <Form onSubmit={handleSubmit(handleData)}>
