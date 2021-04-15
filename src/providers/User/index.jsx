@@ -8,7 +8,7 @@ export const UserProvider = ({children}) => {
         const token = JSON.parse(localStorage.getItem("token"))
         const userId = JSON.parse(localStorage.getItem("userId"))
         api
-            .get(`users/${userId}`, {headers: {Authorization: `Bearer ${token}`}})
+            .get(`/users/${userId}`, {headers: {Authorization: `Bearer ${token}`}})
             .then(response => setUser(response.data)).catch(err => setError(true));
 
     }

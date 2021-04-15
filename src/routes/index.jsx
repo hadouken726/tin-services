@@ -1,5 +1,5 @@
-import { Switch } from "react-router-dom";
-import Route from "./route"
+import { Switch, Route } from "react-router-dom";
+import {PrivateRoute} from "./route"
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import AboutUs from "../pages/AboutUs";
@@ -8,16 +8,16 @@ import CompleteRegister from "../pages/CompleteRegister";
 import NotFound from "../pages/NotFound";
 
 const Routes = () => {
-  return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/about" component={AboutUs} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/completeregister" component={CompleteRegister} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+    return (
+        <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/about" component={AboutUs}/>
+            <Route exact path="/login" component={Login}/>
+            <PrivateRoute exact path="/dashboard" component={Dashboard}/>
+            <Route exact path="/completeregister" component={CompleteRegister}/>
+            <Route component={NotFound}/>
+        </Switch>
+    );
 };
 
 export default Routes;

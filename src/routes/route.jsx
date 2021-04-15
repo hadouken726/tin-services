@@ -1,22 +1,19 @@
-import { Redirect, Route as ReactDOMRoute } from "react-router-dom";
-const Route = ({ isPrivate = false, component: Component, ...rest }) => {
-    const token = JSON.parse(localStorage.getItem("token")) || ""
-    return (
-        <ReactDOMRoute
-            {...rest}
-            render={() => {
-                return isPrivate === !!token ? (
-                    <Component />
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: isPrivate ? "/login" : "/dashboard",
-                        }}
-                    />
-                );
-            }}
-        />
-    );
-};
+import { Redirect, Route } from "react-router-dom"
+import {isAuthenticated} from "../services/auth"
 
-export default Route;
+export const PrivateRoute = ({component: Component, ...rest}) => (
+    < Route
+        {...rest}
+        render={props => (
+            isAuthenticated() ? (<Component {...props} />) : (
+                <Redirect
+                    to={{
+                        pathname: "/login",
+                        state: {from: props.location}
+                    }}
+                />
+            )
+        )}
+    />
+);
+
