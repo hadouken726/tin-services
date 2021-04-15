@@ -1,16 +1,14 @@
-import api from "./api";
-import jwt_decode from "jwt-decode";
-export const isAuthenticated = () => {
-    return JSON.parse(localStorage.getItem("token")) || false
-}
-export const signIn = (userData, setError, history) => {
-    api
-        .post("/login", userData)
-        .then((response) => {
-            const {sub} = jwt_decode(response.data.accessToken)
-            localStorage.setItem("token", JSON.stringify(response.data.accessToken));
-            localStorage.setItem("userId", JSON.stringify(sub));
-            history.push("/dashboard");
-        })
-        .catch((err) => setError(true));
-}
+export const TOKEN_KEY = "token";
+export const ID = "id"
+export const isAuthenticated = () => JSON.parse(localStorage.getItem(TOKEN_KEY)) || false
+export const getToken = () => JSON.parse(localStorage.getItem(TOKEN_KEY)) || false
+export const login = (token,id) => {
+    localStorage.setItem(TOKEN_KEY, JSON.stringify(token));
+    localStorage.setItem(ID, JSON.stringify(id));
+};
+export const logout = () => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ID)
+};
+
+
