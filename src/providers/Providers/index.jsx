@@ -7,7 +7,7 @@ export const ProvidersProvider = ({children}) => {
     const getProviders = (setError) => {
         const token = JSON.parse(localStorage.getItem("token"))
         api
-            .get(`users/`, {headers: {Authorization: `Bearer ${token}`}})
+            .get("/providers", {headers: {Authorization: `Bearer ${token}`}})
             .then(response => setProviders(response.data)).catch(err => setError(true));
     }
     return <ProvidersContext.Provider value={{providers, setProviders, getProviders}}>{children}</ProvidersContext.Provider>
