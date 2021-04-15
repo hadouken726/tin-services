@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import api from "../../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
+import { useHistory } from "react-router";
+
 
 import {
   DashBoardContainer,
@@ -11,7 +13,7 @@ import {
   DivHeader,
   DivScrool,
 } from "./styled";
-// import { useHistory } from "react-router";
+
 
 const DashBoardNegsPosts = () => {
   const [input, setInput] = useState("");
@@ -21,14 +23,14 @@ const DashBoardNegsPosts = () => {
 
   // const [open, setOpen] = useState(false);  // para o Modal do Cadastro de Anuncios e Avaliação
 
-  // const history = useHistory();
-  // const token = JSON.parse(localStorage.getItem("token"));
+  const history = useHistory();
+  const token = JSON.parse(localStorage.getItem("token"));
+  const userId = localStorage.getItem("id");
 
   let user = {
-    id: 1,
+    id: userId,
     type: "provider",
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1c3Rhdm9AbWFpbC5jb20iLCJpYXQiOjE2MTgzMjQ1NTcsImV4cCI6MTYxODMyODE1Nywic3ViIjoiMiJ9.Qq2zMJVIexcYoC04gn8HDc-e77_LGVs64S6OY4CwxdQ",
+    token: token,
   };
 
   useEffect(() => {
