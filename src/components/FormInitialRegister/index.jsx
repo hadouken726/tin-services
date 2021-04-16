@@ -2,9 +2,10 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { Form, Input, InputBox, SelectBox } from "./styles";
-// import PrimaryButton from "../../components/PrimaryButton";
+import { Form, Input, InputBox } from "./styles";
 import { useHistory } from "react-router-dom";
+
+import PrimaryButton from "../../components/PrimaryButton";
 
 const FormInitialRegister = () => {
   const [initialDataRegister, setInitialDataRegister] = useState({});
@@ -55,7 +56,7 @@ const FormInitialRegister = () => {
       <InputBox>
         <Input name="password" placeholder="Senha" {...register("password")} />
       </InputBox>
-      <button type="submit">Enviar</button>
+      <PrimaryButton name="Enviar" type="submit" />
     </Form>
   );
 };
