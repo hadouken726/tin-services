@@ -46,10 +46,16 @@ const FormCompleteRegister = () => {
       })
       .catch(function (err) {
         setZipCodeError(err.errors[0]);
+        console.log(`O CEP ${zipCodeError} é inválido!`);
       });
   };
 
-  const { register, setValue, handleSubmit, errors } = useForm({
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -67,7 +73,7 @@ const FormCompleteRegister = () => {
       <p>Complete seu registro</p>
       <InputBox>
         <Input
-          placeholder="CEP"
+          placeholder={errors.zipcode ? errors.zipcode?.message : "CEP"}
           name="zipcode"
           value={currentZipCode}
           onChange={(e) => setCurrentZipCode(e.target.value)}
@@ -83,12 +89,22 @@ const FormCompleteRegister = () => {
         />
       </InputBox>
       <InputBox>
-        <Input name="number" placeholder="Número" {...register("number")} />
+        <Input
+          name="number"
+          placeholder={
+            errors.number ? errors.number?.message : "Número da Residência."
+          }
+          {...register("number")}
+        />
       </InputBox>
       <InputBox>
         <Input
           name="complement"
-          placeholder="Complemento"
+          placeholder={
+            errors.complement
+              ? errors.complement?.message
+              : "Digite o complemento."
+          }
           {...register("complement")}
         />
       </InputBox>
@@ -96,7 +112,9 @@ const FormCompleteRegister = () => {
         <Input
           name="neighborhood"
           value={adressData.neighborhood}
-          placeholder="Bairro"
+          placeholder={
+            errors.neighborhood ? errors.neighborhood?.message : "Bairro"
+          }
           {...register("neighborhood")}
         />
       </InputBox>
@@ -104,7 +122,7 @@ const FormCompleteRegister = () => {
         <Input
           name="city"
           value={adressData.city}
-          placeholder="Cidade"
+          placeholder={errors.city ? errors.city?.message : "Cidade"}
           {...register("city")}
         />
       </InputBox>
@@ -112,11 +130,11 @@ const FormCompleteRegister = () => {
         <Input
           name="state"
           value={adressData.state}
-          placeholder="Estado"
+          placeholder={errors.state ? errors.state?.message : "Estado"}
           {...register("state")}
         />
       </InputBox>
-      <PrimaryButton name="Enviar" type="submit"/>
+      <PrimaryButton name="Enviar" type="submit" />
     </Form>
   );
 };
