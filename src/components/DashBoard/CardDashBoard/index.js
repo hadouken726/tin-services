@@ -13,29 +13,43 @@ import {
   DivCompartilhar,
   DivClose,
 } from "./styled";
+import { useEffect, useState } from "react";
+import api from "../../../services/api";
+import { getToken } from "../../../services/auth";
 
-const CardDashBoard = ({
-  order = null,
-  type,
-  IsNegociation,
-  star,
-  setStar,
-}) => {
+const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
+  const [provider, setProvider] = useState({})
 
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
 
-  // PROVIDER EM NEGOCIATION
+  const getProvider = (providerId) => {
+    (async () => {
+      try {
+        const { data } = await api.get(`users/${providerId}`, {
+          headers: { Authorization: "Bearer " + getToken() },
+        });
+        console.log(data);
+        setProvider(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }
+
+  // PROVIDER NEGOCIATION
   return type === "provider" && IsNegociation ? (
+    // {getProvider(order.providerId)}
+
     <DivCardDashBoard>
       <UserAvatarContainer>
-        <ProviderAvatar src={order.user.urlAvatar} draggable="false" />
-        <h4>{order.user.id}</h4>
+        <ProviderAvatar src={user.urlAvatar} draggable="false" />
+        <h4>{order.userId}</h4>
       </UserAvatarContainer>
 
       <DivName>
-        <h4>{order.user.name}</h4>
+        <h4>{"order.user.name"}</h4>
         <h4>{`Categoria: ${order.categoryId}`}</h4>
       </DivName>
 
@@ -68,8 +82,7 @@ const CardDashBoard = ({
         <MdShare color={"#24FF00"} />
       </DivCompartilhar>
     </DivCardDashBoard>
-  ) : // CLIENT EM NEGOCIAÇÃO
-  type === "client" && IsNegociation ? (
+  ) : type === "client" && IsNegociation ? ( // CLIENT EM NEGOCIAÇÃO
     <DivCardDashBoard>
       <UserAvatarContainer>
         <ProviderAvatar src={order.urlAvatar} draggable="false" />
@@ -77,7 +90,7 @@ const CardDashBoard = ({
       </UserAvatarContainer>
 
       <DivName>
-        <h4 style={{ color: "red" }}>{"order.provider.name"}</h4>
+        <h4 style={{ color: "red" }}>{order.category}</h4>
         <h4>{order.desc}</h4>
       </DivName>
 
@@ -99,14 +112,14 @@ const CardDashBoard = ({
         <MdPermPhoneMsg color={"#24FF00"} />
       </DivCompartilhar>
     </DivCardDashBoard>
-  ) : type === "client" && IsNegociation === false ? (
+  ) : type === "client" && IsNegociation === false ? ( // CLIENT EM ANUNCIOS
     <h1>Cliente Anuncio</h1>
   ) : (
     // PROVIDER PODE VER POSTS E ENCAMINHAR UMA MENSAGEM AO CLIENTE
     <DivCardDashBoard>
       <UserAvatarContainer>
-        <ProviderAvatar src={order.user.urlAvatar} draggable="false" />
-        <h4>{order.user.id}</h4>
+        <ProviderAvatar src={user.urlAvatar} draggable="false" />
+        <h4>{order.userId}</h4>
       </UserAvatarContainer>
 
       <DivName>
@@ -125,7 +138,6 @@ const CardDashBoard = ({
       </DivStatus>
 
       <DivStars>
-        {/* https://www.npmjs.com/package/react-rating-stars-component */}
         <ReactStars
           edit={false} // aqui podemos editar com true
           value={0} // aqui traz o valor do score
