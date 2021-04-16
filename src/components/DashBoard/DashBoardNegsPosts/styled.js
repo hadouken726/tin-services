@@ -29,9 +29,9 @@ export const DashBoardContainer = styled.div`
     font-size: 14px;
     font-weight: bold;
 
-    @media (max-width: 990px) {
+    /* @media (max-width: 990px) {
       font-size: 20px;
-    }
+    } */
   }
 
   @media (min-width: 700px) {
@@ -83,12 +83,13 @@ export const DashBoardContent = styled.div`
 export const DivHeader = styled.div`
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  vertical-align: center;
 
   align-items: center;
   justify-content: space-between;
 
-  padding: 24px 25px 5px 25px;
+  padding: 4px 25px 5px 25px;
   width: 100%;
 
   p {
@@ -101,8 +102,8 @@ export const DivHeader = styled.div`
   div#searchGroup {
     position: relative;
     display: flex;
-    margin-left: 70%;
-    margin-top: -45px;
+    /* margin-left: 70%; */
+    /* margin-top: -3px; */
     width: 15rem;
   }
 
@@ -128,7 +129,6 @@ export const DivHeader = styled.div`
     /* @media (max-width: 983px) {
       width: 35rem;
     }*/
- 
   }
 
   div#buttonSearch {
@@ -151,7 +151,7 @@ export const DivHeader = styled.div`
 `;
 
 export const LinkText = styled.div`
-  
+  margin-top: 25px;
   width: 50vw;
   height: 20px;
   font-size: 2.4rem;
@@ -181,12 +181,12 @@ export const LinkText = styled.div`
     color: blue;
   }
 
+
   /* @media (max-width: 998px) {
     h1 {
       font-size: 0.8rem;
     }
   }*/
-  
 `;
 
 export const UserAvatarContainer = styled.div`
