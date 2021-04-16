@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import InitialRegister from "../pages/InitialRegister";
 import CompleteRegister from "../pages/CompleteRegister";
 import NotFound from "../pages/NotFound";
+import SearchMap from "../pages/SearchMap";
 
 const Routes = () => {
   return (
@@ -17,6 +18,7 @@ const Routes = () => {
       <PrivateRoute exact path="/dashboard" component={Dashboard} />
       <Route exact path="/register" component={InitialRegister} />
       <Route exact path="/completeregister" component={CompleteRegister} />
+      <Route exact path="/searchmap" component={SearchMap} />
       <Route component={NotFound} />
     </Switch>
   );
