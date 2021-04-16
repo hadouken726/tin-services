@@ -48,40 +48,6 @@ const Login = () => {
       })
       .catch((err) => setFetchError(true));
   };
-<<<<<<< HEAD
-  return (
-    <Container>
-      <Glass size={90}>
-        <Header />
-        <Content>
-          <img src={loginImg} alt="Login" draggable="false" />
-          <Form onSubmit={handleSubmit(handleForm)}>
-            <p>Faça seu login</p>
-            <InputBox>
-              <IconBox>
-                {errors.email ? <FiAlertTriangle color="red" /> : <FiMail />}
-              </IconBox>
-              <Input
-                type="email"
-                {...register("email")}
-                placeholder={errors.email ? errors.email.message : "Seu e-mail"}
-              />
-            </InputBox>
-
-            <InputBox>
-              <IconBox>
-                {errors.email ? <FiAlertTriangle color="red" /> : <FiLock />}
-              </IconBox>
-              <Input
-                type="password"
-                {...register("password")}
-                placeholder={errors.email ? errors.email.message : "Sua senha"}
-              />
-            </InputBox>
-
-            <Button type="submit">Login</Button>
-
-=======
 
   return (
     <Container>
@@ -115,7 +81,6 @@ const Login = () => {
 
             <Button type="submit">Login</Button>
 
->>>>>>> a7729c5a5fb5fce2773bb0ec6793f6259945ead8
             <Link className="callLink" to="/register">
               <FiLogIn />
               Não tem registro? Vem por aqui!
