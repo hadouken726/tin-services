@@ -48,7 +48,6 @@ const Login = () => {
             })
             .catch((err) => setFetchError(true));
     };
-    console.log(categories)
     return (
         <Container>
             <Glass size={90}>
