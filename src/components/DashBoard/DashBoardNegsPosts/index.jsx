@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import api from "../../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
+import { useUser } from "../../../contexts/User";
+import { categories } from "../../../utils/categories";
+import { getId, getToken } from "../../../services/auth";
 
 
 import {
@@ -16,22 +19,29 @@ import {
 
 
 const DashBoardNegsPosts = () => {
+  const { user, setUser } = useUser({});
+  const userId = getId();
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState([]);
   const [IsNegociation, setIsNegociation] = useState(true);
-  // const [anuncio, setAnuncio] = useState({});  // ou Context API
+  
 
-  // const [open, setOpen] = useState(false);  // para o Modal do Cadastro de Anuncios e Avaliação
+  // const history = useHistory();
 
-  const history = useHistory();
-  const token = JSON.parse(localStorage.getItem("token"));
-  const userId = localStorage.getItem("id");
 
-  let user = {
-    id: userId,
-    type: "provider",
-    token: token,
-  };
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await api.get(`users/${userId}`, {
+          headers: { Authorization: "Bearer " + getToken() },
+        });
+        console.log(data);
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -44,7 +54,7 @@ const DashBoardNegsPosts = () => {
           ? `providers/${user.id}/posts?_expand=user`
           : `providers/${user.id}/posts?_expand=user`,
 
-        { headers: { Authorization: `Bearer ${user.token}` } }
+        { headers: { Authorization: `Bearer ${getToken()}` } }
       );
       console.log(data);
       setOrders(data);
