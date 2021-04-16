@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import axios from "axios";
-import { Form, Input, InputBox } from "./styles";
+import { ErrorMessage, Form, Input, InputBox } from "./styles";
 import api from "../../services/api";
 import PrimaryButton from "../PrimaryButton";
+import { useHistory } from "react-router";
 
 const FormCompleteRegister = () => {
+  const history = useHistory();
+
   const [currentZipCode, setCurrentZipCode] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
   const [adressData, setAdressData] = useState({});
@@ -22,7 +25,10 @@ const FormCompleteRegister = () => {
 
   let schema = yup.object().shape({
     street: yup.string().required("Campo obrigatório!"),
-    number: yup.string().required("Campo obrigatório!"),
+    number: yup
+      .string()
+      .matches(/\d+/g, "Digite somente números, sem espaços!")
+      .required("Campo obrigatório!"),
     complement: yup.string().required("Campo obrigatório!"),
     neighborhood: yup.string().required("Campo obrigatório!"),
     city: yup.string().required("Campo obrigatório!"),
@@ -66,6 +72,7 @@ const FormCompleteRegister = () => {
       .then((resp) => console.log(resp))
       .catch((err) => console.log(err));
     localStorage.removeItem("formData");
+    history.push("/login");
   };
 
   return (
@@ -89,14 +96,9 @@ const FormCompleteRegister = () => {
         />
       </InputBox>
       <InputBox>
-        <Input
-          name="number"
-          placeholder={
-            errors.number ? errors.number?.message : "Número da Residência."
-          }
-          {...register("number")}
-        />
+        <Input name="number" placeholder="Número" {...register("number")} />
       </InputBox>
+      {errors.number && <ErrorMessage>{errors.number.message}</ErrorMessage>}
       <InputBox>
         <Input
           name="complement"
