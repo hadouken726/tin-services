@@ -127,7 +127,7 @@ export const InputBox = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid var(--white);
-  margin: 1rem 0;
+  margin: 0.8rem 0;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
 
@@ -177,7 +177,7 @@ export const Option = styled.option`
   color: #000;
 `;
 
-export const ErrorMessage = styled.p`
+export const ErrorMessage = styled.span`
   margin: 0;
   padding: 0;
   font-size: 15px;

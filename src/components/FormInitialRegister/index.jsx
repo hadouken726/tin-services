@@ -87,7 +87,9 @@ const FormInitialRegister = () => {
             {...register("name")}
           />
         </InputBox>
-        {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+        {errors.name && (
+          <ErrorMessage id="alertError">{errors.name.message}</ErrorMessage>
+        )}
         <InputBox>
           <Input
             name="cpfCnpj"
@@ -96,7 +98,7 @@ const FormInitialRegister = () => {
           />
         </InputBox>
         {errors.cpfCnpj && (
-          <ErrorMessage>{errors.cpfCnpj.message}</ErrorMessage>
+          <ErrorMessage id="alertError">{errors.cpfCnpj.message}</ErrorMessage>
         )}
         <InputBox>
           <Input
@@ -105,7 +107,9 @@ const FormInitialRegister = () => {
             {...register("phone")}
           />
         </InputBox>
-        {errors.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
+        {errors.phone && (
+          <ErrorMessage id="alertError">{errors.phone.message}</ErrorMessage>
+        )}
         {isProvider && (
           <SelectBox>
             {categories.map((category) => (
@@ -123,7 +127,9 @@ const FormInitialRegister = () => {
         <InputBox>
           <Input name="email" placeholder="Email" {...register("email")} />
         </InputBox>
-        {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+        {errors.email && (
+          <ErrorMessage id="alertError">{errors.email.message}</ErrorMessage>
+        )}
         <InputBox>
           <Input
             name="password"
@@ -132,7 +138,7 @@ const FormInitialRegister = () => {
           />
         </InputBox>
         {errors.password && (
-          <ErrorMessage>{errors.password.message}</ErrorMessage>
+          <ErrorMessage id="alertError">{errors.password.message}</ErrorMessage>
         )}
         <PrimaryButton name="Enviar" type="submit" />
       </Form>
