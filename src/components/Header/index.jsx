@@ -1,10 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 import { Container, Content, Button } from "./styles";
 
 const Header = ({ current }) => {
+  const history = useHistory();
+
   return (
     <Container>
       <img src={logo} alt="Tin Services" draggable="false" />
@@ -18,7 +20,7 @@ const Header = ({ current }) => {
         >
           Sobre nós
         </Link>
-        <Button>Registre-se</Button>
+        <Button onClick={() => history.push("/register")}>Registre-se</Button>
       </Content>
     </Container>
   );

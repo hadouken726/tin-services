@@ -37,10 +37,7 @@ const FormInitialRegister = () => {
       .string()
       .matches(/\([1-9]\d\)\s9?\d{4}-\d{4}|\s9?\d{11}/g, "Telefone inválido!")
       .required("Campo obrigatório!"),
-    email: yup
-      .string()
-      .matches(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i, "Email inválido!")
-      .required("Campo obrigatório"),
+    email: yup.string().email("Email inválido!").required("Campo obrigatório"),
     password: yup.string().required("Campo obrigatório!"),
   });
 
