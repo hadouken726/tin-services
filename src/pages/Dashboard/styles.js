@@ -93,3 +93,24 @@ export const Avatar = styled.div`
   }
 `;
 
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  background-color: var(--blue-400);
+  width: 12rem;
+  height: 3rem;
+  font-size: 1.2rem;
+  border-radius: 2rem;
+  color: var(--white);
+  transition: filter 200ms ease-in;
+
+  @media (max-width: 1190px) {
+    width: 100%;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;

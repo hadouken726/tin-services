@@ -21,11 +21,12 @@ const CardDashBoard = ({
   star,
   setStar,
 }) => {
+
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
 
-  // PROVIDER EM NEGOCIAÇÕES
+  // PROVIDER EM NEGOCIATION
   return type === "provider" && IsNegociation ? (
     <DivCardDashBoard>
       <UserAvatarContainer>
