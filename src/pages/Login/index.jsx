@@ -20,7 +20,6 @@ import {
 } from "./styles";
 import jwt_decode from "jwt-decode"
 import api from "../../services/api";
-
 const Login = () => {
     const schema = yup.object().shape({
         email: yup.string("Somente texto").email().required("Campo obrigatório"),
@@ -49,7 +48,7 @@ const Login = () => {
             })
             .catch((err) => setFetchError(true));
     };
-
+    console.log(categories)
     return (
         <Container>
             <Glass size={90}>
