@@ -49,7 +49,7 @@ export const InputBox = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid var(--white);
-  margin: 0.5rem 0;
+  margin: 1rem 0;
   padding: 0.5rem 1rem;
   border-radius: 2rem;
 
@@ -67,6 +67,20 @@ export const Input = styled.input`
   color: #eeee;
   &:valid {
     background-color: transparent;
+  }
+`;
+
+export const SelectBox = styled.select`
+  width: 80%;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--white);
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+
+  @media (max-width: 1190px) {
+    width: 100%;
   }
 `;
 
