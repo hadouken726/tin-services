@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Form, Input, InputBox } from "./styles";
 import api from "../../services/api";
+import PrimaryButton from "../PrimaryButton";
 
 const FormCompleteRegister = () => {
   const [currentZipCode, setCurrentZipCode] = useState("");
@@ -115,7 +116,7 @@ const FormCompleteRegister = () => {
           {...register("state")}
         />
       </InputBox>
-      <button type="submit">Enviar</button>
+      <PrimaryButton name="Enviar" type="submit"/>
     </Form>
   );
 };

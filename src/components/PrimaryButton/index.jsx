@@ -1,9 +1,7 @@
-const PrimaryButton = ({name, action}) => {
-  return (
-    <div>
-      <button onClick={action}>{name}</button>
-    </div>
-  )
-}
+import { Button } from "./styles";
 
-export default PrimaryButton
+const PrimaryButton = ({ name, action }) => {
+  return <Button onClick={action}>{name}</Button>;
+};
+
+export default PrimaryButton;
