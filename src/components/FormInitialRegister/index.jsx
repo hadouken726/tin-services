@@ -3,27 +3,18 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Form, Input, InputBox, SelectBox } from "./styles";
-import PrimaryButton from "../../components/PrimaryButton";
-import { useFormData } from "../../providers/FormData";
+// import PrimaryButton from "../../components/PrimaryButton";
+import { useHistory } from "react-router-dom";
 
 const FormInitialRegister = () => {
   const [initialDataRegister, setInitialDataRegister] = useState({});
-  const { setFormData } = useFormData();
   const [isProvider, setIsProvider] = useState(false);
+  const history = useHistory();
 
   let schema = yup.object().shape({
-    Nome: yup.string().required("Campo obrigatório!"),
-    cpfCnpj: yup
-      .string()
-      .matches(
-        /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/g
-      )
-      .required("Campo obrigatório!"),
-    email: yup
-      .string()
-      .email(
-        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/g
-      ),
+    name: yup.string().required("Campo obrigatório!"),
+    cpfCnpj: yup.string().required("Campo obrigatório!"),
+    email: yup.string(),
     password: yup.string().required("Campo obrigatório!"),
   });
 
@@ -31,17 +22,23 @@ const FormInitialRegister = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleForm = (data) => {
-    setFormData(data);
+  const handleData = (data) => {
+    console.log(data);
+    localStorage.setItem("formData", JSON.stringify(data));
+    history.push("/completeregister");
   };
 
   return (
-    <Form onSubmit={handleSubmit(handleForm)}>
+    <Form onSubmit={handleSubmit(handleData)}>
       <InputBox>
-        <Input name="name" placeholder="Nome" />
+        <Input name="name" placeholder="Nome" {...register("name")} />
       </InputBox>
       <InputBox>
-        <Input name="cpfCnpj" placeholder="CPF ou CNPJ" />
+        <Input
+          name="cpfCnpj"
+          placeholder="CPF ou CNPJ"
+          {...register("cpfCnpj")}
+        />
       </InputBox>
       {/* {isProvider && (
         <InputBox>
@@ -53,12 +50,12 @@ const FormInitialRegister = () => {
         </InputBox>
       )} */}
       <InputBox>
-        <Input name="email" placeholder="Email" />
+        <Input name="email" placeholder="Email" {...register("email")} />
       </InputBox>
       <InputBox>
-        <Input name="password" placeholder="Senha" />
+        <Input name="password" placeholder="Senha" {...register("password")} />
       </InputBox>
-      {/* Primary Button */}
+      <button type="submit">Enviar</button>
     </Form>
   );
 };
