@@ -1,74 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, DivBox, Button } from "./styled";
+import { getId, getToken } from "../../services/auth";
 import api from "../../services/api";
+import { useUser } from "../../contexts/User";
+import { categories } from "../../utils/categories";
+import { useForm } from "react-hook-form";
 
 export default function ComboBox() {
-  const [categoryId, setCategoryId] = useState(2);
-  const [desc, setDesc] = useState("");
-  const [post, setPost] = useState({});
-
-  const token = JSON.parse(localStorage.getItem("token"));
-  const userId = localStorage.getItem("id");
-
+  const { setUser } = useUser({});
+  const userId = getId();
+  const { register, handleSubmit } = useForm();
   const status = "active";
-  const dateNow = new Date();
+  const changedAt = new Date().toString();
 
-  const handleCategoryIdChange = (e) => {
-    setCategoryId(e.target.value);
-  };
-
-  const handleDescChange = (e) => {
-    setDesc(e.target.value);
-  };
-
-  const onSubmit = (data) => {
-    data.preventDefault();
-    setPost({
-      userId: userId, // ID cliente logado
-      category: Number(categoryId),
-      desc: desc,
-      status: status,
-      changedAt: dateNow.toString(),
-    });
+  const handleForm = (data) => {
+    (async () => {
+      try {
+        await api.post(`posts/`, { ...data, userId, status, changedAt });
+        console.log(data);
+        console.log("Anúncio enviado com sucesso !");
+      } catch (error) {
+        console.log(error);
+      }
+    })();
   };
 
   useEffect(() => {
-    if (JSON.stringify(post) !== "{}") {
-      console.log(post);
-    }
-    if (JSON.stringify(post) !== "{}" && post.desc === "") {
-      console.log("Favor digitar uma descrição !");
-    }
-    if (JSON.stringify(post) !== "{}" && post.desc !== "") {
-      (async () => {
-        try {
-          const { data } = await api.post(`posts/`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          console.log(data);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-      console.log("Anúncio enviado com sucesso !");
-      setDesc("");
-    }
-  }, [post]);
-
+    (async () => {
+      try {
+        const { data } = await api.get(`users/${userId}`, {
+          headers: { Authorization: "Bearer " + getToken() },
+        });
+        console.log(data);
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <Container>
       <DivBox>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(handleForm)}>
           <h1>Anúncio</h1>
           <h3>Categoria</h3>
 
           <div id="appearance-select">
-            <select value={categoryId} onChange={handleCategoryIdChange}>
-              <option value="1" selected={true}>
-                jardinagem
-              </option>
-              <option value="2">diarista</option>
+            <select {...register("category")}>
+              {categories.map((category) => (
+                <option key={category.id} value="1">
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -78,13 +62,12 @@ export default function ComboBox() {
             style={{ width: "450px", height: "200px" }}
             placeholder={"Digite um Anúncio..."}
             id={"desc"}
-            name={"desc"}
+            {...register("desc", { required: true })}
             rows={6}
-            value={desc}
-            onChange={handleDescChange}
+            required
           ></textarea>
           <br />
-          <Button>Enviar anúncio</Button>
+          <Button type="submit">Enviar anúncio</Button>
         </form>
       </DivBox>
     </Container>

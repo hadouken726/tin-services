@@ -39,6 +39,10 @@ export const Container = styled.div`
       margin-bottom: 3px;
     }
 
+    p {
+      color: red;
+    }
+
     textarea {
       width: 25%;
       background-color: rgba(255, 255, 255, 0.04);

@@ -3,6 +3,8 @@ import { useHistory } from "react-router";
 import Glass from "../../components/Glass";
 import GlobalModal from "../../components/GlobalModal";
 import CreatePosts from "../../components/CreatePosts";
+import { useUser } from "../../contexts/User";
+import { getId, getToken } from "../../services/auth";
 
 import {
   Container,
@@ -16,11 +18,13 @@ import {
 
 import imgLogo from "../../assets/logo.svg";
 import DashBoardNegsPosts from "../../components/DashBoard/DashBoardNegsPosts";
+import api from "../../services/api";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("id");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, setUser } = useUser({});
+  const userId = getId();
 
   const handleOpenModal = () => setIsModalOpen(true);
 
@@ -35,8 +39,21 @@ const Dashboard = () => {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const imgAvatar =
-    "https://trello-attachments.s3.amazonaws.com/6071a39f1949627993269405/245x247/cef5957b3390caa1e9995afffae634fb/avatar-marcelo.png";
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await api.get(`users/${userId}`, {
+          headers: { Authorization: "Bearer " + getToken() },
+        });
+        console.log(data);
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  const imgAvatar = user.urlAvatar;
 
   return (
     <>
@@ -51,9 +68,9 @@ const Dashboard = () => {
           </Avatar>
         </Header>
         <DashBoardNegsPosts />
-        <Button onClick={handleOpenModal} className="secondary">
-          Criar Anúncios
-        </Button>
+
+       {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> }
+
       </Glass>
     </Container>
     <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
