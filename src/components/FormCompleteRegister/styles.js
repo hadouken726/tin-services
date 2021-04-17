@@ -73,3 +73,11 @@ export const Input = styled.input`
 export const IconBox = styled.div`
   margin-right: 0.5rem;
 `;
+
+export const ErrorMessage = styled.span`
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  color: red;
+  font-style: italic;
+`;

@@ -51,3 +51,7 @@ export const DivCompartilhar = styled.div`
 export const DivClose = styled.div`
   
 `;
+
+export const DivEdit = styled.div`
+  
+`;
