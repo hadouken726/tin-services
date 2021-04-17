@@ -6,7 +6,7 @@ import { useUser } from "../../contexts/User";
 import { categories } from "../../utils/categories";
 import { useForm } from "react-hook-form";
 
-export default function ComboBox() {
+export default function CreatePosts() {
   const { setUser } = useUser({});
   const userId = getId();
   const { register, handleSubmit } = useForm();

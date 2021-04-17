@@ -3,6 +3,8 @@ import { useHistory } from "react-router";
 import Glass from "../../components/Glass";
 import GlobalModal from "../../components/GlobalModal";
 import CreatePosts from "../../components/CreatePosts";
+import CreateAvaliation from "../../components/CreateAvaliation";
+
 import { useUser } from "../../contexts/User";
 import { getId, getToken } from "../../services/auth";
 
@@ -69,12 +71,13 @@ const Dashboard = () => {
         </Header>
         <DashBoardNegsPosts />
 
-       {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> }
-
+       {/* {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> } */}
+       <Button onClick={handleOpenModal} className="secondary">Avaliação</Button>
       </Glass>
     </Container>
     <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
-    <CreatePosts />    
+      <CreateAvaliation handleCloseModal={handleCloseModal}/>
+    {/* <CreatePosts handleCloseModal={handleCloseModal}/>     */}
   </GlobalModal>
   </>
   );
