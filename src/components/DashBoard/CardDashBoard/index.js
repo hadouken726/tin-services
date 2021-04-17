@@ -27,7 +27,15 @@ import {
 const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
-
+  const [orderState,setOrderState] = useState(order)
+    const handleStatus = async (e) => {
+        try {
+            const changedOrder = {...order, status: e.target.value}
+            const response = await api.patch(`/orders/${order.id}`,changedOrder)
+            setOrderState(response.data)
+        }
+        catch (err){console.log(err)}
+    }
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
@@ -103,7 +111,12 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       </DivDate>
 
       <DivStatus>
-        <h4>{order.status}</h4>
+          <select onChange={handleStatus} defaultValue={orderState.status} name="select">
+              <option value="requested">requested</option>
+              <option value="opened" >opened</option>
+              <option value="done">done</option>
+          </select>
+          <h4>{orderState.status}</h4>
         <h4> </h4>
       </DivStatus>
 
@@ -153,7 +166,12 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       </DivDate>
 
       <DivStatus>
-        <h4>{order.status}</h4>
+          <select onChange={handleStatus} defaultValue={orderState.status} name="select">
+              <option value="requested">requested</option>
+              <option value="opened" >opened</option>
+              <option value="done">done</option>
+          </select>
+        <h4>{orderState.status}</h4>
         <h4> </h4>
       </DivStatus>
 
