@@ -101,7 +101,7 @@ const SearchMap = () => {
     initUser();
   }, []);
 
-  return (
+  return JSON.stringify(user) !== "{}" && (
     <Container>
       <Glass size={90}>
         <Header>
@@ -119,7 +119,7 @@ const SearchMap = () => {
         <Content>
           <Map>
             <MapContainer
-              center={{ lat: -23.977974, lng: -46.307671 }}
+              center={{ lat: user.lat, lng: user.lng }}
               zoom={14}
               style={{
                 width: "100%",
