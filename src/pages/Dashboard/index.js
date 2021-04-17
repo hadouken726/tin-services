@@ -57,26 +57,29 @@ const Dashboard = () => {
 
   return (
     <>
-    <Container>
-      <Glass size={95}>
-        <Header>
-          <Logo>
-            <LogoImage src={imgLogo} draggable="false" />
-          </Logo>
-          <Avatar>
-            <LogoAvatar src={imgAvatar} draggable="false" />
-          </Avatar>
-        </Header>
-        <DashBoardNegsPosts />
+      <Container>
+        <Glass size={95}>
+          <Header>
+            <Logo>
+              <LogoImage src={imgLogo} draggable="false" />
+            </Logo>
+            <Avatar>
+              <LogoAvatar src={imgAvatar} draggable="false" />
+            </Avatar>
+          </Header>
+          <DashBoardNegsPosts />
 
-       {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> }
-
-      </Glass>
-    </Container>
-    <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
-    <CreatePosts />    
-  </GlobalModal>
-  </>
+          {user.type === "client" && (
+            <Button onClick={handleOpenModal} className="secondary">
+              Criar Anúncios
+            </Button>
+          )}
+        </Glass>
+      </Container>
+      <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
+        <CreatePosts />
+      </GlobalModal>
+    </>
   );
 };
 
