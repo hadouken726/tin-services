@@ -21,7 +21,7 @@ import DashBoardNegsPosts from "../../components/DashBoard/DashBoardNegsPosts";
 import api from "../../services/api";
 
 const Dashboard = () => {
-  const token = localStorage.getItem("token");
+  const token = getToken()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, setUser } = useUser({});
   const userId = getId();
@@ -43,7 +43,7 @@ const Dashboard = () => {
     (async () => {
       try {
         const { data } = await api.get(`users/${userId}`, {
-          headers: { Authorization: "Bearer " + getToken() },
+          headers: { Authorization: "Bearer " + token },
         });
         console.log(data);
         setUser(data);
