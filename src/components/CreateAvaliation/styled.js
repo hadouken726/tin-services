@@ -65,6 +65,35 @@ export const Container = styled.div`
   }
 `;
 
+export const Header = styled.div`
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+  flex: wrap;
+  align-items: center;
+  justify-content: center;
+
+`;
+
+export const UserAvatarContainer = styled.div`
+  width: 55px;
+  margin-right: 20px;
+  h4 {
+    text-align: center;
+  }
+`;
+
+export const ProviderAvatar = styled.img`
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+`;
+
+export const DivName = styled.div`
+  width: 15rem;
+`;
+
 export const DivBox = styled.div``;
 
 export const Button = styled.button`
@@ -86,6 +115,4 @@ export const Button = styled.button`
   }
 `;
 
-export const DivStars = styled.div`
-  
-`;
+export const DivStars = styled.div``;

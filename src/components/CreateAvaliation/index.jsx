@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Container, DivBox, Button, DivStars } from "./styled";
 import { getId, getToken } from "../../services/auth";
 import api from "../../services/api";
 import { useUser } from "../../contexts/User";
 import { useForm } from "react-hook-form";
 import ReactStars from "react-rating-stars-component";
+import { categories } from "../../utils/categories";
+import {
+  Container,
+  UserAvatarContainer,
+  ProviderAvatar,
+  DivBox,
+  Button,
+  DivStars,
+  DivName,
+  Header,
+} from "./styled";
 
-export default function CreateAvaliacao({ handleCloseModal }) {
+export default function CreateAvaliacao({ handleCloseModal, user }) {
   const [score, setScore] = useState(0);
   const { setUser } = useUser({});
   const userId = getId();
@@ -16,25 +26,25 @@ export default function CreateAvaliacao({ handleCloseModal }) {
   const changedAt = new Date().toString();
 
   const ratingChanged = (newRating) => {
-    setScore(newRating)
+    setScore(newRating);
   };
 
-//   {
-//     "score": 4,
-//     "feedback": "",
-//     "orderId": 2,
-//     "userId": 1,      <------------  order
-//     "evaluatedId": 2
-//   }
+  //   {
+  //     "score": 4,
+  //     "feedback": "",
+  //     "orderId": 2,
+  //     "userId": 1,      <------------  orderID ou UserID
+  //     "evaluatedId": 2
+  //   }
 
   const handleForm = (data) => {
     (async () => {
       try {
-        await api.post(`avaliations/`, [{ ...data, userId, status, changedAt }]);
-  const evaluatedId = userId;
+        //await api.post(`avaliations/`, { ...data, orderId, userId, status, changedAt });
+        const evaluatedId = userId;
         console.log({ ...data, userId, evaluatedId, score, status, changedAt });
         console.log("Avaliação enviada com sucesso !");
-        handleCloseModal()
+        handleCloseModal();
       } catch (error) {
         console.log(error);
       }
@@ -58,14 +68,25 @@ export default function CreateAvaliacao({ handleCloseModal }) {
   return (
     <Container>
       <DivBox>
+        <Header>
+          <UserAvatarContainer>
+            <ProviderAvatar src={user.urlAvatar} draggable="false" />
+          </UserAvatarContainer>
+          <DivName>
+            <h4>{user.name}</h4>
+            <h4>{`Categoria: ${
+              categories.find((category) => category.id == user.categoryId).name
+            }`}</h4>
+          </DivName>
+        </Header>
+
         <form onSubmit={handleSubmit(handleForm)}>
           <h1>Avaliação</h1>
           <h2>Pontuação</h2>
-
           <DivStars>
             <ReactStars
               edit={true}
-              value={1}
+              value={score}
               count={5}
               onChange={ratingChanged}
               size={24}
@@ -88,7 +109,7 @@ export default function CreateAvaliacao({ handleCloseModal }) {
             required
           ></textarea>
           <br />
-          <Button type="submit" >Enviar avaliação</Button>
+          <Button type="submit">Enviar avaliação</Button>
         </form>
       </DivBox>
     </Container>

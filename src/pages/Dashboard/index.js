@@ -71,13 +71,11 @@ const Dashboard = () => {
         </Header>
         <DashBoardNegsPosts />
 
-       {/* {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> } */}
-       <Button onClick={handleOpenModal} className="secondary">Avaliação</Button>
+       {user.type === "client" && <Button onClick={handleOpenModal} className="secondary">Criar Anúncios</Button> }
       </Glass>
     </Container>
     <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
-      <CreateAvaliation handleCloseModal={handleCloseModal}/>
-    {/* <CreatePosts handleCloseModal={handleCloseModal}/>     */}
+    <CreatePosts handleCloseModal={handleCloseModal}/>    
   </GlobalModal>
   </>
   );
