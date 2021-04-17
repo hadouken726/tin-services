@@ -5,6 +5,7 @@ import Header from "../../components/Header";
 import addUser from "../../assets/addUser.svg";
 
 const CompleteRegister = () => {
+
   return (
     <Container>
       <Glass size={90}>
