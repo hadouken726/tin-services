@@ -22,19 +22,17 @@ import Stars from "../../components/Stars";
 import logo from "../../assets/logo.png";
 
 import marker from "../../assets/marker-pin.svg";
+
+import userPin from "../../assets/user-pin.svg";
+
+import UserMarker from "../../components/UserMarker";
+
 import Leaflet from "leaflet";
 
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 import api from "../../services/api";
-
-const mapIcon = Leaflet.icon({
-  iconUrl: marker,
-  iconSize: [80, 80],
-  iconAnchor: [40, 80],
-  popupAnchor: [0, -80],
-});
 
 const SearchMap = () => {
   const token = getToken();
@@ -43,6 +41,13 @@ const SearchMap = () => {
   const [clients, setClients] = useState([]);
   const [providers, setProviders] = useState([]);
   const history = useHistory();
+
+  const mapIcon = Leaflet.icon({
+    iconUrl: marker,
+    iconSize: [80, 80],
+    iconAnchor: [40, 80],
+    popupAnchor: [0, -80],
+  });
 
   const checkUserType = (userType) => {
     switch (userType) {
@@ -90,8 +95,8 @@ const SearchMap = () => {
 
         const user = response.data;
         setUser(user);
-        console.log(user);
-        console.log("User Location: " + Number(user.lat), Number(user.lng));
+        // console.log(user);
+        // console.log("User Location: " + Number(user.lat), Number(user.lng));
         checkUserType(user.type);
       } catch (error) {
         console.log(error);
@@ -101,65 +106,69 @@ const SearchMap = () => {
     initUser();
   }, []);
 
-  return JSON.stringify(user) !== "{}" && (
-    <Container>
-      <Glass size={90}>
-        <Header>
-          <img src={logo} alt="Tin Services" />
-          <div>
-            <button>
-              <HomeIcon />
-            </button>
-            <button>
-              <UserIcon />
-            </button>
-          </div>
-        </Header>
+  return (
+    JSON.stringify(user) !== "{}" && (
+      <Container>
+        <Glass size={90}>
+          <Header>
+            <img src={logo} alt="Tin Services" />
+            <div>
+              <button>
+                <HomeIcon />
+              </button>
+              <button>
+                <UserIcon />
+              </button>
+            </div>
+          </Header>
 
-        <Content>
-          <Map>
-            <MapContainer
-              center={{ lat: user.lat, lng: user.lng }}
-              zoom={14}
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "16px",
-              }}
-            >
-              <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Content>
+            <Map>
+              <MapContainer
+                center={{ lat: user.lat, lng: user.lng }}
+                zoom={14}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "16px",
+                }}
+              >
+                <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-              {user.type === "provider"
-                ? clients.map(
-                    (client) => (
-                      console.log(client["lat"], client["lng"]),
-                      (
-                        <Marker
-                          key={client.id}
-                          icon={mapIcon}
-                          position={[
-                            Number(client["lat"]),
-                            Number(client["lng"]),
-                          ]}
-                        >
-                          <Popup
-                            closeButton={false}
-                            minWidth={240}
-                            maxWidth={240}
+                {user.type === "provider"
+                  ? clients.map(
+                      (client) => (
+                        console.log(client["lat"], client["lng"]),
+                        (
+                          <Marker
+                            key={client.id}
+                            icon={mapIcon}
+                            position={[
+                              Number(client["lat"]),
+                              Number(client["lng"]),
+                            ]}
                           >
-                            Casa do fulano
-                          </Popup>
-                        </Marker>
+                            <Popup
+                              closeButton={false}
+                              minWidth={240}
+                              maxWidth={240}
+                            >
+                              <UserMarker user={client} />
+                            </Popup>
+                          </Marker>
+                        )
                       )
                     )
-                  )
-                : providers.map(
-                    (provider) => (
-                      console.log(provider["lat"], provider["lng"]),
-                      (
+                  : providers.map((provider) => (
+                      <>
                         <Marker
                           key={provider.id}
-                          icon={mapIcon}
+                          icon={Leaflet.icon({
+                            iconUrl: marker,
+                            iconSize: [80, 80],
+                            iconAnchor: [40, 80],
+                            popupAnchor: [0, -80],
+                          })}
                           position={[
                             Number(provider["lat"]),
                             Number(provider["lng"]),
@@ -167,59 +176,73 @@ const SearchMap = () => {
                         >
                           <Popup
                             closeButton={false}
-                            minWidth={240}
-                            maxWidth={240}
+                            minWidth={180}
+                            maxWidth={180}
                           >
-                            Casa do fulano
+                            <UserMarker user={provider} />
                           </Popup>
                         </Marker>
-                      )
-                    )
-                  )}
-            </MapContainer>
-          </Map>
-          <UsersContent>
-            <SearchBox>
-              <input type="text" />
-              <button>
-                <SearchIcon />
-              </button>
-            </SearchBox>
-            <UsersBox>
-              {user.type === "provider"
-                ? clients.map((client) => (
-                    <User key={client.id}>
-                      <div className="user-avatar">
-                        <img src={client.urlAvatar} alt="Avatar" />
-                        <Stars />
-                      </div>
-                      <div className="user-description">
-                        <h3>{client.name}</h3>
-                        <span>{client.type}</span>
-                        <h4>Contato</h4>
-                        <span>{client.email}</span>
-                      </div>
-                    </User>
-                  ))
-                : providers.map((provider) => (
-                    <User key={provider.id}>
-                      <div className="user-avatar">
-                        <img src={provider.urlAvatar} alt="Avatar" />
-                        <Stars />
-                      </div>
-                      <div className="user-description">
-                        <h3>{provider.name}</h3>
-                        <span>{provider.type}</span>
-                        <h4>Description</h4>
-                        <span>{provider.desc}</span>
-                      </div>
-                    </User>
-                  ))}
-            </UsersBox>
-          </UsersContent>
-        </Content>
-      </Glass>
-    </Container>
+                      </>
+                    ))}
+                <Marker
+                  key={user.id}
+                  icon={Leaflet.icon({
+                    iconUrl: userPin,
+                    iconSize: [80, 80],
+                    iconAnchor: [40, 80],
+                    popupAnchor: [0, -80],
+                  })}
+                  position={[user.lat, user.lng]}
+                >
+                  <Popup closeButton={false} minWidth={180} maxWidth={180}>
+                    <UserMarker user={user} />
+                  </Popup>
+                </Marker>
+              </MapContainer>
+            </Map>
+            <UsersContent>
+              <SearchBox>
+                <input type="text" />
+                <button>
+                  <SearchIcon />
+                </button>
+              </SearchBox>
+              <UsersBox>
+                {user.type === "provider"
+                  ? clients.map((client) => (
+                      <User key={client.id}>
+                        <div className="user-avatar">
+                          <img src={client.urlAvatar} alt="Avatar" />
+                          <Stars />
+                        </div>
+                        <div className="user-description">
+                          <h3>{client.name}</h3>
+                          <span>{client.type}</span>
+                          <h4>Contato</h4>
+                          <span>{client.email}</span>
+                        </div>
+                      </User>
+                    ))
+                  : providers.map((provider) => (
+                      <User key={provider.id}>
+                        <div className="user-avatar">
+                          <img src={provider.urlAvatar} alt="Avatar" />
+                          <Stars />
+                        </div>
+                        <div className="user-description">
+                          <h3>{provider.name}</h3>
+                          <span>{provider.type}</span>
+                          <h4>Description</h4>
+                          <span>{provider.desc}</span>
+                        </div>
+                      </User>
+                    ))}
+              </UsersBox>
+            </UsersContent>
+          </Content>
+        </Glass>
+      </Container>
+    )
   );
 };
 
