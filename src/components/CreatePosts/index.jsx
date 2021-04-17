@@ -49,7 +49,7 @@ export default function ComboBox() {
           <div id="appearance-select">
             <select {...register("category")}>
               {categories.map((category) => (
-                <option key={category.id} value="1">
+                <option key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
