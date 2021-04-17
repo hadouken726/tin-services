@@ -34,12 +34,12 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
   const getClient = (clients, userId) => {
     if (clients) {
-      return clients.find((client) => client.id === order.userId);
+      return clients.find((client) => client.id == order.userId);
     }
   };
 
   const getProvider = (providers, userId) => {
-    return providers.find((provider) => provider.id === order.providerId);
+    return providers.find((provider) => provider.id == order.providerId);
   };
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       <DivName>
         <h4>{getClient(clients, order.userId).name}</h4>
         <h4>{`Categoria: ${
-          categories.find((category) => category.id === order.categoryId).name
+          categories.find((category) => category.id == order.categoryId).name
         }`}</h4>
       </DivName>
 
@@ -142,7 +142,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       <DivName>
         {/* <h4 style={{ color: "red" }}>{order.category}</h4> */}
         <h4>{`Categoria: ${
-          categories.find((category) => category.id === order.categoryId).name
+          categories.find((category) => category.id == order.categoryId).name
         }`}</h4>
         <h4>{order.desc}</h4>
       </DivName>
@@ -174,7 +174,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
       <DivName>
         <h4>{`Categoria: ${
-          categories.find((category) => category.id === order.category).name
+          categories.find((category) => category.id == order.category).name
         }`}</h4>
         <h4>{order.desc}</h4>
       </DivName>
@@ -213,7 +213,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         <DivName>
           <h4>{"Tipo de Serviço:"}</h4>
           <h4>{`${
-            categories.find((category) => category.id === order.category).name
+            categories.find((category) => category.id == order.category).name
           }`}</h4>
         </DivName>
 
