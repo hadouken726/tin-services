@@ -46,11 +46,14 @@ const DashBoardNegsPosts = () => {
           const { data } = await api.get(urlPost, {
             headers: { Authorization: `Bearer ${getToken()}` },
           });
-          console.log(`Type:${user.type} and ${IsNegociation}`, data);
+          // console.log(`Type:${user.type} and ${IsNegociation}`, data);
           setOrders(data);
         })();
         urlPost = "";
       }
+
+
+
     };
   // const history = useHistory();
 
@@ -60,7 +63,7 @@ const DashBoardNegsPosts = () => {
         const { data } = await api.get(`users/${userId}`, {
           headers: { Authorization: "Bearer " + getToken() },
         });
-        console.log(data);
+        // console.log(data);
         setUser(data);
         
       } catch (error) {
@@ -75,7 +78,6 @@ const DashBoardNegsPosts = () => {
     })();
   }, [IsNegociation, user]);
 
-  
 
   const handleInput = (e) => {
     setInput(e.target.value);

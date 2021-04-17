@@ -1,7 +1,16 @@
 import { MdShare, MdPermPhoneMsg } from "react-icons/md";
 import { CgCloseO } from "react-icons/cg";
+import { FaEdit } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
+import { useEffect, useState } from "react";
+import api from "../../../services/api";
+import axios from "axios";
+import { categories } from "../../../utils/categories";
 
+import {
+  getProvidersPlusAv,
+  getClientsPlusAv,
+} from "../../../utils/othersInfo";
 import {
   DivCardDashBoard,
   UserAvatarContainer,
@@ -12,45 +21,80 @@ import {
   DivStars,
   DivCompartilhar,
   DivClose,
+  DivEdit,
 } from "./styled";
-import { useEffect, useState } from "react";
-import api from "../../../services/api";
-import { getToken } from "../../../services/auth";
 
-const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
-  const [provider, setProvider] = useState({})
+const CardDashBoard = ({ order, type, IsNegociation, user }) => {
+  const [providers, setProviders] = useState([]);
+  const [clients, setClients] = useState([]);
 
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
 
-  const getProvider = (providerId) => {
-    (async () => {
+  const getClient = (clients, userId) => {
+    if (clients) {
+      return clients.find((client) => client.id === order.userId);
+    }
+  };
+
+  const getProvider = (providers, userId) => {
+    return providers.find((provider) => provider.id === order.providerId);
+  };
+
+  useEffect(() => {
+    if (type === "provider") {
       try {
-        const { data } = await api.get(`users/${providerId}`, {
-          headers: { Authorization: "Bearer " + getToken() },
-        });
-        console.log(data);
-        setProvider(data);
+        Promise.all([api.get("clients"), api.get("avaliations")]).then(
+          axios.spread((resp_clients, resp_avaliations) => {
+            setClients(
+              getClientsPlusAv(resp_clients.data, resp_avaliations.data)
+            );
+          })
+        );
       } catch (error) {
         console.log(error);
       }
-    })();
-  }
+    } else {
+      try {
+        Promise.all([api.get("providers"), api.get("avaliations")]).then(
+          axios.spread((resp_providers, resp_avaliations) => {
+            setProviders(
+              getProvidersPlusAv(resp_providers.data, resp_avaliations.data)
+            );
+          })
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   if (type === "provider" && IsNegociation && clients.length > 0) {
+  //     console.log(
+  //       getClient(clients, order.userId).avaliations.find(
+  //         (avaliation) => avaliation.evaluatedId === order.userId
+  //       )
+  //     );
+  //   }
+  // }, [clients]);
 
   // PROVIDER NEGOCIATION
-  return type === "provider" && IsNegociation ? (
-    // {getProvider(order.providerId)}
-
+  return type === "provider" && IsNegociation && clients.length > 0 ? (
     <DivCardDashBoard>
       <UserAvatarContainer>
-        <ProviderAvatar src={user.urlAvatar} draggable="false" />
-        <h4>{order.userId}</h4>
+        <ProviderAvatar
+          src={getClient(clients, order.userId).urlAvatar}
+          draggable="false"
+        />
       </UserAvatarContainer>
 
       <DivName>
-        <h4>{"order.user.name"}</h4>
-        <h4>{`Categoria: ${order.categoryId}`}</h4>
+        <h4>{getClient(clients, order.userId).name}</h4>
+        <h4>{`Categoria: ${
+          categories.find((category) => category.id === order.categoryId).name
+        }`}</h4>
       </DivName>
 
       <DivDate>
@@ -66,11 +110,15 @@ const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
       <DivStars>
         <ReactStars
           edit={false} // aqui podemos editar com true
-          value={3} // aqui traz o valor do score
+          // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
+          //   (avaliation) => avaliation.evaluatedId === order.userId
+          // ).score): 0}
+
+          value={1}
           count={5}
           onChange={ratingChanged}
           size={24}
-          isHalf={true}
+          isHalf={false}
           emptyIcon={<i className="far fa-star"></i>}
           halfIcon={<i className="fa fa-star-half-alt"></i>}
           fullIcon={<i className="fa fa-star"></i>}
@@ -82,15 +130,20 @@ const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
         <MdShare color={"#24FF00"} />
       </DivCompartilhar>
     </DivCardDashBoard>
-  ) : type === "client" && IsNegociation ? ( // CLIENT EM NEGOCIAÇÃO
+  ) : type === "client" && IsNegociation && providers.length > 0 ? ( // CLIENT EM NEGOCIAÇÃO - ORDERS
     <DivCardDashBoard>
       <UserAvatarContainer>
-        <ProviderAvatar src={order.urlAvatar} draggable="false" />
-        <h4>{order.providerId}</h4>
+        <ProviderAvatar
+          src={getProvider(providers, order.providerId).urlAvatar}
+          draggable="false"
+        />
       </UserAvatarContainer>
 
       <DivName>
-        <h4 style={{ color: "red" }}>{order.category}</h4>
+        {/* <h4 style={{ color: "red" }}>{order.category}</h4> */}
+        <h4>{`Categoria: ${
+          categories.find((category) => category.id === order.categoryId).name
+        }`}</h4>
         <h4>{order.desc}</h4>
       </DivName>
 
@@ -112,19 +165,18 @@ const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
         <MdPermPhoneMsg color={"#24FF00"} />
       </DivCompartilhar>
     </DivCardDashBoard>
-  ) : type === "client" && IsNegociation === false ? ( // CLIENT EM ANUNCIOS
-    <h1>Cliente Anuncio</h1>
-  ) : (
-    // PROVIDER PODE VER POSTS E ENCAMINHAR UMA MENSAGEM AO CLIENTE
+  ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
+    // CLIENT EM ANUNCIOS
     <DivCardDashBoard>
       <UserAvatarContainer>
         <ProviderAvatar src={user.urlAvatar} draggable="false" />
-        <h4>{order.userId}</h4>
       </UserAvatarContainer>
 
       <DivName>
-        <h4>{"Tipo de Serviço:"}</h4>
-        <h4>{`${order.desc}`}</h4>
+        <h4>{`Categoria: ${
+          categories.find((category) => category.id === order.category).name
+        }`}</h4>
+        <h4>{order.desc}</h4>
       </DivName>
 
       <DivDate>
@@ -137,25 +189,53 @@ const CardDashBoard = ({ order, type, IsNegociation, user, star, setStar }) => {
         <h4> </h4>
       </DivStatus>
 
-      <DivStars>
-        <ReactStars
-          edit={false} // aqui podemos editar com true
-          value={0} // aqui traz o valor do score
-          count={5}
-          onChange={ratingChanged}
-          size={24}
-          isHalf={true}
-          emptyIcon={<i className="far fa-star"></i>}
-          halfIcon={<i className="fa fa-star-half-alt"></i>}
-          fullIcon={<i className="fa fa-star"></i>}
-          activeColor="#ffd700"
-        />
-      </DivStars>
+      <DivClose>
+        <CgCloseO color={"#24FF00"} />
+      </DivClose>
 
-      <DivCompartilhar>
-        <MdShare color={"#24FF00"} />
-      </DivCompartilhar>
+      <DivEdit>
+        <FaEdit color={"#24FF00"} />
+      </DivEdit>
     </DivCardDashBoard>
+  ) : (
+    // PROVIDER PODE VER POSTS E ENCAMINHAR UMA MENSAGEM AO CLIENTE
+    type === "provider" &&
+    IsNegociation === false &&
+    clients.length > 0 && (
+      <DivCardDashBoard>
+        <UserAvatarContainer>
+          <ProviderAvatar
+            src={getClient(clients, order.userId).urlAvatar}
+            draggable="false"
+          />
+        </UserAvatarContainer>
+
+        <DivName>
+          <h4>{"Tipo de Serviço:"}</h4>
+          <h4>{`${
+            categories.find((category) => category.id === order.category).name
+          }`}</h4>
+        </DivName>
+
+        <DivDate>
+          <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
+          <h4> </h4>
+        </DivDate>
+
+        <DivStatus>
+          <h4>{order.status}</h4>
+          <h4> </h4>
+        </DivStatus>
+
+        <DivClose>
+          <CgCloseO color={"#24FF00"} />
+        </DivClose>
+
+        <DivEdit>
+          <FaEdit color={"#24FF00"} />
+        </DivEdit>
+      </DivCardDashBoard>
+    )
   );
 };
 
