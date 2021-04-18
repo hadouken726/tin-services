@@ -15,8 +15,9 @@ import {
   DivName,
   Header,
 } from "./styled";
+import axios from "axios";
 
-  const CreateAvaliation = ({ handleCloseModal, user }) => {
+  const CreateAvaliation = ({ handleCloseModal, user, orderState, setOrderState, type, providers, clients, avaliations, setAvaliations }) => {
   const [score, setScore] = useState(0);
   const { setUser } = useUser({});
   const userId = getId();
@@ -37,82 +38,155 @@ import {
   //     "evaluatedId": 2
   //   }
 
-  const handleForm = (data) => {
-    (async () => {
+  const handleForm = async (data) => {
       try {
-        //await api.post(`avaliations/`, { ...data, orderId, userId, status, changedAt });
-        const evaluatedId = userId;
-        console.log({ ...data, userId, evaluatedId, score, status, changedAt });
-        console.log("Avaliação enviada com sucesso !");
-        handleCloseModal();
+          let response = {}
+          if (type === "provider") {
+              response = await Promise.all([api.post(`avaliations`, {
+                  ...data,
+                  orderId: orderState.id.toString(),
+                  userId: user.id.toString(),
+                  evaluatedId: orderState.userId.toString(),
+                  score
+              }), api.patch(`orders/${orderState.id}`,{...orderState, evaluatedBy: [...orderState.evaluatedBy,orderState.providerId]})])
+              setAvaliations([...avaliations, response[0].data])
+              setOrderState(response[1].data)
+              console.log(data);
+              console.log("Avaliação enviada com sucesso !");
+              handleCloseModal();
+
+          }
+          else {
+              response = await Promise.all([api.post(`avaliations`, {
+                  ...data,
+                  orderId: orderState.id.toString(),
+                  userId: user.id.toString(),
+                  evaluatedId: orderState.providerId.toString(),
+                  score
+              }), api.patch(`orders/${orderState.id}`,{...orderState, evaluatedBy: [...orderState.evaluatedBy,orderState.userId]})])
+              setAvaliations([...avaliations, response[0].data])
+              setOrderState(response[1].data)
+              console.log(data);
+              console.log("Avaliação enviada com sucesso !");
+              handleCloseModal();
+          }
+
       } catch (error) {
         console.log(error);
       }
-    })();
-  };
+    };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await api.post(`users/${userId}`, {
-          headers: { Authorization: "Bearer " + getToken() },
-        });
-        console.log(data);
-        setUser(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const { data } = await api.post(`users/${userId}`, {
+  //         headers: { Authorization: "Bearer " + getToken() },
+  //       });
+  //       console.log(data);
+  //       setUser(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
-  return (
-    <Container>
-      <DivBox>
-        <Header>
-          <UserAvatarContainer>
-            <ProviderAvatar src={user.urlAvatar} draggable="false" />
-          </UserAvatarContainer>
-          <DivName>
-            <h4>{user.name}</h4>
-            <h4>{`Categoria: ${
-              categories.find((category) => category.id == user.categoryId).name
-            }`}</h4>
-          </DivName>
-        </Header>
+      return (type === "provider" ? (
+              <Container>
+                  <DivBox>
+                      <Header>
+                          <UserAvatarContainer>
+                              <ProviderAvatar src={clients.find(client=>orderState.userId == client.id).urlAvatar} draggable="false"/>
+                          </UserAvatarContainer>
+                          <DivName>
+                              <h4>{clients.find(client=>orderState.userId == client.id).name}</h4>
+                              <h4>{`Categoria: ${
+                                  categories.find((category) => category.id == orderState.categoryId).name
+                              }`}</h4>
+                          </DivName>
+                      </Header>
 
-        <form onSubmit={handleSubmit(handleForm)}>
-          <h1>Avaliação</h1>
-          <h2>Pontuação</h2>
-          <DivStars>
-            <ReactStars
-              edit={true}
-              value={score}
-              count={5}
-              onChange={ratingChanged}
-              size={24}
-              isHalf={false}
-              emptyIcon={<i className="far fa-star"></i>}
-              halfIcon={<i className="fa fa-star-half-alt"></i>}
-              fullIcon={<i className="fa fa-star"></i>}
-              activeColor="#ffd700"
-            />
-          </DivStars>
+                      <form onSubmit={handleSubmit(handleForm)}>
+                          <h1>Avaliação</h1>
+                          <h2>Pontuação</h2>
+                          <DivStars>
+                              <ReactStars
+                                  edit={true}
+                                  value={score}
+                                  count={5}
+                                  onChange={ratingChanged}
+                                  size={24}
+                                  isHalf={false}
+                                  emptyIcon={<i className="far fa-star"></i>}
+                                  halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                  fullIcon={<i className="fa fa-star"></i>}
+                                  activeColor="#ffd700"
+                              />
+                          </DivStars>
 
-          <h2>Descrição</h2>
+                          <h2>Descrição</h2>
 
-          <textarea
-            style={{ width: "450px", height: "200px" }}
-            placeholder={"Dê um feedback sobre o ..."}
-            id={"feedback"}
-            {...register("feedback", { required: true })}
-            rows={6}
-            required
-          />
-          <br />
-          <Button type="submit">Enviar avaliação</Button>
-        </form>
-      </DivBox>
-    </Container>
-  );
+                          <textarea
+                              style={{width: "450px", height: "200px"}}
+                              placeholder={"Dê um feedback sobre o ..."}
+                              id={"feedback"}
+                              {...register("feedback", {required: true})}
+                              rows={6}
+                              required
+                          />
+                          <br/>
+                          <Button type="submit">Enviar avaliação</Button>
+                      </form>
+                  </DivBox>
+              </Container>)
+              : (
+                  <Container>
+                      <DivBox>
+                          <Header>
+                              <UserAvatarContainer>
+                                  <ProviderAvatar src={providers.find(prov=>orderState.providerId == prov.id).urlAvatar} draggable="false"/>
+                              </UserAvatarContainer>
+                              <DivName>
+                                  <h4>{providers.find(prov=>orderState.providerId == prov.id).name}</h4>
+                                  <h4>{`Categoria: ${
+                                      categories.find((category) => category.id == orderState.categoryId).name
+                                  }`}</h4>
+                              </DivName>
+                          </Header>
+
+                          <form onSubmit={handleSubmit(handleForm)}>
+                              <h1>Avaliação</h1>
+                              <h2>Pontuação</h2>
+                              <DivStars>
+                                  <ReactStars
+                                      edit={true}
+                                      value={score}
+                                      count={5}
+                                      onChange={ratingChanged}
+                                      size={24}
+                                      isHalf={false}
+                                      emptyIcon={<i className="far fa-star"></i>}
+                                      halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                      fullIcon={<i className="fa fa-star"></i>}
+                                      activeColor="#ffd700"
+                                  />
+                              </DivStars>
+
+                              <h2>Descrição</h2>
+
+                              <textarea
+                                  style={{width: "450px", height: "200px"}}
+                                  placeholder={"Dê um feedback sobre o ..."}
+                                  id={"feedback"}
+                                  {...register("feedback", {required: true})}
+                                  rows={6}
+                                  required
+                              />
+                              <br/>
+                              <Button type="submit">Enviar avaliação</Button>
+                          </form>
+                      </DivBox>
+                  </Container>
+              )
+      );
 }
 export default CreateAvaliation
