@@ -8,8 +8,6 @@ import Stars from "../../components/Stars";
 import Glass from "../../components/Glass";
 import GlobalModal from "../../components/GlobalModal";
 
-import { categories } from "../../utils/categories";
-
 import {
   Container,
   Header,
@@ -80,6 +78,7 @@ const SearchMap = () => {
                   .toLowerCase()
                   .includes(searchValue.toLocaleLowerCase())
               );
+
               setProviders(filteredProviders);
             } catch (error) {
               console.log(error);
