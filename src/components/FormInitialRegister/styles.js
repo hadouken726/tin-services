@@ -43,11 +43,11 @@ export const LinkButton = styled.button`
     &.active::after {
       content: "";
       position: absolute;
-      bottom: -1rem;
+      bottom: -0.5rem;
       left: 0;
       width: 100%;
       height: 0.3rem;
-      background-color: var(--white);
+      background-color: var(--blue-400);
       border-top-left-radius: 0.5rem;
       border-top-right-radius: 0.5rem;
     }
