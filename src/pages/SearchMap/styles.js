@@ -114,7 +114,6 @@ export const SearchBox = styled.div`
     flex: 1;
     padding: 1rem;
     background: var(--glass-bg);
-    background-color: var(--blue-400);
     opacity: 0.6;
     border-top: 2px solid rgba(255, 255, 255, 0.5);
     border-left: 2px solid rgba(255, 255, 255, 0.5);
@@ -184,7 +183,6 @@ export const User = styled.div`
   margin-bottom: 1rem;
   border-radius: 1rem;
   background: var(--glass-bg);
-  background-color: var(--blue-400);
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-left: 2px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);

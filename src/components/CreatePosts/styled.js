@@ -2,21 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 20%;
-  padding: 20px;
-
-  background: linear-gradient(
-    103.6deg,
-    rgba(255, 255, 255, 0.4) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
-  backdrop-filter: blur(42px);
-
-  border-top: 2px solid rgba(255, 255, 255, 0.5);
-  border-left: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 2.5rem;
-
-  border-radius: 16px;
+  height: 100%;
+  /* padding: 20px; */
 
   overflow-y: scroll;
 
@@ -31,23 +18,50 @@ export const Container = styled.div`
     justify-content: center;
     padding: -10px;
 
-    h1,h2{
-        color: #1e438d;
-    }
-    
-    textarea{
-        width: 25%;
-        background-color: rgba(255, 255, 255, 0.04);
-        border-radius: 15px;
-        padding: 0 20px 0 20px;
-        color: #fff
-
+    h1,
+    h2 {
+      color: #1e438d;
+      margin-bottom: 10px;
     }
 
-    textarea::placeholder{
-        color: rgba(255, 255, 255, 0.5);
+    h1 {
+      font-size: 2.5rem;
+      font-style: bolder;
     }
-    
+
+    h2 {
+      margin-top: 15px;
+      font-size: 1.2rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
+
+    p {
+      color: red;
+    }
+
+    textarea {
+      width: 25%;
+      background-color: rgba(255, 255, 255, 0.04);
+      border-radius: 15px;
+      padding-top: 10px;
+      padding-left: 25px;
+      color: #fff;
+      overflow: hidden;
+      outline: none;
+      /* border: none; */
+    }
+
+    textarea::name {
+      margin-top: 10px;
+    }
+
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
   }
 `;
 

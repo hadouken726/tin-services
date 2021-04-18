@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import api from "../../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
-import { useHistory } from "react-router";
-
+// import { useHistory } from "react-router";
+import { useUser } from "../../../contexts/User";
+import { categories } from "../../../utils/categories";
+import { getId, getToken } from "../../../services/auth";
 
 import {
   DashBoardContainer,
@@ -14,42 +16,68 @@ import {
   DivScrool,
 } from "./styled";
 
-
 const DashBoardNegsPosts = () => {
+  const { user, setUser } = useUser({});
+  const userId = getId();
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState([]);
   const [IsNegociation, setIsNegociation] = useState(true);
-  // const [anuncio, setAnuncio] = useState({});  // ou Context API
 
-  // const [open, setOpen] = useState(false);  // para o Modal do Cadastro de Anuncios e Avaliação
+  let urlPost = "";
+    if (IsNegociation) {
+      if (user.type === "provider") {
+        urlPost = `orders/?providerId=${Number(userId)}`;
+      } else {
+        urlPost = `orders/?userId=${Number(userId)}`;
+      }
+    } else {
+      if (user.type === "provider") {
+        urlPost = `posts/?providerId=${Number(userId)}`;
+      } else {
+        urlPost = `posts/?userId=${Number(userId)}`;
+      }
+    }
 
-  const history = useHistory();
-  const token = JSON.parse(localStorage.getItem("token"));
-  const userId = localStorage.getItem("id");
+    const getDados = async () => {
+  
+      if (user) {
+        setOrders([]);
+        (async () => {
+          const { data } = await api.get(urlPost, {
+            headers: { Authorization: `Bearer ${getToken()}` },
+          });
+          // console.log(`Type:${user.type} and ${IsNegociation}`, data);
+          setOrders(data);
+        })();
+        urlPost = "";
+      }
 
-  let user = {
-    id: userId,
-    type: "provider",
-    token: token,
-  };
+
+
+    };
+  // const history = useHistory();
 
   useEffect(() => {
     (async () => {
-      const { data } = await api.get(
-        user.type === "provider" && IsNegociation
-          ? `providers/${user.id}/orders?_expand=user`
-          : user.type === "client" && IsNegociation
-          ? `clients/${user.id}/orders?_expand=user`
-          : user.type === "provider" && IsNegociation === false
-          ? `providers/${user.id}/posts?_expand=user`
-          : `providers/${user.id}/posts?_expand=user`,
-
-        { headers: { Authorization: `Bearer ${user.token}` } }
-      );
-      console.log(data);
-      setOrders(data);
+      try {
+        const { data } = await api.get(`users/${userId}`, {
+          headers: { Authorization: "Bearer " + getToken() },
+        });
+        // console.log(data);
+        setUser(data);
+        
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      getDados();
+    })();
+  }, [IsNegociation, user]);
+
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -63,7 +91,6 @@ const DashBoardNegsPosts = () => {
     await setIsNegociation(false);
   };
 
-  console.log(orders);
 
   return (
     <DashBoardContainer>
@@ -77,8 +104,8 @@ const DashBoardNegsPosts = () => {
               Minhas negociações
             </h1>
           </div>
-          </LinkText>
-          <LinkText>
+        </LinkText>
+        <LinkText>
           <div>
             <h1
               className={`ButtonPostisNegociation${IsNegociation}`}
@@ -105,58 +132,69 @@ const DashBoardNegsPosts = () => {
       </DivHeader>
 
       <DivScrool>
-        {user.type === "provider" &&
+        {user.type === "provider" && // CARDS NEGOCIATION
           IsNegociation &&
           orders.map((order, index) => (
             <DashBoardContent key={index}>
               <CardDashBoard
                 order={order}
+                user={user}
                 type={user.type}
                 IsNegociation={IsNegociation}
               />
             </DashBoardContent>
           ))}
 
-        {user.type === "client" &&
+        {user.type === "client" && // NEGOCIATION
           IsNegociation &&
           orders
-            .filter((order) =>
-              order.user.name?.toLowerCase().includes(input.toLowerCase())
-            )
-            .sort((a, b) => a.user.name - b.user.name)
+            // .filter((order) =>
+            //   order.user.name?.toLowerCase().includes(input.toLowerCase())
+            // )
+            // .sort((a, b) => a.user.name - b.user.name)
             .map((order, index) => (
               <DashBoardContent key={index}>
                 <CardDashBoard
                   order={order}
+                  user={user}
                   type={user.type}
                   IsNegociation={IsNegociation}
                 />
               </DashBoardContent>
             ))}
 
-        {user.type === "provider" &&
+{user.type === "provider" && // CARDS NEGOCIATION
           IsNegociation === false &&
           orders.map((order, index) => (
             <DashBoardContent key={index}>
               <CardDashBoard
                 order={order}
+                user={user}
                 type={user.type}
                 IsNegociation={IsNegociation}
               />
             </DashBoardContent>
           ))}
 
-        {user.type === "client" &&
-          IsNegociation === true &&
-          orders.map((order, index) => (
-            <DashBoardContent key={index}>
-              <CardDashBoard
-                order={order}
-                type={user.type}
-                IsNegociation={IsNegociation}
-              />
-            </DashBoardContent>
-          ))}
+        {user.type === "client" && // NEGOCIATION
+          IsNegociation === false &&
+          orders
+            // .filter((order) =>
+            //   order.user.name?.toLowerCase().includes(input.toLowerCase())
+            // )
+            // .sort((a, b) => a.user.name - b.user.name)
+            .map((order, index) => (
+              <DashBoardContent key={index}>
+                <CardDashBoard
+                  order={order}
+                  user={user}
+                  type={user.type}
+                  IsNegociation={IsNegociation}
+                />
+              </DashBoardContent>
+            ))}
+
+       
       </DivScrool>
     </DashBoardContainer>
   );
