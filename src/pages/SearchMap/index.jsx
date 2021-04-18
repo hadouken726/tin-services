@@ -175,7 +175,7 @@ const SearchMap = () => {
           <Content>
             <Map>
               <MapContainer
-                center={{ lat: user.lat, lng: user.lng }}
+                center={{ lat: Number(user.lat), lng: Number(user.lng) }}
                 zoom={16}
                 style={{
                   width: "100%",
