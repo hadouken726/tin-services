@@ -35,7 +35,7 @@ const FormInitialRegister = () => {
       .required("Campo obrigatório!"),
     phone: yup
       .string()
-      .matches(/\([1-9]\d\)\s9?\d{4}-\d{4}|\s9?\d{11}/g, "Telefone inválido!")
+      .matches(/\(\d{2}\)\s\d{4,5}\-\d{4}/g, "Telefone inválido!")
       .required("Campo obrigatório!"),
     email: yup.string().email("Email inválido!").required("Campo obrigatório"),
     password: yup.string().required("Campo obrigatório!"),
@@ -50,8 +50,8 @@ const FormInitialRegister = () => {
   });
 
   const handleData = (data) => {
-    console.log(data);
-    localStorage.setItem("formData", JSON.stringify(data));
+    let type = isProvider ? "provider" : "client";
+    localStorage.setItem("formData", JSON.stringify({ ...data, type }));
     history.push("/completeregister");
   };
 
@@ -90,7 +90,7 @@ const FormInitialRegister = () => {
         <InputBox>
           <Input
             name="cpfCnpj"
-            placeholder="Digite seu CPF ou CNPJ."
+            placeholder={isProvider ? "Digite seu CPF ou CNPJ." : "Digite seu CPF"}
             {...register("cpfCnpj")}
           />
         </InputBox>
@@ -100,7 +100,7 @@ const FormInitialRegister = () => {
         <InputBox>
           <Input
             name="phone"
-            placeholder="Digite seu telefone"
+            placeholder="(XX) XXXXX-XXXX"
             {...register("phone")}
           />
         </InputBox>

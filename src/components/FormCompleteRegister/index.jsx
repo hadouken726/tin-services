@@ -29,7 +29,7 @@ const FormCompleteRegister = () => {
   let zipCodeSchema = yup.object().shape({
     zipcode: yup
       .string()
-      .matches(/[0-9]{5}[\d]{3}/g, "CEP inválido!")
+      .matches(/[0-9]{5}[\d]{3}|[0-9]{5}\-[\d]{3}/g, "CEP inválido!")
       .required("Campo obrigatório!"),
   });
 
@@ -40,7 +40,7 @@ const FormCompleteRegister = () => {
       .matches(/\d+/g, "Digite somente números, sem espaços!")
       .required("Campo obrigatório!"),
     complement: yup.string().required("Campo obrigatório!"),
-    neighborhood: yup.string().required("Campo obrigatório!"),
+    district: yup.string().required("Campo obrigatório!"),
     city: yup.string().required("Campo obrigatório!"),
     state: yup.string().required("Campo obrigatório!"),
   });
@@ -54,7 +54,7 @@ const FormCompleteRegister = () => {
           .then((response) => {
             setAdressData(response.data);
             setValue("street", response.data.street);
-            setValue("neighborhood", response.data.neighborhood);
+            setValue("district", response.data.neighborhood);
             setValue("city", response.data.city);
             setValue("state", response.data.state);
           })
@@ -131,12 +131,10 @@ const FormCompleteRegister = () => {
         </InputBox>
         <InputBox>
           <Input
-            name="neighborhood"
-            value={adressData.neighborhood}
-            placeholder={
-              errors.neighborhood ? errors.neighborhood?.message : "Bairro"
-            }
-            {...register("neighborhood")}
+            name="district"
+            value={adressData.district}
+            placeholder={errors.district ? errors.district?.message : "Bairro"}
+            {...register("district")}
           />
         </InputBox>
         <InputBox>

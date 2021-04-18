@@ -1,23 +1,25 @@
 import styled from "styled-components";
+import { ImCheckboxChecked } from "react-icons/im";
+import { FaWindowClose } from "react-icons/fa";
 
 export const DivCardDashBoard = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: row;
   flex: wrap;
   align-items: center;
   justify-content: space-between;
 
-    h4{
-      font-size: 12px;
-    }
+  h4 {
+    font-size: 12px;
+  }
 `;
 
 export const UserAvatarContainer = styled.div`
   width: 35px;
   margin-right: 20px;
-  h4{
-      text-align: center;
-    }
+  h4 {
+    text-align: center;
+  }
 `;
 
 export const ProviderAvatar = styled.img`
@@ -35,23 +37,23 @@ export const DivDate = styled.div`
   width: 100px;
 `;
 
-export const DivStatus = styled.div`
-  
+export const DivStatus = styled.div``;
+
+export const DivStars = styled.div``;
+
+export const DivCompartilhar = styled.div``;
+
+export const DivClose = styled.div``;
+
+export const DivEdit = styled.div``;
+
+export const Accept = styled(ImCheckboxChecked)`
+  margin-left: 0.5rem;
+  font-size: 2rem;
+  color: #fff;
 `;
-
-export const DivStars = styled.div`
-  
-`;
-
-
-export const DivCompartilhar = styled.div`
-  
-`;
-
-export const DivClose = styled.div`
-  
-`;
-
-export const DivEdit = styled.div`
-  
+export const Decline = styled(FaWindowClose)`
+  margin-left: 0.5rem;
+  font-size: 2rem;
+  color: #fff;
 `;
