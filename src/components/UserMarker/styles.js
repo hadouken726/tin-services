@@ -4,7 +4,7 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   img {
     width: 50px;
@@ -17,6 +17,11 @@ export const Container = styled.div`
     p {
       margin: 0;
       font-size: 1rem;
+    }
+
+    p.city {
+      margin: 0;
+      font-size: 0.8rem;
     }
   }
 `;

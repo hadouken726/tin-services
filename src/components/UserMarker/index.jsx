@@ -8,7 +8,10 @@ const UserMarker = ({ user }) => {
       <img className="marker" src={user.urlAvatar} alt="Marker" />
       <div>
         <p>{user.name}</p>
-        <span>{user.email}</span>
+        <span>
+          {user.street} {user.number}
+        </span>
+        <p className="city">{user.city}</p>
       </div>
     </Container>
   );

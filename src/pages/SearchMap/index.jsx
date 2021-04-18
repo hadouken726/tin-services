@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { getToken, getId } from "../../services/auth";
+import UserMarker from "../../components/UserMarker";
+import Leaflet from "leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Stars from "../../components/Stars";
 import Glass from "../../components/Glass";
+import GlobalModal from "../../components/GlobalModal";
+
+import { categories } from "../../utils/categories";
+
 import {
   Container,
   Header,
@@ -15,32 +24,75 @@ import {
   User,
 } from "./styles";
 
-import { getToken, getId } from "../../services/auth";
-
-import Stars from "../../components/Stars";
-
 import logo from "../../assets/logo.png";
-
 import marker from "../../assets/marker-pin.svg";
-
 import userPin from "../../assets/user-pin.svg";
 
-import UserMarker from "../../components/UserMarker";
-
-import Leaflet from "leaflet";
-
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 import api from "../../services/api";
+import UserInfoModal from "../../components/UserInfoModal";
 
 const SearchMap = () => {
   const token = getToken();
   const userId = getId();
   const [user, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [clients, setClients] = useState([]);
   const [providers, setProviders] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const history = useHistory();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => setIsModalOpen(true);
+
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleUserClick = (user) => {
+    setCurrentUser(user);
+    handleOpenModal();
+  };
+
+  const handleSearch = () => {
+    if (searchValue) {
+      switch (user.type) {
+        case "provider":
+          (async () => {
+            try {
+              const filteredClients = clients.filter((client) =>
+                client.name
+                  .toLowerCase()
+                  .includes(searchValue.toLocaleLowerCase())
+              );
+
+              setClients(filteredClients);
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+          break;
+        case "client":
+          (async () => {
+            try {
+              const filteredProviders = providers.filter((provider) =>
+                provider.name
+                  .toLowerCase()
+                  .includes(searchValue.toLocaleLowerCase())
+              );
+              setProviders(filteredProviders);
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+          break;
+        default:
+          return;
+      }
+    } else {
+      checkUserType(user.type);
+    }
+  };
 
   const mapIcon = Leaflet.icon({
     iconUrl: marker,
@@ -95,8 +147,6 @@ const SearchMap = () => {
 
         const user = response.data;
         setUser(user);
-        // console.log(user);
-        // console.log("User Location: " + Number(user.lat), Number(user.lng));
         checkUserType(user.type);
       } catch (error) {
         console.log(error);
@@ -104,6 +154,7 @@ const SearchMap = () => {
     };
 
     initUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -126,7 +177,7 @@ const SearchMap = () => {
             <Map>
               <MapContainer
                 center={{ lat: user.lat, lng: user.lng }}
-                zoom={14}
+                zoom={16}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -136,29 +187,24 @@ const SearchMap = () => {
                 <TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                 {user.type === "provider"
-                  ? clients.map(
-                      (client) => (
-                        console.log(client["lat"], client["lng"]),
-                        (
-                          <Marker
-                            key={client.id}
-                            icon={mapIcon}
-                            position={[
-                              Number(client["lat"]),
-                              Number(client["lng"]),
-                            ]}
-                          >
-                            <Popup
-                              closeButton={false}
-                              minWidth={240}
-                              maxWidth={240}
-                            >
-                              <UserMarker user={client} />
-                            </Popup>
-                          </Marker>
-                        )
-                      )
-                    )
+                  ? clients.map((client) => (
+                      <Marker
+                        key={client.id}
+                        icon={mapIcon}
+                        position={[
+                          Number(client["lat"]),
+                          Number(client["lng"]),
+                        ]}
+                      >
+                        <Popup
+                          closeButton={false}
+                          minWidth={230}
+                          maxWidth={230}
+                        >
+                          <UserMarker user={client} />
+                        </Popup>
+                      </Marker>
+                    ))
                   : providers.map((provider) => (
                       <>
                         <Marker
@@ -176,8 +222,8 @@ const SearchMap = () => {
                         >
                           <Popup
                             closeButton={false}
-                            minWidth={180}
-                            maxWidth={180}
+                            minWidth={230}
+                            maxWidth={230}
                           >
                             <UserMarker user={provider} />
                           </Popup>
@@ -202,8 +248,12 @@ const SearchMap = () => {
             </Map>
             <UsersContent>
               <SearchBox>
-                <input type="text" />
-                <button>
+                <input
+                  type="text"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <button onClick={handleSearch}>
                   <SearchIcon />
                 </button>
               </SearchBox>
@@ -221,6 +271,9 @@ const SearchMap = () => {
                           <h4>Contato</h4>
                           <span>{client.email}</span>
                         </div>
+                        <button onClick={() => handleUserClick(client)}>
+                          <SearchIcon />
+                        </button>
                       </User>
                     ))
                   : providers.map((provider) => (
@@ -235,12 +288,22 @@ const SearchMap = () => {
                           <h4>Description</h4>
                           <span>{provider.desc}</span>
                         </div>
+                        <button onClick={() => handleUserClick(provider)}>
+                          <SearchIcon />
+                        </button>
                       </User>
                     ))}
               </UsersBox>
             </UsersContent>
           </Content>
         </Glass>
+        <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
+          <UserInfoModal
+            user={currentUser}
+            clients={clients}
+            providers={providers}
+          />
+        </GlobalModal>
       </Container>
     )
   );
