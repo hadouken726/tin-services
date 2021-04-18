@@ -16,11 +16,11 @@ import {
   Header,
 } from "./styled";
 
-export default function CreateAvaliacao({ handleCloseModal, user }) {
+  const CreateAvaliation = ({ handleCloseModal, user }) => {
   const [score, setScore] = useState(0);
   const { setUser } = useUser({});
   const userId = getId();
-  const evaluatedId = userId;
+  // const evaluatedId = userId;
   const { register, handleSubmit } = useForm();
   const status = "active";
   const changedAt = new Date().toString();
@@ -107,7 +107,7 @@ export default function CreateAvaliacao({ handleCloseModal, user }) {
             {...register("feedback", { required: true })}
             rows={6}
             required
-          ></textarea>
+          />
           <br />
           <Button type="submit">Enviar avaliação</Button>
         </form>
@@ -115,3 +115,4 @@ export default function CreateAvaliacao({ handleCloseModal, user }) {
     </Container>
   );
 }
+export default CreateAvaliation
