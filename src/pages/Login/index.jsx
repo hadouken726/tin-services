@@ -65,6 +65,7 @@ const Login = () => {
                 type="email"
                 {...register("email")}
                 placeholder={errors.email ? errors.email.message : "Seu e-mail"}
+                style={{ backgroundColor: "transparent" }}
               />
             </InputBox>
 

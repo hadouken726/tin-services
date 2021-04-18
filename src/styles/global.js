@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  input {
+    background: transparent;
+  }
+
   input,
   button {
     border: none;
@@ -55,7 +59,7 @@ const GlobalStyle = createGlobalStyle`
     right: 0;
     left: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
 
   .react-modal-content {
     width: 90%;
-    max-width: 800px;
+    
     background: var(--glass-bg);
     padding: 2rem;
     position: relative;
@@ -83,6 +87,10 @@ const GlobalStyle = createGlobalStyle`
 
     ::-webkit-scrollbar {
       display: none;
+    }
+
+    @media(min-width: 1024px) {
+      width: 60%;
     }
   }
 

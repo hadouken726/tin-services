@@ -191,6 +191,8 @@ export const User = styled.div`
   display: flex;
   align-items: center;
 
+  position: relative;
+
   @media (max-width: 1080px) {
     width: 100%;
     flex-direction: column;
@@ -234,5 +236,23 @@ export const User = styled.div`
     h3 + span {
       margin-bottom: 1rem;
     }
+  }
+
+  button {
+    position: absolute;
+    width: 2rem;
+    height: 2rem;
+    top: 5%;
+    right: 4%;
+    background-color: lightblue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--glass-bg);
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
   }
 `;
