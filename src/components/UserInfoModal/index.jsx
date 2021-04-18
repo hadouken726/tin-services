@@ -88,7 +88,7 @@ const UserInfoModal = ({ user, clients, providers }) => {
         </Avaliations>
         <ReactWhatsapp
           className="zap-button"
-          number="558688213588"
+          number={`55` + user.phone.replace(/-/g, "")}
           // number={user.phone}
           message="Tin - services: Olá, gostaria de solicitar um serviço!"
         >
