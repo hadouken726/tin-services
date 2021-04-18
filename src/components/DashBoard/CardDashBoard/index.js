@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import axios from "axios";
 import { categories } from "../../../utils/categories";
-
+import CreateAvaliation from "../../CreateAvaliation";
 import {
   getProvidersPlusAv,
   getClientsPlusAv,
@@ -28,7 +28,10 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
   const [orderState,setOrderState] = useState(order)
+    const [showAvModal, setShowAvModal] = useState(false)
+    const handleCloseModal = () => setShowAvModal(false)
     const [avaliations, setAvaliations] = useState([])
+    const handleOpenModal = () => setShowAvModal(true)
     const handleCancelOrder = async () => {
         try {
             const changedOrder = {...order, status: "canceled"}
@@ -210,8 +213,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
                     :
                     orderState.status === "done" && !orderState.evaluatedBy.includes(orderState.userId) ?
                         (<div>
-                            {/*handleOpenAvaliation para abrir modal de avaliação*/}
-                            <button >Avaliar serviço</button>
+                            <button onClick={handleOpenModal}>Avaliar serviço</button>
                         </div>)
                         : orderState.status === "done" && orderState.evaluatedBy.includes(orderState.userId) ?
                         (<DivStars>
@@ -319,6 +321,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             </DivCardDashBoard>
         )
     );
-};
+    showAvModal && <><CreateAvaliation handleCloseModal={handleCloseModal} user={user} /></>
+}
 
 export default CardDashBoard;
