@@ -20,11 +20,18 @@ import Stars from "../Stars";
 const UserInfoModal = ({ user, clients, providers }) => {
   const [userCategory, setUserCategory] = useState({});
   const [avaliations, setAvaliations] = useState([]);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     const category = categories.find(
       (category) => category.id === Number(user.categoryId)
     );
+
+    const filteredNumber = user.phone
+      .split("")
+      .filter((digit) => "123456789".includes(digit));
+
+    setPhoneNumber(filteredNumber.join(""));
 
     (async () => {
       try {
@@ -41,6 +48,8 @@ const UserInfoModal = ({ user, clients, providers }) => {
     setUserCategory(category);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(phoneNumber);
 
   return (
     <Container>
@@ -88,8 +97,8 @@ const UserInfoModal = ({ user, clients, providers }) => {
         </Avaliations>
         <ReactWhatsapp
           className="zap-button"
-          number={`55` + user.phone.replace(/-/g, "")}
-          // number={user.phone}
+          // number={`55` + user.phone.replace(/-/g, "")}
+          number={"55" + phoneNumber}
           message="Tin - services: Olá, gostaria de solicitar um serviço!"
         >
           Enviar mensagem <ZapIcon />
