@@ -310,7 +310,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
       <DivName>
         <h4>{`Categoria: ${
-          categories.find((category) => category.id == order.category).name
+          categories.find((category) => category.id == order.categoryId).name
         }`}</h4>
         <h4>{order.desc}</h4>
       </DivName>
@@ -349,7 +349,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         <DivName>
           <h4>{"Tipo de Serviço:"}</h4>
           <h4>{`${
-            categories.find((category) => category.id == order.category).name
+            categories.find((category) => category.id == order.categoryId).name
           }`}</h4>
         </DivName>
 
