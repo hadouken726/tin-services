@@ -97,10 +97,6 @@ export const Input = styled.input`
   }
 `;
 
-export const IconBox = styled.div`
-  margin-right: 0.5rem;
-`;
-
 export const Button = styled.button`
   margin: 1rem 0;
   background-color: var(--blue-400);

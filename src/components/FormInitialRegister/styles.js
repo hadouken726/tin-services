@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,6 +11,7 @@ export const Container = styled.div`
 
 export const SwitchUserType = styled.div`
   margin-left: auto;
+  margin-bottom: 1rem;
   width: 45%;
   display: flex;
   flex-direction: row;
@@ -36,27 +37,27 @@ export const LinkButton = styled.button`
     justify-content: center;
   }
 
+  &.active {
+    position: relative;
+
+    &.active::after {
+      content: "";
+      position: absolute;
+      bottom: -0.5rem;
+      left: 0;
+      width: 100%;
+      height: 0.3rem;
+      background-color: var(--blue-400);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+  }
+
   .link {
     margin: 0 1.5rem;
 
     &:hover {
       filter: brightness(0.9);
-    }
-
-    &.active {
-      position: relative;
-
-      &.active::after {
-        content: "";
-        position: absolute;
-        bottom: -1rem;
-        left: 0;
-        width: 100%;
-        height: 0.3rem;
-        background-color: var(--blue-400);
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
-      }
     }
   }
 `;
@@ -81,6 +82,7 @@ export const Button = styled.button`
 export const Form = styled.form`
   margin-left: auto;
   width: 45%;
+  height: auto;
   color: var(--white);
   display: flex;
   flex-direction: column;
