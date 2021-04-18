@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 80%;
-  height: 80%;
+  width: ${(props) => `${props.size}%`};
+  height: ${(props) => `${props.size}%`};
   background: linear-gradient(
     103.6deg,
     rgba(255, 255, 255, 0.4) 0%,
@@ -12,7 +12,13 @@ export const Container = styled.div`
 
   border-top: 2px solid rgba(255, 255, 255, 0.5);
   border-left: 2px solid rgba(255, 255, 255, 0.5);
-  padding: 80px;
+  padding: 2.5rem;
 
   border-radius: 16px;
+
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;

@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  input {
+    background: transparent;
+  }
+
   input,
   button {
     border: none;
@@ -47,6 +51,60 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  .react-modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-modal-content {
+    width: 90%;
+    
+    background: var(--glass-bg);
+    padding: 2rem;
+    position: relative;
+    border-radius: 0.25rem;
+    outline: none;
+    border: none;
+
+    backdrop-filter: blur(42px);
+
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+    padding: 2.5rem;
+
+    border-radius: 16px;
+
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media(min-width: 1024px) {
+      width: 60%;
+    }
+  }
+
+  .close-react-modal {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    border: 0;
+    background: transparent;
+    transition: filter 200ms;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
   }
 `;
 
