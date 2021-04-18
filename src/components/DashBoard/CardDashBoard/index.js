@@ -72,6 +72,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       try {
         Promise.all([api.get("clients"), api.get("avaliations")]).then(
           axios.spread((resp_clients, resp_avaliations) => {
+              setAvaliations(resp_avaliations.data)
             setClients(
               getClientsPlusAv(resp_clients.data, resp_avaliations.data)
             );
@@ -84,6 +85,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       try {
         Promise.all([api.get("providers"), api.get("avaliations")]).then(
           axios.spread((resp_providers, resp_avaliations) => {
+              setAvaliations(resp_avaliations.data)
             setProviders(
               getProvidersPlusAv(resp_providers.data, resp_avaliations.data)
             );
@@ -212,14 +214,14 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
                             <button >Avaliar serviço</button>
                         </div>)
                         : orderState.status === "done" && orderState.evaluatedBy.includes(orderState.userId) ?
-                        <DivStars>
+                        (<DivStars>
                             <ReactStars
                                 edit={false} // aqui podemos editar com true
                                 // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
                                 //   (avaliation) => avaliation.evaluatedId === order.userId
                                 // ).score): 0}
 
-                                value={avaliations.length > 0 && avaliations.find(av => av.orderId == orderState.id && av.userId == orderState.userId).score}
+                                value={avaliations.length > 0 ? avaliations.find(av => av.orderId == orderState.id && av.userId == orderState.userId).score : 0}
                                 count={5}
                                 onChange={ratingChanged}
                                 size={24}
@@ -229,7 +231,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
                                 fullIcon={<i className="fa fa-star"></i>}
                                 activeColor="#ffd700"
                             />
-                        </DivStars>
+                        </DivStars>)
                         : null
 
             }
