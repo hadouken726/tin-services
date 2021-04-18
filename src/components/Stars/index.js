@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 
-export default function Stars() {
-  const [star, setStar] = useState(3);
+export default function Stars({ score }) {
+  const [star, setStar] = useState(score || 3);
 
   const stars = {
     size: 20,

@@ -89,12 +89,16 @@ export const InputBox = styled.div`
 export const Input = styled.input`
   flex: 1;
   height: 2rem;
-  background-color: transparent;
+  background-color: transparent !important;
   font-size: 1rem;
   width: 100%;
   color: #eeee;
   &:valid {
     background-color: transparent;
+  }
+
+  &:scope {
+    background-color: black;
   }
 `;
 

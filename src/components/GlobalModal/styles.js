@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { FiX } from "react-icons/fi";
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  
+`;
 
 export const Button = styled.button``;
 
