@@ -112,143 +112,160 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
   // PROVIDER NEGOCIATION
     return type === "provider" && IsNegociation && clients.length > 0 ? (
-        <DivCardDashBoard>
-            <UserAvatarContainer>
-                <ProviderAvatar
-                    src={getClient(clients, order.userId).urlAvatar}
-                    draggable="false"
-                />
-            </UserAvatarContainer>
+        <>
+            <DivCardDashBoard>
+                <UserAvatarContainer>
+                    <ProviderAvatar
+                        src={getClient(clients, order.userId).urlAvatar}
+                        draggable="false"
+                    />
+                </UserAvatarContainer>
 
-            <DivName>
-                <h4>{getClient(clients, order.userId).name}</h4>
-                <h4>{`Categoria: ${
-                    categories.find((category) => category.id == order.categoryId).name
-                }`}</h4>
-            </DivName>
+                <DivName>
+                    <h4>{getClient(clients, order.userId).name}</h4>
+                    <h4>{`Categoria: ${
+                        categories.find((category) => category.id == order.categoryId).name
+                    }`}</h4>
+                </DivName>
 
-            <DivDate>
-                <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-                <h4></h4>
-            </DivDate>
+                <DivDate>
+                    <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
+                    <h4></h4>
+                </DivDate>
 
-            <DivStatus>
-                <h4>{orderState.status}</h4>
-                <h4></h4>
-            </DivStatus>
-            {orderState.status === "requested" &&
-            <div>
-                <button onClick={handleAcceptRequest}>
-                    Aceitar serviço
-                </button>
-                <button onClick={handleRecuseRequest}>
-                    Recusar serviço
-                </button>
-            </div>
-            }
+                <DivStatus>
+                    <h4>{orderState.status}</h4>
+                    <h4></h4>
+                </DivStatus>
 
-            <DivStars>
-                <ReactStars
-                    edit={false} // aqui podemos editar com true
-                    // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
-                    //   (avaliation) => avaliation.evaluatedId === order.userId
-                    // ).score): 0}
 
-                    value={1}
-                    count={5}
-                    onChange={ratingChanged}
-                    size={24}
-                    isHalf={false}
-                    emptyIcon={<i className="far fa-star"></i>}
-                    halfIcon={<i className="fa fa-star-half-alt"></i>}
-                    fullIcon={<i className="fa fa-star"></i>}
-                    activeColor="#ffd700"
-                />
-            </DivStars>
-
-            <DivCompartilhar>
-                <MdShare color={"#24FF00"}/>
-            </DivCompartilhar>
-        </DivCardDashBoard>
-    ) : type === "client" && IsNegociation && providers.length > 0 ? ( // CLIENT EM NEGOCIAÇÃO - ORDERS
-        <DivCardDashBoard>
-            <UserAvatarContainer>
-                <ProviderAvatar
-                    src={getProvider(providers, order.providerId).urlAvatar}
-                    draggable="false"
-                />
-            </UserAvatarContainer>
-
-            <DivName>
-                {/* <h4 style={{ color: "red" }}>{order.category}</h4> */}
-                <h4>{`Categoria: ${
-                    categories.find((category) => category.id == order.categoryId).name
-                }`}</h4>
-                <h4>{order.desc}</h4>
-            </DivName>
-
-            <DivDate>
-                <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-                <h4></h4>
-            </DivDate>
-
-            <DivStatus>
-                {/*<select onChange={handleClientStatus} defaultValue={orderState.status} name="select">*/}
-                {/*    <option value="requested">requested</option>*/}
-                {/*    <option value="opened">opened</option>*/}
-                {/*    <option value="done">done</option>*/}
-                {/*</select>*/}
-                <h4>{orderState.status}</h4>
-                <h4></h4>
-            </DivStatus>
-            {orderState.status === "requested" ?
-                (<div>
-                    <button onClick={handleCancelOrder}>Cancelar solicitação</button>
-                </div>)
-                :
-                orderState.status === "opened" ?
+                {orderState.status === "requested" ?
                     (<div>
-                        <button onClick={handleCancelOrder}>Cancelar serviço</button>
+                        <button onClick={handleAcceptRequest}>
+                            Aceitar serviço
+                        </button>
+                        <button onClick={handleRecuseRequest}>
+                            Recusar serviço
+                        </button>
+                    </div>)
+                    : orderState.status === "done" && !orderState.evaluatedBy.includes(orderState.providerId) ?
+                        (<div>
+                            <button onClick={handleOpenModal}>Avaliar cliente</button>
+                        </div>)
+                        : orderState.status === "done" && orderState.evaluatedBy.includes(orderState.providerId) ?
+                            (<DivStars>
+                                <ReactStars
+                                    edit={false} // aqui podemos editar com true
+                                    // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
+                                    //   (avaliation) => avaliation.evaluatedId === order.userId
+                                    // ).score): 0}
+
+                                    value={avaliations.length > 0 && avaliations.find(av => av.orderId == orderState.id && av.userId == orderState.providerId).score}
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    size={24}
+                                    isHalf={false}
+                                    emptyIcon={<i className="far fa-star"></i>}
+                                    halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                    fullIcon={<i className="fa fa-star"></i>}
+                                    activeColor="#ffd700"
+                                />
+                            </DivStars>) : null
+                }
+                <DivCompartilhar>
+                    <MdShare color={"#24FF00"}/>
+                </DivCompartilhar>
+            </DivCardDashBoard>
+            {showAvModal &&
+            <CreateAvaliation orderState={orderState} setOrderState={setOrderState} avaliations={avaliations}
+                              setAvaliations={setAvaliations} type={type} providers={providers}
+                              clients={clients} handleCloseModal={handleCloseModal} user={user}/>}
+        </>
+    ) : type === "client" && IsNegociation && providers.length > 0 ? ( // CLIENT EM NEGOCIAÇÃO - ORDERS
+        <>
+            <DivCardDashBoard>
+                <UserAvatarContainer>
+                    <ProviderAvatar
+                        src={getProvider(providers, order.providerId).urlAvatar}
+                        draggable="false"
+                    />
+                </UserAvatarContainer>
+
+                <DivName>
+                    {/* <h4 style={{ color: "red" }}>{order.category}</h4> */}
+                    <h4>{`Categoria: ${
+                        categories.find((category) => category.id == order.categoryId).name
+                    }`}</h4>
+                    <h4>{order.desc}</h4>
+                </DivName>
+
+                <DivDate>
+                    <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
+                    <h4></h4>
+                </DivDate>
+
+                <DivStatus>
+                    {/*<select onChange={handleClientStatus} defaultValue={orderState.status} name="select">*/}
+                    {/*    <option value="requested">requested</option>*/}
+                    {/*    <option value="opened">opened</option>*/}
+                    {/*    <option value="done">done</option>*/}
+                    {/*</select>*/}
+                    <h4>{orderState.status}</h4>
+                    <h4></h4>
+                </DivStatus>
+                {orderState.status === "requested" ?
+                    (<div>
+                        <button onClick={handleCancelOrder}>Cancelar solicitação</button>
                     </div>)
                     :
-                    orderState.status === "done" && !orderState.evaluatedBy.includes(orderState.userId) ?
+                    orderState.status === "opened" ?
                         (<div>
-                            <button onClick={handleOpenModal}>Avaliar serviço</button>
+                            <button onClick={handleCancelOrder}>Cancelar serviço</button>
                         </div>)
-                        : orderState.status === "done" && orderState.evaluatedBy.includes(orderState.userId) ?
-                        (<DivStars>
-                            <ReactStars
-                                edit={false} // aqui podemos editar com true
-                                // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
-                                //   (avaliation) => avaliation.evaluatedId === order.userId
-                                // ).score): 0}
+                        :
+                        orderState.status === "done" && !orderState.evaluatedBy.includes(orderState.userId) ?
+                            (<div>
+                                <button onClick={handleOpenModal}>Avaliar serviço</button>
+                            </div>)
+                            : orderState.status === "done" && orderState.evaluatedBy.includes(orderState.userId) ?
+                            (<DivStars>
+                                <ReactStars
+                                    edit={false} // aqui podemos editar com true
+                                    // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
+                                    //   (avaliation) => avaliation.evaluatedId === order.userId
+                                    // ).score): 0}
 
-                                value={avaliations.length > 0 ? avaliations.find(av => av.orderId == orderState.id && av.userId == orderState.userId).score : 0}
-                                count={5}
-                                onChange={ratingChanged}
-                                size={24}
-                                isHalf={false}
-                                emptyIcon={<i className="far fa-star"></i>}
-                                halfIcon={<i className="fa fa-star-half-alt"></i>}
-                                fullIcon={<i className="fa fa-star"></i>}
-                                activeColor="#ffd700"
-                            />
-                        </DivStars>)
-                        : null
+                                    value={avaliations.length > 0 && avaliations.find(av => av.orderId == orderState.id && av.userId == orderState.userId).score}
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    size={24}
+                                    isHalf={false}
+                                    emptyIcon={<i className="far fa-star"></i>}
+                                    halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                    fullIcon={<i className="fa fa-star"></i>}
+                                    activeColor="#ffd700"
+                                />
+                            </DivStars>)
+                            : null
 
-            }
+                }
 
 
-            <DivClose>
-                <div onClick={handleCancelOrder} >
-                <CgCloseO color={"#24FF00"}/>
-                </div>
-            </DivClose>
+                <DivClose>
+                    <div onClick={handleCancelOrder}>
+                        <CgCloseO color={"#24FF00"}/>
+                    </div>
+                </DivClose>
 
-            <DivCompartilhar>
-                <MdPermPhoneMsg color={"#24FF00"}/>
-            </DivCompartilhar>
-        </DivCardDashBoard>
+                <DivCompartilhar>
+                    <MdPermPhoneMsg color={"#24FF00"}/>
+                </DivCompartilhar>
+            </DivCardDashBoard>
+            {showAvModal &&
+            <CreateAvaliation orderState={orderState} setOrderState={setOrderState} avaliations={avaliations}
+                              setAvaliations={setAvaliations} type={type} providers={providers}
+                              clients={clients} handleCloseModal={handleCloseModal} user={user}/>}
+        </>
     ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
         // CLIENT EM ANUNCIOS
         <DivCardDashBoard>
@@ -321,7 +338,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             </DivCardDashBoard>
         )
     );
-    showAvModal && <><CreateAvaliation handleCloseModal={handleCloseModal} user={user} /></>
 }
 
 export default CardDashBoard;
+
