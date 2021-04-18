@@ -29,7 +29,7 @@ const FormCompleteRegister = () => {
   let zipCodeSchema = yup.object().shape({
     zipcode: yup
       .string()
-      .matches(/[0-9]{5}[\d]{3}/g, "CEP inválido!")
+      .matches(/[0-9]{5}[\d]{3}|[0-9]{5}-[\d]{3}/g, "CEP inválido!")
       .required("Campo obrigatório!"),
   });
 
@@ -37,7 +37,7 @@ const FormCompleteRegister = () => {
     street: yup.string().required("Campo obrigatório!"),
     number: yup
       .string()
-      .matches(/\d+/g, "Digite somente números, sem espaços!")
+      .matches(/[0-9]\d+/g, "Digite somente números, sem espaços!")
       .required("Campo obrigatório!"),
     complement: yup.string().required("Campo obrigatório!"),
     neighborhood: yup.string().required("Campo obrigatório!"),
@@ -94,7 +94,7 @@ const FormCompleteRegister = () => {
   }, [isModalOpen]);
 
   return (
-    <>
+    <div>
       <Form onSubmit={handleSubmit(handleData)}>
         <p>Complete seu registro</p>
         <InputBox>
@@ -160,7 +160,7 @@ const FormCompleteRegister = () => {
       <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
         <ConfirmMessageModal />
       </GlobalModal>
-    </>
+    </div>
   );
 };
 
