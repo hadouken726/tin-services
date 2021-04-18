@@ -46,7 +46,7 @@ import axios from "axios";
                   ...data,
                   orderId: orderState.id.toString(),
                   userId: user.id.toString(),
-                  evaluatedId: orderState.userId.toString(),
+                  evaluatedId: orderState.providerId.toString(),
                   score
               }), api.patch(`orders/${orderState.id}`,{...orderState, evaluatedBy: [...orderState.evaluatedBy,orderState.providerId]})])
               setAvaliations([...avaliations, response[0].data])
