@@ -115,6 +115,7 @@ export const DetailsBox = styled.div`
     article {
       border-radius: 1rem;
       width: 100%;
+      margin-bottom: 1rem;
       font-weight: bold;
       padding: 1rem;
       border-left: 5px solid var(--blue-400);
