@@ -38,6 +38,7 @@ const UserInfoModal = ({ user, clients, providers }) => {
         const response = await api.get(`avaliations`, {
           headers: { Authorization: "Bearer " + getToken() },
         });
+        console.log(response.data)
 
         setAvaliations(response.data);
       } catch (error) {
@@ -48,9 +49,6 @@ const UserInfoModal = ({ user, clients, providers }) => {
     setUserCategory(category);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(phoneNumber);
-
   return (
     <Container>
       <Header>
@@ -74,23 +72,19 @@ const UserInfoModal = ({ user, clients, providers }) => {
           </h4>
           <DetailsBox>
             <div className="avaliations">
-              {avaliations.length > 0 &&
-                avaliations
-                  .filter(
-                    (avaliation) => Number(avaliation.evaluatedId) === user.id
-                  )
+              {user.avaliations.length > 0 &&
+                  user.avaliations
                   .map((avaliation) => (
-                    <article key={avaliation.id}>
-                      {clients
-                        .filter(
-                          (client) => client.id === Number(avaliation.userId)
-                        )
-                        .map((client) => (
-                          <p>{client.name}</p>
-                        ))}
+                      user.type === "provider" ?
+                          ( <article key={avaliation.id}>
+                          <p>{clients.length > 0 && [...clients].find(u=>avaliation.userId == u.id).name}</p>
                       <p>{avaliation.feedback}</p>
                       <Stars score={avaliation.score} />
-                    </article>
+                    </article>) :( <article key={avaliation.id}>
+                              <p>{providers.length > 0 && [...providers].find(u=>avaliation.userId == u.id).name}</p>
+                              <p>{avaliation.feedback}</p>
+                              <Stars score={avaliation.score} />
+                          </article>)
                   ))}
             </div>
           </DetailsBox>
