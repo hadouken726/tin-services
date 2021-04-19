@@ -49,7 +49,7 @@ export default function CreatePosts({handleCloseModal}) {
           <div id="appearance-select">
             <select {...register("categoryId")}>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option className="option" key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}
