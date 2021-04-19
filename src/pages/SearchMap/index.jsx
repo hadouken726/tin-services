@@ -17,6 +17,7 @@ import {
   Map,
   UsersContent,
   MapIcon,
+  OutIcon,
   SearchBox,
   SearchIcon,
   UsersBox,
@@ -31,7 +32,7 @@ import "leaflet/dist/leaflet.css";
 
 import api from "../../services/api";
 import UserInfoModal from "../../components/UserInfoModal";
-import {getClientsPlusAv, getProvidersPlusAv} from "../../utils/othersInfo";
+import { getClientsPlusAv, getProvidersPlusAv } from "../../utils/othersInfo";
 
 const SearchMap = () => {
   const token = getToken();
@@ -50,6 +51,11 @@ const SearchMap = () => {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const sendTo = (route) => history.push(`/${route}`);
+
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/");
+  };
 
   const handleUserClick = (user) => {
     setCurrentUser(user);
@@ -109,22 +115,30 @@ const SearchMap = () => {
       case "provider":
         (async () => {
           try {
-            const response = await Promise.all([api.get(`clients`), api.get("avaliations")])
-            setClients(getClientsPlusAv(response[0].data, response[1].data))
+            const response = await Promise.all([
+              api.get(`clients`),
+              api.get("avaliations"),
+            ]);
+            setClients(getClientsPlusAv(response[0].data, response[1].data));
           } catch (error) {
             console.log(error);
           }
         })();
         break;
       case "client":
-          (async () => {
-              try {
-                  const response = await Promise.all([api.get(`providers`), api.get("avaliations")])
-                  setProviders(getProvidersPlusAv(response[0].data, response[1].data))
-              } catch (error) {
-                  console.log(error);
-              }
-          })();
+        (async () => {
+          try {
+            const response = await Promise.all([
+              api.get(`providers`),
+              api.get("avaliations"),
+            ]);
+            setProviders(
+              getProvidersPlusAv(response[0].data, response[1].data)
+            );
+          } catch (error) {
+            console.log(error);
+          }
+        })();
         break;
       default:
         return;
@@ -168,6 +182,9 @@ const SearchMap = () => {
               </button>
               <button>
                 <UserIcon />
+              </button>
+              <button onClick={logOut} className="logout">
+                <OutIcon />
               </button>
             </div>
           </Header>
@@ -262,7 +279,12 @@ const SearchMap = () => {
                       <User key={client.id}>
                         <div className="user-avatar">
                           <img src={client.urlAvatar} alt="Avatar" />
-                          <Stars score={client.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
+                          <Stars
+                            score={client.avaliations.reduce(
+                              (score, avaliation) => score + avaliation.score,
+                              0
+                            )}
+                          />
                         </div>
                         <div className="user-description">
                           <h3>{client.name}</h3>
@@ -279,7 +301,12 @@ const SearchMap = () => {
                       <User key={provider.id}>
                         <div className="user-avatar">
                           <img src={provider.urlAvatar} alt="Avatar" />
-                          <Stars score={provider.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
+                          <Stars
+                            score={provider.avaliations.reduce(
+                              (score, avaliation) => score + avaliation.score,
+                              0
+                            )}
+                          />
                         </div>
                         <div className="user-description">
                           <h3>{provider.name}</h3>
@@ -305,7 +332,7 @@ const SearchMap = () => {
         </GlobalModal>
       </Container>
     )
-  )
+  );
 };
 
 export default SearchMap;
