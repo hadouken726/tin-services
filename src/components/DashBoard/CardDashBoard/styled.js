@@ -50,10 +50,10 @@ export const DivEdit = styled.div``;
 export const Accept = styled(ImCheckboxChecked)`
   margin-left: 0.5rem;
   font-size: 2rem;
-  color: #fff;
+  color: #24ff00;
 `;
 export const Decline = styled(FaWindowClose)`
   margin-left: 0.5rem;
   font-size: 2rem;
-  color: #fff;
+  color: #eb4d4e;
 `;
