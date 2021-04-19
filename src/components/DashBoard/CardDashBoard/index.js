@@ -25,8 +25,11 @@ import {
   Accept,
   Decline,
 } from "./styled";
+import GlobalModal from "../../GlobalModal";
+import ShareNegociations from "../../ShareNegociations";
 
 const CardDashBoard = ({ order, type, IsNegociation, user }) => {
+
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
   const [orderState, setOrderState] = useState(order);
@@ -34,6 +37,13 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const handleCloseModal = () => setShowAvModal(false);
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
+  const [isOpen, setIsOpen] = useState(false)
+    const handleCloseShare = () => {
+      setIsOpen(false)
+    }
+    const handleOpenShare = () => {
+      setIsOpen(true)
+    }
   const handleCancelOrder = async () => {
     try {
       const changedOrder = { ...order, status: "canceled" };
@@ -105,16 +115,6 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (type === "provider" && IsNegociation && clients.length > 0) {
-  //     console.log(
-  //       getClient(clients, order.userId).avaliations.find(
-  //         (avaliation) => avaliation.evaluatedId === order.userId
-  //       )
-  //     );
-  //   }
-  // }, [clients]);
-
   // PROVIDER NEGOCIATION
   return type === "provider" && IsNegociation && clients.length > 0 ? (
     <>
@@ -183,7 +183,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             />
           </DivStars>
         ) : null}
-        <DivCompartilhar>
+        <DivCompartilhar >
           <MdShare color={"#24FF00"} />
         </DivCompartilhar>
       </DivCardDashBoard>
@@ -250,11 +250,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           orderState.evaluatedBy.includes(orderState.userId) ? (
           <DivStars>
             <ReactStars
-              edit={false} // aqui podemos editar com true
-              // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
-              //   (avaliation) => avaliation.evaluatedId === order.userId
-              // ).score): 0}
-
+              edit={false} 
               value={
                 avaliations.length > 0 &&
                 avaliations.find(
@@ -282,7 +278,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </DivClose>
 
         <DivCompartilhar>
-          <button>
+          <button onClick={handleOpenShare}>
             <MdPermPhoneMsg size={24} color={"#24FF00"} />
           </button>
         </DivCompartilhar>
@@ -300,7 +296,14 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           user={user}
         />
       )}
+        <GlobalModal isOpen={isOpen} onRequestClose={handleCloseShare}>
+            <ShareNegociations provider={getProvider(providers, order.providerId)} client={user} categoryName={categories.find((category) => category.id == order.categoryId).name}>
+
+            </ShareNegociations>
+        </GlobalModal>
     </>
+
+
   ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
     // CLIENT EM ANUNCIOS
     <DivCardDashBoard>
