@@ -33,6 +33,7 @@ import "leaflet/dist/leaflet.css";
 import api from "../../services/api";
 import UserInfoModal from "../../components/UserInfoModal";
 import { getClientsPlusAv, getProvidersPlusAv } from "../../utils/othersInfo";
+import EditUserModal from "../../components/EditUserModal";
 
 const SearchMap = () => {
   const token = getToken();
@@ -45,6 +46,12 @@ const SearchMap = () => {
   const history = useHistory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const handleOpenEditModal = () => setEditModalOpen(true);
+
+  const handleCloseEditModal = () => setEditModalOpen(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
 
@@ -60,6 +67,10 @@ const SearchMap = () => {
   const handleUserClick = (user) => {
     setCurrentUser(user);
     handleOpenModal();
+  };
+
+  const handleEditUser = () => {
+    handleOpenEditModal();
   };
 
   const handleSearch = () => {
@@ -180,13 +191,19 @@ const SearchMap = () => {
               <button onClick={() => sendTo("searchmap")}>
                 <MapIcon />
               </button>
-              <button>
+              <button onClick={handleEditUser}>
                 <UserIcon />
               </button>
               <button onClick={logOut} className="logout">
                 <OutIcon />
               </button>
             </div>
+            <GlobalModal
+              isOpen={isEditModalOpen}
+              onRequestClose={handleCloseEditModal}
+            >
+              <EditUserModal user={user} />
+            </GlobalModal>
           </Header>
 
           <Content>
