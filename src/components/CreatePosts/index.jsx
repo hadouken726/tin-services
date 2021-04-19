@@ -31,7 +31,6 @@ export default function CreatePosts() {
         const { data } = await api.get(`users/${userId}`, {
           headers: { Authorization: "Bearer " + getToken() },
         });
-        console.log(data);
         setUser(data);
       } catch (error) {
         console.log(error);
@@ -47,7 +46,7 @@ export default function CreatePosts() {
           <h3>Categoria</h3>
 
           <div id="appearance-select">
-            <select {...register("category")}>
+            <select {...register("categoryId")}>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
