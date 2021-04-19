@@ -31,7 +31,6 @@ export const Content = styled.div`
 export const Form = styled.form`
   margin-left: auto;
   width: 30%;
-  color: var(--white);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +88,7 @@ export const InputBox = styled.div`
 export const Input = styled.input`
   flex: 1;
   height: 2rem;
-  background-color: transparent !important;
+  background-color: var(--blue-400);
   font-size: 1rem;
   width: 100%;
   color: #eeee;

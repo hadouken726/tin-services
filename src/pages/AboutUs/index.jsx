@@ -80,17 +80,18 @@ const AboutUs = () => {
             </div>
           </Mission>
           <Mission className="benefits">
-            <h2>
-              O que a Tin services entrega de benefícios aos prestadores de
-              serviços?
-            </h2>
+            <h2>O que a Tin services entrega de benefícios?</h2>
 
             <div className="cardsBox">
               <Card>
                 <Tilt className="tilt" options={options}>
                   <Glass size={100}>
                     <div className="benefit">
-                      <img src={visibility} alt="Visibilidade" draggable="false" />
+                      <img
+                        src={visibility}
+                        alt="Visibilidade"
+                        draggable="false"
+                      />
                       <span>Visibilidade</span>
                     </div>
                   </Glass>
