@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getToken } from "../../services/auth";
+import {getId, getToken} from "../../services/auth";
 import ReactWhatsapp from "react-whatsapp";
 
 import {
@@ -16,15 +16,40 @@ import { categories } from "../../utils/categories";
 
 import api from "../../services/api";
 import Stars from "../Stars";
+import {useHistory} from "react-router-dom";
 
 const UserInfoModal = ({ user, clients, providers }) => {
-  const [userCategory, setUserCategory] = useState({});
-  const [phoneNumber, setPhoneNumber] = useState("");
+    const [userCategory, setUserCategory] = useState({});
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const category = user.type === "provider"? categories.find(cat=>cat.id == user.categoryId) : categories.find(cat=>cat.id == getId())
 
-  useEffect(() => {
-    const category = categories.find(
-      (category) => category.id === Number(user.categoryId)
-    );
+    const history = useHistory()
+    const createOrder = async () => {
+        try {
+            const response = await api.post("orders", {
+                    status: "requested",
+                    changedAt: new Date().toString(),
+                    madeBy: getId().toString(),
+                    userId: getId().toString(),
+                    evaluatedBy: [],
+                    providerId: user.id.toString(),
+                    desc: `Gostaria de solicitar um serviço de ${category.name}`,
+                    categoryId: user.categoryId
+                }
+            )
+            console.log("order criada com sucesso!!")
+            history.push("/dashboard")
+        }catch (err){
+            console.log(err)
+        }
+
+
+
+
+
+    };
+
+    useEffect(() => {
 
     const filteredNumber = user.phone
       .split("")
@@ -93,6 +118,8 @@ const UserInfoModal = ({ user, clients, providers }) => {
         >
           Enviar mensagem <ZapIcon />
         </ReactWhatsapp>
+          {user.type === "provider" && <button onClick={createOrder}>Solicitar serviço</button>}
+
       </Content>
     </Container>
   );
