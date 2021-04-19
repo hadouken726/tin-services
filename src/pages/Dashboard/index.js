@@ -69,11 +69,11 @@ const Dashboard = () => {
             <img src={imgLogo} draggable="false" alt="Logo" />
 
             <div>
-              <button onClick={() => sendTo("searchmap")}>
-                <MapIcon />
-              </button>
               <button onClick={() => sendTo("dashboard")}>
                 <HomeIcon />
+              </button>
+              <button onClick={() => sendTo("searchmap")}>
+                <MapIcon />
               </button>
               <button>
                 <UserIcon />

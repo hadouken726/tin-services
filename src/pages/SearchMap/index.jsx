@@ -166,11 +166,11 @@ const SearchMap = () => {
           <Header>
             <img src={logo} alt="Tin Services" />
             <div>
-              <button onClick={() => sendTo("searchmap")}>
-                <MapIcon />
-              </button>
               <button onClick={() => sendTo("dashboard")}>
                 <HomeIcon />
+              </button>
+              <button onClick={() => sendTo("searchmap")}>
+                <MapIcon />
               </button>
               <button>
                 <UserIcon />
