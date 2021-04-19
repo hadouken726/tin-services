@@ -30,6 +30,7 @@ import "leaflet/dist/leaflet.css";
 
 import api from "../../services/api";
 import UserInfoModal from "../../components/UserInfoModal";
+import {getClientsPlusAv, getProvidersPlusAv} from "../../utils/othersInfo";
 
 const SearchMap = () => {
   const token = getToken();
@@ -105,28 +106,22 @@ const SearchMap = () => {
       case "provider":
         (async () => {
           try {
-            const response = await api.get(`clients`, {
-              headers: { Authorization: "Bearer " + getToken() },
-            });
-
-            setClients(response.data);
+            const response = await Promise.all([api.get(`clients`), api.get("avaliations")])
+            setClients(getClientsPlusAv(response[0].data, response[1].data))
           } catch (error) {
             console.log(error);
           }
         })();
         break;
       case "client":
-        (async () => {
-          try {
-            const response = await api.get(`providers`, {
-              headers: { Authorization: "Bearer " + getToken() },
-            });
-
-            setProviders(response.data);
-          } catch (error) {
-            console.log(error);
-          }
-        })();
+          (async () => {
+              try {
+                  const response = await Promise.all([api.get(`providers`), api.get("avaliations")])
+                  setProviders(getProvidersPlusAv(response[0].data, response[1].data))
+              } catch (error) {
+                  console.log(error);
+              }
+          })();
         break;
       default:
         return;
@@ -155,7 +150,6 @@ const SearchMap = () => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     JSON.stringify(user) !== "{}" && (
       <Container>
@@ -262,7 +256,7 @@ const SearchMap = () => {
                       <User key={client.id}>
                         <div className="user-avatar">
                           <img src={client.urlAvatar} alt="Avatar" />
-                          <Stars />
+                          <Stars score={client.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
                         </div>
                         <div className="user-description">
                           <h3>{client.name}</h3>
@@ -279,7 +273,7 @@ const SearchMap = () => {
                       <User key={provider.id}>
                         <div className="user-avatar">
                           <img src={provider.urlAvatar} alt="Avatar" />
-                          <Stars />
+                          <Stars score={provider.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
                         </div>
                         <div className="user-description">
                           <h3>{provider.name}</h3>
@@ -305,7 +299,7 @@ const SearchMap = () => {
         </GlobalModal>
       </Container>
     )
-  );
+  )
 };
 
 export default SearchMap;

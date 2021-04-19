@@ -19,7 +19,6 @@ import Stars from "../Stars";
 
 const UserInfoModal = ({ user, clients, providers }) => {
   const [userCategory, setUserCategory] = useState({});
-  const [avaliations, setAvaliations] = useState([]);
   const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
@@ -33,79 +32,61 @@ const UserInfoModal = ({ user, clients, providers }) => {
 
     setPhoneNumber(filteredNumber.join(""));
 
-    (async () => {
-      try {
-        const response = await api.get(`avaliations`, {
-          headers: { Authorization: "Bearer " + getToken() },
-        });
-
-        setAvaliations(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-
     setUserCategory(category);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+    return (
+        <Container>
+            <Header>
+                <img src={user.urlAvatar} alt="Usr avatar"/>
+                <div>
+                    <p>{user.name}</p>
+                    <span>{userCategory && userCategory.name}</span>
+                </div>
+            </Header>
+            <Content>
+                <Description>
+                    <h4>
+                        <b>Descrição</b>
+                    </h4>
+                    <p>{user.desc}</p>
+                </Description>
 
-  console.log(phoneNumber);
-
-  return (
-    <Container>
-      <Header>
-        <img src={user.urlAvatar} alt="Usr avatar" />
-        <div>
-          <p>{user.name}</p>
-          <span>{userCategory && userCategory.name}</span>
-        </div>
-      </Header>
-      <Content>
-        <Description>
-          <h4>
-            <b>Descrição</b>
-          </h4>
-          <p>{user.desc}</p>
-        </Description>
-
-        <Avaliations>
-          <h4>
-            <b>Avaliações</b>
-          </h4>
-          <DetailsBox>
-            <div className="avaliations">
-              {avaliations.length > 0 &&
-                avaliations
-                  .filter(
-                    (avaliation) => Number(avaliation.evaluatedId) === user.id
-                  )
-                  .map((avaliation) => (
-                    <article key={avaliation.id}>
-                      {clients
-                        .filter(
-                          (client) => client.id === Number(avaliation.userId)
-                        )
-                        .map((client) => (
-                          <p>{client.name}</p>
-                        ))}
-                      <p>{avaliation.feedback}</p>
-                      <Stars score={avaliation.score} />
-                    </article>
-                  ))}
-            </div>
-          </DetailsBox>
-        </Avaliations>
-        <ReactWhatsapp
-          className="zap-button"
-          // number={`55` + user.phone.replace(/-/g, "")}
-          number={"55" + phoneNumber}
-          message="Tin - services: Olá, gostaria de solicitar um serviço!"
-        >
-          Enviar mensagem <ZapIcon />
-        </ReactWhatsapp>
-      </Content>
-    </Container>
-  );
+                <Avaliations>
+                    <h4>
+                        <b>Avaliações</b>
+                    </h4>
+                    <DetailsBox>
+                        <div className="avaliations">
+                            {user.avaliations.length > 0 &&
+                            user.avaliations
+                                .map((avaliation) => (
+                                    user.type === "provider" ?
+                                        (<article key={avaliation.id}>
+                                            <p>{clients.length > 0 && [...clients].find(u => avaliation.userId == u.id).name}</p>
+                                            <p>{avaliation.feedback}</p>
+                                            <Stars score={avaliation.score}/>
+                                        </article>) :
+                                        (<article key={avaliation.id}>
+                                            <p>{providers.length > 0 && [...providers].find(u => avaliation.userId == u.id).name}</p>
+                                            <p>{avaliation.feedback}</p>
+                                            <Stars score={avaliation.score}/>
+                                        </article>)
+                                ))}
+                        </div>
+                    </DetailsBox>
+                </Avaliations>
+                <ReactWhatsapp
+                    className="zap-button"
+                    // number={`55` + user.phone.replace(/-/g, "")}
+                    number={"55" + phoneNumber}
+                    message="Tin - services: Olá, gostaria de solicitar um serviço!"
+                >
+                    Enviar mensagem <ZapIcon/>
+                </ReactWhatsapp>
+            </Content>
+        </Container>
+    );
 };
 
 export default UserInfoModal;
