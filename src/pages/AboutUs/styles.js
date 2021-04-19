@@ -81,7 +81,7 @@ export const Card = styled.article`
     width: 100%;
     height: 100%;
     transform: translateY(100px);
-    opacity: 0;
+    opacity: 1;
     border-radius: 16px;
     transition: 500ms;
     text-align: center;

@@ -27,7 +27,12 @@ const Home = () => {
 
             <div>
               <Button onClick={() => history.push("/login")}>Login</Button>
-              <button className="secondary">Explorar</button>
+              <button
+                onClick={() => history.push("/about")}
+                className="secondary"
+              >
+                Explorar
+              </button>
             </div>
           </TextContent>
           <img src={homeImg1} alt="Worker" draggable="false" />

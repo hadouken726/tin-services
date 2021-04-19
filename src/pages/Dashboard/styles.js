@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { FiHome, FiUser, FiMap, FiLogOut } from "react-icons/fi";
 
 export const Container = styled.div`
   width: 100vw;
@@ -12,11 +13,60 @@ export const Header = styled.div`
   margin: 0 auto;
   position: relative;
   display: flex;
-  top: -10px;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  height: 1px;
+  width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20rem;
+
+    button {
+      border-radius: 50%;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      background-color: var(--blue-400);
+      border-top: 2px solid rgba(255, 255, 255, 0.5);
+      border-left: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
+      transition: all 200ms ease-in;
+
+      img {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+      }
+
+      &:active {
+        opacity: 0.6;
+      }
+    }
+
+    button.logout {
+      border-radius: 50%;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      background-color: lightcoral;
+      border-top: 2px solid rgba(255, 255, 255, 0.5);
+      border-left: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
+      transition: all 200ms ease-in;
+
+      &:active {
+        opacity: 0.6;
+      }
+    }
+  }
 
   @media (max-width: 600px) {
     justify-content: flex-start;
@@ -30,7 +80,6 @@ export const Header = styled.div`
   }
 `;
 
-
 export const Logo = styled.div`
   margin-right: 10px;
 
@@ -39,27 +88,26 @@ export const Logo = styled.div`
   }
 `;
 
-export const LogoImage = styled.img`
-  width: 100px;
-  height: 35px;
-  border: none;
-  
+// export const LogoImage = styled.img`
+//   width: 100px;
+//   height: 35px;
+//   border: none;
 
-  @media (max-width: 500px) {
-    width: 150px;
-    height: 45px;
-  }
+//   @media (max-width: 500px) {
+//     width: 150px;
+//     height: 45px;
+//   }
 
-  @media (max-width: 370px) {
-    width: 150px;
-    height: 45px;
-  }
+//   @media (max-width: 370px) {
+//     width: 150px;
+//     height: 45px;
+//   }
 
-  @media (max-width: 280px) {
-    width: 120px;
-    height: 45px;
-  }
-`;
+//   @media (max-width: 280px) {
+//     width: 120px;
+//     height: 45px;
+//   }
+// `;
 
 export const LogoAvatar = styled.img`
   width: 30px;
@@ -67,12 +115,10 @@ export const LogoAvatar = styled.img`
   border-radius: 50%;
 
   @media (min-width: 1920px) {
-    
   }
 `;
 
 export const Avatar = styled.div`
-  top: 10px;
   /* font-style: normal;
   font-weight: bold;
   font-size: 2rem; */
@@ -113,4 +159,24 @@ export const Button = styled.button`
   &:hover {
     filter: brightness(0.9);
   }
+`;
+
+export const HomeIcon = styled(FiHome)`
+  color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const UserIcon = styled(FiUser)`
+  color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const MapIcon = styled(FiMap)`
+  color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const OutIcon = styled(FiLogOut)`
+  color: red;
+  font-size: 2.5rem;
 `;

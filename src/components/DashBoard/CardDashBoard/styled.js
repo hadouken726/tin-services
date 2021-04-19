@@ -8,9 +8,10 @@ export const DivCardDashBoard = styled.div`
   flex: wrap;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1rem;
 
   h4 {
-    font-size: 12px;
+    font-size: 1rem;
   }
 `;
 
@@ -41,19 +42,27 @@ export const DivStatus = styled.div``;
 
 export const DivStars = styled.div``;
 
-export const DivCompartilhar = styled.div``;
+export const DivCompartilhar = styled.div`
+  button {
+    background-color: transparent;
+  }
+`;
 
-export const DivClose = styled.div``;
+export const DivClose = styled.div`
+  button {
+    background-color: transparent;
+  }
+`;
 
 export const DivEdit = styled.div``;
 
 export const Accept = styled(ImCheckboxChecked)`
   margin-left: 0.5rem;
   font-size: 2rem;
-  color: #fff;
+  color: #24ff00;
 `;
 export const Decline = styled(FaWindowClose)`
   margin-left: 0.5rem;
   font-size: 2rem;
-  color: #fff;
+  color: #eb4d4e;
 `;

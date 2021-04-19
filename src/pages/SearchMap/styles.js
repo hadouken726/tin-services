@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FiHome, FiUser, FiSearch } from "react-icons/fi";
+import { FiHome, FiUser, FiSearch, FiMap, FiLogOut } from "react-icons/fi";
 
 export const Container = styled.div`
   width: 100vw;
@@ -32,7 +32,7 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 9rem;
+    width: 20rem;
 
     button {
       border-radius: 50%;
@@ -43,6 +43,31 @@ export const Header = styled.header`
       justify-content: center;
       background: var(--glass-bg);
       background-color: var(--blue-400);
+      border-top: 2px solid rgba(255, 255, 255, 0.5);
+      border-left: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
+      transition: all 200ms ease-in;
+
+      img {
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+      }
+
+      &:active {
+        opacity: 0.6;
+      }
+    }
+
+    button.logout {
+      border-radius: 50%;
+      width: 4rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--glass-bg);
+      background-color: lightcoral;
       border-top: 2px solid rgba(255, 255, 255, 0.5);
       border-left: 2px solid rgba(255, 255, 255, 0.5);
       box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
@@ -62,6 +87,16 @@ export const HomeIcon = styled(FiHome)`
 
 export const UserIcon = styled(FiUser)`
   color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const MapIcon = styled(FiMap)`
+  color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const OutIcon = styled(FiLogOut)`
+  color: red;
   font-size: 2.5rem;
 `;
 

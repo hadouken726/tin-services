@@ -4,6 +4,21 @@ import { ImWhatsapp } from "react-icons/im";
 export const Container = styled.div`
   width: 100%;
   height: 100%;
+
+  button.ask-service {
+    display: block;
+    font-size: 1rem;
+    background-color: var(--blue-400);
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    color: var(--white);
+    font-weight: bold;
+    margin: 0 auto;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const Header = styled.header`
@@ -106,6 +121,7 @@ export const DetailsBox = styled.div`
 
   div.avaliations {
     width: 100%;
+    height: 12rem;
     overflow-y: scroll;
 
     ::-webkit-scrollbar {
@@ -115,6 +131,7 @@ export const DetailsBox = styled.div`
     article {
       border-radius: 1rem;
       width: 100%;
+      margin-bottom: 1rem;
       font-weight: bold;
       padding: 1rem;
       border-left: 5px solid var(--blue-400);
@@ -125,6 +142,53 @@ export const DetailsBox = styled.div`
 `;
 
 export const Button = styled.button``;
+
+export const Adverts = styled.div`
+  margin-top: 1rem;
+
+  width: 100%;
+  text-align: justify;
+  background: var(--glass-bg);
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 2px solid rgba(255, 255, 255, 0.5);
+  background-color: var(--blue-400);
+  opacity: 0.8;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--blue-400);
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  div {
+    width: 100%;
+    max-height: 8rem;
+    overflow-y: scroll;
+
+    p {
+      border-radius: 1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      padding: 1rem;
+      border-left: 5px solid var(--blue-400);
+      background: var(--glass-bg);
+      color: var(--blue-400);
+    }
+
+    ::-webkit-scrollbar {
+      background: transparent;
+    }
+  }
+`;
 
 export const ZapIcon = styled(ImWhatsapp)`
   margin-left: 0.5rem;
