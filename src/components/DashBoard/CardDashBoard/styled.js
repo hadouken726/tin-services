@@ -8,9 +8,10 @@ export const DivCardDashBoard = styled.div`
   flex: wrap;
   align-items: center;
   justify-content: space-between;
+  padding: 0 1rem;
 
   h4 {
-    font-size: 12px;
+    font-size: 1rem;
   }
 `;
 
