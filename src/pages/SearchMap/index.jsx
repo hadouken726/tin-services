@@ -192,7 +192,8 @@ const SearchMap = () => {
                 <MapIcon />
               </button>
               <button onClick={handleEditUser}>
-                <UserIcon />
+                <img src={user.urlAvatar} alt="avatar" />
+                {/* <UserIcon /> */}
               </button>
               <button onClick={logOut} className="logout">
                 <OutIcon />

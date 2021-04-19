@@ -48,6 +48,12 @@ export const Header = styled.header`
       box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
       transition: all 200ms ease-in;
 
+      img {
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+      }
+
       &:active {
         opacity: 0.6;
       }
