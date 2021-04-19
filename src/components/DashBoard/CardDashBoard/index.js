@@ -105,16 +105,6 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (type === "provider" && IsNegociation && clients.length > 0) {
-  //     console.log(
-  //       getClient(clients, order.userId).avaliations.find(
-  //         (avaliation) => avaliation.evaluatedId === order.userId
-  //       )
-  //     );
-  //   }
-  // }, [clients]);
-
   // PROVIDER NEGOCIATION
   return type === "provider" && IsNegociation && clients.length > 0 ? (
     <>
@@ -183,7 +173,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             />
           </DivStars>
         ) : null}
-        <DivCompartilhar>
+        <DivCompartilhar >
           <MdShare color={"#24FF00"} />
         </DivCompartilhar>
       </DivCardDashBoard>
@@ -250,11 +240,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           orderState.evaluatedBy.includes(orderState.userId) ? (
           <DivStars>
             <ReactStars
-              edit={false} // aqui podemos editar com true
-              // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
-              //   (avaliation) => avaliation.evaluatedId === order.userId
-              // ).score): 0}
-
+              edit={false} 
               value={
                 avaliations.length > 0 &&
                 avaliations.find(
@@ -301,6 +287,8 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         />
       )}
     </>
+
+
   ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
     // CLIENT EM ANUNCIOS
     <DivCardDashBoard>
