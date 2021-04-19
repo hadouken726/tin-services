@@ -8,6 +8,7 @@ import InitialRegister from "../pages/InitialRegister";
 import CompleteRegister from "../pages/CompleteRegister";
 import NotFound from "../pages/NotFound";
 import SearchMap from "../pages/SearchMap";
+import Teste from "../pages/Teste"
 
 const Routes = () => {
   return (
@@ -19,6 +20,7 @@ const Routes = () => {
       <Route exact path="/register" component={InitialRegister} />
       <Route exact path="/completeregister" component={CompleteRegister} />
       <Route exact path="/searchmap" component={SearchMap} />
+      <Route exact path="/test" component={Teste} />
       <Route component={NotFound} />
     </Switch>
   );
