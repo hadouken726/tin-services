@@ -25,8 +25,11 @@ import {
   Accept,
   Decline,
 } from "./styled";
+import GlobalModal from "../../GlobalModal";
+import ShareNegociations from "../../ShareNegociations";
 
 const CardDashBoard = ({ order, type, IsNegociation, user }) => {
+
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
   const [orderState, setOrderState] = useState(order);
@@ -34,6 +37,13 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const handleCloseModal = () => setShowAvModal(false);
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
+  const [isOpen, setIsOpen] = useState(false)
+    const handleCloseShare = () => {
+      setIsOpen(false)
+    }
+    const handleOpenShare = () => {
+      setIsOpen(true)
+    }
   const handleCancelOrder = async () => {
     try {
       const changedOrder = { ...order, status: "canceled" };
@@ -268,7 +278,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </DivClose>
 
         <DivCompartilhar>
-          <button>
+          <button onClick={handleOpenShare}>
             <MdPermPhoneMsg size={24} color={"#24FF00"} />
           </button>
         </DivCompartilhar>
@@ -286,6 +296,11 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           user={user}
         />
       )}
+        <GlobalModal isOpen={isOpen} onRequestClose={handleCloseShare}>
+            <ShareNegociations provider={getProvider(providers, order.providerId)} client={user} categoryName={categories.find((category) => category.id == order.categoryId).name}>
+
+            </ShareNegociations>
+        </GlobalModal>
     </>
 
 

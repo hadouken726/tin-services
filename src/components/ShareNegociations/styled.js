@@ -7,6 +7,21 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  button.zap-button {
+    display: block;
+    font-size: 1rem;
+    background-color: #2ecc71;
+    padding: 1rem 2rem;
+    border-radius: 2rem;
+    color: var(--white);
+    font-weight: bold;
+    margin: 0 auto;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg{margin-left: 0.5rem}
+  }
 `;
 
 export const InputBox = styled.div`
