@@ -16,6 +16,7 @@ import {
   Content,
   Map,
   UsersContent,
+  MapIcon,
   SearchBox,
   SearchIcon,
   UsersBox,
@@ -47,6 +48,8 @@ const SearchMap = () => {
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleCloseModal = () => setIsModalOpen(false);
+
+  const sendTo = (route) => history.push(`/${route}`);
 
   const handleUserClick = (user) => {
     setCurrentUser(user);
@@ -157,8 +160,11 @@ const SearchMap = () => {
           <Header>
             <img src={logo} alt="Tin Services" />
             <div>
-              <button>
+              <button onClick={() => sendTo("dashboard")}>
                 <HomeIcon />
+              </button>
+              <button onClick={() => sendTo("searchmap")}>
+                <MapIcon />
               </button>
               <button>
                 <UserIcon />
