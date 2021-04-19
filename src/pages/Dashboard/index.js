@@ -17,6 +17,7 @@ import {
   // LogoAvatar,
   MapIcon,
   HomeIcon,
+  OutIcon,
   UserIcon,
   Button,
 } from "./styles";
@@ -38,6 +39,11 @@ const Dashboard = () => {
   const history = useHistory();
 
   const sendTo = (route) => history.push(`/${route}`);
+
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/");
+  };
 
   useEffect(() => {
     if (!token) {
@@ -77,6 +83,9 @@ const Dashboard = () => {
               </button>
               <button>
                 <UserIcon />
+              </button>
+              <button onClick={logOut} className="logout">
+                <OutIcon />
               </button>
             </div>
           </Header>

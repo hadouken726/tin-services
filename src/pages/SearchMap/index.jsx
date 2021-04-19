@@ -17,6 +17,7 @@ import {
   Map,
   UsersContent,
   MapIcon,
+  OutIcon,
   SearchBox,
   SearchIcon,
   UsersBox,
@@ -31,7 +32,8 @@ import "leaflet/dist/leaflet.css";
 
 import api from "../../services/api";
 import UserInfoModal from "../../components/UserInfoModal";
-import {getClientsPlusAv, getProvidersPlusAv} from "../../utils/othersInfo";
+import { getClientsPlusAv, getProvidersPlusAv } from "../../utils/othersInfo";
+import EditUserModal from "../../components/EditUserModal";
 
 const SearchMap = () => {
   const token = getToken();
@@ -45,15 +47,30 @@ const SearchMap = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const handleOpenEditModal = () => setEditModalOpen(true);
+
+  const handleCloseEditModal = () => setEditModalOpen(false);
+
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleCloseModal = () => setIsModalOpen(false);
 
   const sendTo = (route) => history.push(`/${route}`);
 
+  const logOut = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+
   const handleUserClick = (user) => {
     setCurrentUser(user);
     handleOpenModal();
+  };
+
+  const handleEditUser = () => {
+    handleOpenEditModal();
   };
 
   const handleSearch = () => {
@@ -109,22 +126,30 @@ const SearchMap = () => {
       case "provider":
         (async () => {
           try {
-            const response = await Promise.all([api.get(`clients`), api.get("avaliations")])
-            setClients(getClientsPlusAv(response[0].data, response[1].data))
+            const response = await Promise.all([
+              api.get(`clients`),
+              api.get("avaliations"),
+            ]);
+            setClients(getClientsPlusAv(response[0].data, response[1].data));
           } catch (error) {
             console.log(error);
           }
         })();
         break;
       case "client":
-          (async () => {
-              try {
-                  const response = await Promise.all([api.get(`providers`), api.get("avaliations")])
-                  setProviders(getProvidersPlusAv(response[0].data, response[1].data))
-              } catch (error) {
-                  console.log(error);
-              }
-          })();
+        (async () => {
+          try {
+            const response = await Promise.all([
+              api.get(`providers`),
+              api.get("avaliations"),
+            ]);
+            setProviders(
+              getProvidersPlusAv(response[0].data, response[1].data)
+            );
+          } catch (error) {
+            console.log(error);
+          }
+        })();
         break;
       default:
         return;
@@ -166,10 +191,19 @@ const SearchMap = () => {
               <button onClick={() => sendTo("searchmap")}>
                 <MapIcon />
               </button>
-              <button>
+              <button onClick={handleEditUser}>
                 <UserIcon />
               </button>
+              <button onClick={logOut} className="logout">
+                <OutIcon />
+              </button>
             </div>
+            <GlobalModal
+              isOpen={isEditModalOpen}
+              onRequestClose={handleCloseEditModal}
+            >
+              <EditUserModal user={user} />
+            </GlobalModal>
           </Header>
 
           <Content>
@@ -262,7 +296,12 @@ const SearchMap = () => {
                       <User key={client.id}>
                         <div className="user-avatar">
                           <img src={client.urlAvatar} alt="Avatar" />
-                          <Stars score={client.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
+                          <Stars
+                            score={client.avaliations.reduce(
+                              (score, avaliation) => score + avaliation.score,
+                              0
+                            )}
+                          />
                         </div>
                         <div className="user-description">
                           <h3>{client.name}</h3>
@@ -279,7 +318,12 @@ const SearchMap = () => {
                       <User key={provider.id}>
                         <div className="user-avatar">
                           <img src={provider.urlAvatar} alt="Avatar" />
-                          <Stars score={provider.avaliations.reduce((score, avaliation) => score + avaliation.score, 0)} />
+                          <Stars
+                            score={provider.avaliations.reduce(
+                              (score, avaliation) => score + avaliation.score,
+                              0
+                            )}
+                          />
                         </div>
                         <div className="user-description">
                           <h3>{provider.name}</h3>
@@ -305,7 +349,7 @@ const SearchMap = () => {
         </GlobalModal>
       </Container>
     )
-  )
+  );
 };
 
 export default SearchMap;
