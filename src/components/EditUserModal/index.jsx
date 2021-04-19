@@ -39,6 +39,7 @@ const EditUserModal = ({ user }) => {
     <Container>
       <h2>Editar perfil</h2>
       <p>Olá {user.name}</p>
+      <p>Editar url do avatar:</p>
 
       <form onSubmit={handleSubmit(handleData)}>
         <section>
