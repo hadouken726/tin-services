@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {getId, getToken} from "../../services/auth";
+import { getId, getToken } from "../../services/auth";
 import ReactWhatsapp from "react-whatsapp";
 
 import {
@@ -10,56 +10,69 @@ import {
   Avaliations,
   DetailsBox,
   ZapIcon,
+  Adverts,
 } from "./styles";
 
 import { categories } from "../../utils/categories";
 
 import api from "../../services/api";
 import Stars from "../Stars";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const UserInfoModal = ({ user, clients, providers }) => {
-    const [userCategory, setUserCategory] = useState({});
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const category = user.type === "provider"? categories.find(cat=>cat.id == user.categoryId) : categories.find(cat=>cat.id == getId())
+  const [orders, setOrders] = useState([]);
+  const [userCategory, setUserCategory] = useState({});
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const category =
+    user.type === "provider"
+      ? categories.find((cat) => cat.id == user.categoryId)
+      : categories.find((cat) => cat.id == getId());
 
-    const history = useHistory()
-    const createOrder = async () => {
-        try {
-            const response = await api.post("orders", {
-                    status: "requested",
-                    changedAt: new Date().toString(),
-                    madeBy: getId().toString(),
-                    userId: getId().toString(),
-                    evaluatedBy: [],
-                    providerId: user.id.toString(),
-                    desc: `Gostaria de solicitar um serviço de ${category.name}`,
-                    categoryId: user.categoryId
-                }
-            )
-            console.log("order criada com sucesso!!")
-            history.push("/dashboard")
-        }catch (err){
-            console.log(err)
-        }
+  const history = useHistory();
+  const getOrders = async () => {
+    const response = await api.get(`orders`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    });
 
+    setOrders(response.data.filter((order) => order.madeBy == user.id));
+  };
+  const createOrder = async () => {
+    try {
+      const response = await api.post("orders", {
+        status: "requested",
+        changedAt: new Date().toString(),
+        madeBy: getId().toString(),
+        userId: getId().toString(),
+        evaluatedBy: [],
+        providerId: user.id.toString(),
+        desc: `Gostaria de solicitar um serviço de ${category.name}`,
+        categoryId: user.categoryId,
+      });
+      console.log("order criada com sucesso!!");
+      history.push("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-
-
-
-    };
-
-    useEffect(() => {
-
+  useEffect(() => {
     const filteredNumber = user.phone
       .split("")
       .filter((digit) => "123456789".includes(digit));
+
+    const orders = getOrders();
+
+    setOrders(orders);
 
     setPhoneNumber(filteredNumber.join(""));
 
     setUserCategory(category);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log(orders);
   return (
     <Container>
       <Header>
@@ -110,6 +123,17 @@ const UserInfoModal = ({ user, clients, providers }) => {
             </div>
           </DetailsBox>
         </Avaliations>
+
+        {user.type === "client" && (
+          <Adverts>
+            <h4>Anúncios</h4>
+
+            <div>
+              {orders.length > 0 && orders.map((order) => <p>{order.desc}</p>)}
+            </div>
+          </Adverts>
+        )}
+
         <ReactWhatsapp
           className="zap-button"
           // number={`55` + user.phone.replace(/-/g, "")}
@@ -118,8 +142,11 @@ const UserInfoModal = ({ user, clients, providers }) => {
         >
           Enviar mensagem <ZapIcon />
         </ReactWhatsapp>
-          {user.type === "provider" && <button onClick={createOrder}>Solicitar serviço</button>}
-
+        {user.type === "provider" && (
+          <button className="ask-service" onClick={createOrder}>
+            Solicitar serviço
+          </button>
+        )}
       </Content>
     </Container>
   );
