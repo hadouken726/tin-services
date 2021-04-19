@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FiHome, FiUser, FiSearch } from "react-icons/fi";
+import { FiHome, FiUser, FiSearch, FiMap } from "react-icons/fi";
 
 export const Container = styled.div`
   width: 100vw;
@@ -32,7 +32,7 @@ export const Header = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 9rem;
+    width: 15rem;
 
     button {
       border-radius: 50%;
@@ -61,6 +61,11 @@ export const HomeIcon = styled(FiHome)`
 `;
 
 export const UserIcon = styled(FiUser)`
+  color: var(--blue-400);
+  font-size: 2.5rem;
+`;
+
+export const MapIcon = styled(FiMap)`
   color: var(--blue-400);
   font-size: 2.5rem;
 `;

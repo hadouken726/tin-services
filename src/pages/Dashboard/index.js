@@ -15,6 +15,7 @@ import {
   // Logo,
   // LogoImage,
   // LogoAvatar,
+  MapIcon,
   HomeIcon,
   UserIcon,
   Button,
@@ -35,6 +36,8 @@ const Dashboard = () => {
   const handleCloseModal = () => setIsModalOpen(false);
 
   const history = useHistory();
+
+  const sendTo = (route) => history.push(`/${route}`);
 
   useEffect(() => {
     if (!token) {
@@ -66,7 +69,10 @@ const Dashboard = () => {
             <img src={imgLogo} draggable="false" alt="Logo" />
 
             <div>
-              <button>
+              <button onClick={() => sendTo("searchmap")}>
+                <MapIcon />
+              </button>
+              <button onClick={() => sendTo("dashboard")}>
                 <HomeIcon />
               </button>
               <button>

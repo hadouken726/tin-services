@@ -276,13 +276,15 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         ) : null}
 
         <DivClose>
-          <div onClick={handleCancelOrder}>
+          <button onClick={handleCancelOrder}>
             <CgCloseO size={24} color={"#eb4d4b"} />
-          </div>
+          </button>
         </DivClose>
 
         <DivCompartilhar>
-          <MdPermPhoneMsg size={24} color={"#24FF00"} />
+          <button>
+            <MdPermPhoneMsg size={24} color={"#24FF00"} />
+          </button>
         </DivCompartilhar>
       </DivCardDashBoard>
       {showAvModal && (

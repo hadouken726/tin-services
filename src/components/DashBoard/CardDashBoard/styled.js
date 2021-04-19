@@ -42,9 +42,17 @@ export const DivStatus = styled.div``;
 
 export const DivStars = styled.div``;
 
-export const DivCompartilhar = styled.div``;
+export const DivCompartilhar = styled.div`
+  button {
+    background-color: transparent;
+  }
+`;
 
-export const DivClose = styled.div``;
+export const DivClose = styled.div`
+  button {
+    background-color: transparent;
+  }
+`;
 
 export const DivEdit = styled.div``;
 
