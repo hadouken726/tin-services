@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Form,
@@ -21,8 +21,27 @@ import { categories } from "../../utils/categories";
 import PrimaryButton from "../../components/PrimaryButton";
 
 const FormInitialRegister = () => {
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
   const [isProvider, setIsProvider] = useState(false);
   const history = useHistory();
+
+  const getUserGeolocation = () => {
+    fetch(
+      "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setLat(data.latitude);
+        setLng(data.longitude);
+      });
+  };
+
+  useEffect(() => {
+    if (lat === 0) {
+      getUserGeolocation();
+    }
+  }, [lat]);
 
   let schema = yup.object().shape({
     name: yup.string().required("Verifique seu nome!"),
@@ -51,7 +70,11 @@ const FormInitialRegister = () => {
 
   const handleData = (data) => {
     let type = isProvider ? "provider" : "client";
-    localStorage.setItem("formData", JSON.stringify({ ...data, type }));
+    localStorage.setItem(
+      "formData",
+      JSON.stringify({ ...data, type, lat, lng })
+    );
+    console.log({ ...data, type, lat, lng });
     history.push("/completeregister");
   };
 
@@ -90,7 +113,9 @@ const FormInitialRegister = () => {
         <InputBox>
           <Input
             name="cpfCnpj"
-            placeholder={isProvider ? "Digite seu CPF ou CNPJ." : "Digite seu CPF"}
+            placeholder={
+              isProvider ? "Digite seu CPF ou CNPJ." : "Digite seu CPF"
+            }
             {...register("cpfCnpj")}
           />
         </InputBox>

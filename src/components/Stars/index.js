@@ -1,9 +1,9 @@
 // https://www.npmjs.com/package/react-rating-stars-component
-import React, { useState } from "react";
+import React, {useState} from "react";
 import ReactStars from "react-rating-stars-component";
 
 export default function Stars({ score }) {
-  const [star, setStar] = useState(score || 3);
+  const [star, setStar] = useState(score);
 
   const stars = {
     size: 20,
@@ -18,6 +18,7 @@ export default function Stars({ score }) {
       setStar(newValue);
     },
   };
+
   return (
     <>
       <ReactStars size="100px" {...stars} />

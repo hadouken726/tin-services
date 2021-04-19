@@ -26,7 +26,7 @@ export const DashBoardContainer = styled.div`
 
   h1 {
     color: var(--blue-400);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
 
     /* @media (max-width: 990px) {
@@ -37,7 +37,7 @@ export const DashBoardContainer = styled.div`
   @media (min-width: 700px) {
     justify-content: flex-start;
     width: 93%;
-    height: 93%;
+    height: 73%;
   }
 `;
 
@@ -51,7 +51,7 @@ export const DivScrool = styled.div`
 
   /* width */
   ::-webkit-scrollbar {
-    width: 10px;
+    display: none;
   }
   /* Track */
   ::-webkit-scrollbar-track {
@@ -180,7 +180,6 @@ export const LinkText = styled.div`
     cursor: pointer;
     color: blue;
   }
-
 
   /* @media (max-width: 998px) {
     h1 {

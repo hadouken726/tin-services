@@ -24,37 +24,33 @@ const DashBoardNegsPosts = () => {
   const [IsNegociation, setIsNegociation] = useState(true);
 
   let urlPost = "";
-    if (IsNegociation) {
-      if (user.type === "provider") {
-        urlPost = `orders/?providerId=${Number(userId)}`;
-      } else {
-        urlPost = `orders/?userId=${Number(userId)}`;
-      }
+  if (IsNegociation) {
+    if (user.type === "provider") {
+      urlPost = `orders/?providerId=${Number(userId)}`;
     } else {
-      if (user.type === "provider") {
-        urlPost = `posts/?providerId=${Number(userId)}`;
-      } else {
-        urlPost = `posts/?userId=${Number(userId)}`;
-      }
+      urlPost = `orders/?userId=${Number(userId)}`;
     }
+  } else {
+    if (user.type === "provider") {
+      urlPost = `posts/?providerId=${Number(userId)}`;
+    } else {
+      urlPost = `posts/?userId=${Number(userId)}`;
+    }
+  }
 
-    const getDados = async () => {
-  
-      if (user) {
-        setOrders([]);
-        (async () => {
-          const { data } = await api.get(urlPost, {
-            headers: { Authorization: `Bearer ${getToken()}` },
-          });
-          // console.log(`Type:${user.type} and ${IsNegociation}`, data);
-          setOrders(data);
-        })();
-        urlPost = "";
-      }
-
-
-
-    };
+  const getDados = async () => {
+    if (user) {
+      setOrders([]);
+      (async () => {
+        const { data } = await api.get(urlPost, {
+          headers: { Authorization: `Bearer ${getToken()}` },
+        });
+        // console.log(`Type:${user.type} and ${IsNegociation}`, data);
+        setOrders(data);
+      })();
+      urlPost = "";
+    }
+  };
   // const history = useHistory();
 
   useEffect(() => {
@@ -65,7 +61,6 @@ const DashBoardNegsPosts = () => {
         });
         // console.log(data);
         setUser(data);
-        
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +73,6 @@ const DashBoardNegsPosts = () => {
     })();
   }, [IsNegociation, user]);
 
-
   const handleInput = (e) => {
     setInput(e.target.value);
   };
@@ -90,7 +84,6 @@ const DashBoardNegsPosts = () => {
   const getPosts = async () => {
     await setIsNegociation(false);
   };
-
 
   return (
     <DashBoardContainer>
@@ -163,7 +156,7 @@ const DashBoardNegsPosts = () => {
               </DashBoardContent>
             ))}
 
-{user.type === "provider" && // CARDS NEGOCIATION
+        {user.type === "provider" && // CARDS NEGOCIATION
           IsNegociation === false &&
           orders.map((order, index) => (
             <DashBoardContent key={index}>
@@ -193,8 +186,6 @@ const DashBoardNegsPosts = () => {
                 />
               </DashBoardContent>
             ))}
-
-       
       </DivScrool>
     </DashBoardContainer>
   );

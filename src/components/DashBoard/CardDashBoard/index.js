@@ -128,19 +128,17 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
         <DivName>
           <h4>{getClient(clients, order.userId).name}</h4>
-          <h4>{`Categoria: ${
+          <p>{`Categoria: ${
             categories.find((category) => category.id == order.categoryId).name
-          }`}</h4>
+          }`}</p>
         </DivName>
 
         <DivDate>
           <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-          <h4></h4>
         </DivDate>
 
         <DivStatus>
           <h4>{orderState.status}</h4>
-          <h4></h4>
         </DivStatus>
 
         {orderState.status === "requested" ? (
@@ -278,13 +276,15 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         ) : null}
 
         <DivClose>
-          <div onClick={handleCancelOrder}>
-            <CgCloseO color={"#24FF00"} />
-          </div>
+          <button onClick={handleCancelOrder}>
+            <CgCloseO size={24} color={"#eb4d4b"} />
+          </button>
         </DivClose>
 
         <DivCompartilhar>
-          <MdPermPhoneMsg color={"#24FF00"} />
+          <button>
+            <MdPermPhoneMsg size={24} color={"#24FF00"} />
+          </button>
         </DivCompartilhar>
       </DivCardDashBoard>
       {showAvModal && (
