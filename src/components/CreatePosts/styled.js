@@ -62,6 +62,29 @@ export const Container = styled.div`
     textarea::placeholder {
       color: rgba(255, 255, 255, 0.5);
     }
+
+    select {
+      width: 25rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--white);
+      margin: 1rem 0;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--blue-400);
+      font-size: 1rem;
+      outline: none;
+
+      @media (max-width: 1190px) {
+        width: 100%;
+      }
+
+    }
+    #appearance-select option {
+      background-color: #979aa2;
+    }
   }
 `;
 
