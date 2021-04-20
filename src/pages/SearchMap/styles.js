@@ -162,6 +162,7 @@ export const SearchBox = styled.div`
       opacity: 1;
     }
   }
+  input::placeholder{color:lightgray}
 
   button {
     width: 3rem;
