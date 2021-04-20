@@ -178,6 +178,10 @@ const SearchMap = () => {
     initUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+      handleSearch()
+  },[searchValue])
   return (
     JSON.stringify(user) !== "{}" && (
       <Container>
@@ -286,10 +290,8 @@ const SearchMap = () => {
                   type="text"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
+                  placeholder="Pesquise por nome..."
                 />
-                <button onClick={handleSearch}>
-                  <SearchIcon />
-                </button>
               </SearchBox>
               <UsersBox>
                 {user.type === "provider"
