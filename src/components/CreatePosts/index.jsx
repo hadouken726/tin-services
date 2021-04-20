@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, DivBox, Button } from "./styled";
 import { getId, getToken } from "../../services/auth";
 import api from "../../services/api";
@@ -6,7 +6,8 @@ import { useUser } from "../../contexts/User";
 import { categories } from "../../utils/categories";
 import { useForm } from "react-hook-form";
 
-export default function CreatePosts() {
+export default function CreatePosts({handleCloseModal}) {
+  const [recharge, setRecharge] = useState(false);
   const { setUser } = useUser({});
   const userId = getId();
   const { register, handleSubmit } = useForm();
@@ -17,8 +18,8 @@ export default function CreatePosts() {
     (async () => {
       try {
         await api.post(`posts/`, { ...data, userId, status, changedAt });
-        console.log(data);
-        console.log("Anúncio enviado com sucesso !");
+        setRecharge(true);
+        handleCloseModal();
       } catch (error) {
         console.log(error);
       }
@@ -36,7 +37,7 @@ export default function CreatePosts() {
         console.log(error);
       }
     })();
-  }, []);
+  }, [recharge]);
 
   return (
     <Container>
@@ -48,7 +49,7 @@ export default function CreatePosts() {
           <div id="appearance-select">
             <select {...register("categoryId")}>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option className="option" key={category.id} value={category.id}>
                   {category.name}
                 </option>
               ))}

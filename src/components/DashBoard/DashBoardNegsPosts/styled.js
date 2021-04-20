@@ -161,24 +161,25 @@ export const LinkText = styled.div`
   .ButtonNegisNegociationtrue {
     text-decoration: underline;
     cursor: pointer;
-    color: white;
+    color: var(--blue-400);
   }
 
   .ButtonNegisNegociationfalse {
-    text-decoration: underline;
+    text-decoration: normal;
     cursor: pointer;
-    color: blue;
+    color: var(--text);
   }
   .ButtonPostisNegociationfalse {
     text-decoration: underline;
     cursor: pointer;
-    color: white;
+    color: var(--blue-400);
+    
   }
 
   .ButtonPostisNegociationtrue {
-    text-decoration: underline;
+    text-decoration: normal;
     cursor: pointer;
-    color: blue;
+    color: var(--text);
   }
 
   /* @media (max-width: 998px) {
