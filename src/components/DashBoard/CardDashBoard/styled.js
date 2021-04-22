@@ -10,6 +10,11 @@ export const DivCardDashBoard = styled.div`
   justify-content: space-between;
   padding: 0 1rem;
 
+  h3 {
+    font-size: 1rem;
+    font-weight: 800;
+  }
+
   h4 {
     font-size: 1rem;
   }
@@ -49,6 +54,12 @@ export const DivCompartilhar = styled.div`
 `;
 
 export const DivClose = styled.div`
+  button {
+    background-color: transparent;
+  }
+`;
+
+export const DivNegociatePosts = styled.div`
   button {
     background-color: transparent;
   }

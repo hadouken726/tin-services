@@ -17,6 +17,9 @@ const FormCompleteRegister = () => {
   const [currentZipCode, setCurrentZipCode] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
   const [adressData, setAdressData] = useState({});
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+  const [adress, setAdress] = useState("");
   const getData = JSON.parse(localStorage.getItem("formData"));
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +28,24 @@ const FormCompleteRegister = () => {
     setIsModalOpen(false);
     history.push("/login");
   };
+
+  const getUserGeolocation = () => {
+    fetch(
+      `https://nominatim.openstreetmap.org/search?q=${adress}&format=json&polygon_geojson=1&addressdetails=1`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setLat(data[0].lat);
+        setLng(data[0].lon);
+      });
+  };
+
+  useEffect(() => {
+    if (adress !== "") {
+      getUserGeolocation();
+    }
+  }, [adress]);
 
   let zipCodeSchema = yup.object().shape({
     zipcode: yup
@@ -57,6 +78,14 @@ const FormCompleteRegister = () => {
             setValue("district", response.data.neighborhood);
             setValue("city", response.data.city);
             setValue("state", response.data.state);
+            setAdress(
+              response.data.street.split(" ").join("+") +
+                "+" +
+                response.data.city.split(" ").join("+") +
+                "+" +
+                response.data.state.split(" ").join("+") +
+                "+Brazil"
+            );
           })
           .catch("Erro!");
       })
@@ -78,7 +107,7 @@ const FormCompleteRegister = () => {
   const handleData = async (data) => {
     console.log(data);
     await api
-      .post("/register", { ...getData, ...data })
+      .post("/register", { ...getData, ...data, lat, lng })
       .then(() => handleOpenModal())
       .catch((err) => console.log(err));
     localStorage.removeItem("formData");
