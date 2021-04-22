@@ -1,12 +1,16 @@
 import { MdShare, MdPermPhoneMsg } from "react-icons/md";
 import { CgCloseO } from "react-icons/cg";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaPhoneSquare } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
 import { useEffect, useState } from "react";
 import api from "../../../services/api";
 import axios from "axios";
 import { categories } from "../../../utils/categories";
 import CreateAvaliation from "../../CreateAvaliation";
+import GlobalModal from "../../GlobalModal";
+import ShareNegociations from "../../ShareNegociations";
+import ReactWhatsapp from "react-whatsapp";
+import { ImWhatsapp } from "react-icons/im";
 import {
   getProvidersPlusAv,
   getClientsPlusAv,
@@ -24,12 +28,10 @@ import {
   DivEdit,
   Accept,
   Decline,
+  DivNegociatePosts,
 } from "./styled";
-import GlobalModal from "../../GlobalModal";
-import ShareNegociations from "../../ShareNegociations";
 
 const CardDashBoard = ({ order, type, IsNegociation, user }) => {
-
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
   const [orderState, setOrderState] = useState(order);
@@ -37,13 +39,14 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const handleCloseModal = () => setShowAvModal(false);
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
-  const [isOpen, setIsOpen] = useState(false)
-    const handleCloseShare = () => {
-      setIsOpen(false)
-    }
-    const handleOpenShare = () => {
-      setIsOpen(true)
-    }
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCloseShare = () => {
+    setIsOpen(false);
+  };
+  const handleOpenShare = () => {
+    setIsOpen(true);
+  };
   const handleCancelOrder = async () => {
     try {
       const changedOrder = { ...order, status: "canceled" };
@@ -127,7 +130,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </UserAvatarContainer>
 
         <DivName>
-          <h4>{getClient(clients, order.userId).name}</h4>
+          <h3>{getClient(clients, order.userId).name}</h3>
           <p>{`Categoria: ${
             categories.find((category) => category.id == order.categoryId).name
           }`}</p>
@@ -159,11 +162,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           orderState.evaluatedBy.includes(orderState.providerId) ? (
           <DivStars>
             <ReactStars
-              edit={false} // aqui podemos editar com true
-              // value={clients.length > 0  ? Number(getClient(clients, order.userId).avaliations.find(
-              //   (avaliation) => avaliation.evaluatedId === order.userId
-              // ).score): 0}
-
+              edit={false}
               value={
                 avaliations.length > 0 &&
                 avaliations.find(
@@ -183,9 +182,19 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             />
           </DivStars>
         ) : null}
-        <DivCompartilhar >
-          <MdShare color={"#24FF00"} />
-        </DivCompartilhar>
+        <DivNegociatePosts>
+          <ReactWhatsapp
+            className="zap-button"
+            style={{ color: "#24FF00", width: "65px" }}
+            number={"55" + getClient(clients, order.userId).phone}
+            message={`Tin - services: Olá, presto serviços em ${
+              categories.find((category) => category.id == order.categoryId)
+                .name
+            },`}
+          >
+            <ImWhatsapp />
+          </ReactWhatsapp>
+        </DivNegociatePosts>
       </DivCardDashBoard>
       {showAvModal && (
         <CreateAvaliation
@@ -221,17 +230,10 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
         <DivDate>
           <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-          <h4></h4>
         </DivDate>
 
         <DivStatus>
-          {/*<select onChange={handleClientStatus} defaultValue={orderState.status} name="select">*/}
-          {/*    <option value="requested">requested</option>*/}
-          {/*    <option value="opened">opened</option>*/}
-          {/*    <option value="done">done</option>*/}
-          {/*</select>*/}
           <h4>{orderState.status}</h4>
-          <h4></h4>
         </DivStatus>
         {orderState.status === "requested" ? (
           <div>
@@ -250,7 +252,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           orderState.evaluatedBy.includes(orderState.userId) ? (
           <DivStars>
             <ReactStars
-              edit={false} 
+              edit={false}
               value={
                 avaliations.length > 0 &&
                 avaliations.find(
@@ -296,14 +298,16 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
           user={user}
         />
       )}
-        <GlobalModal isOpen={isOpen} onRequestClose={handleCloseShare}>
-            <ShareNegociations provider={getProvider(providers, order.providerId)} client={user} categoryName={categories.find((category) => category.id == order.categoryId).name}>
-
-            </ShareNegociations>
-        </GlobalModal>
+      <GlobalModal isOpen={isOpen} onRequestClose={handleCloseShare}>
+        <ShareNegociations
+          provider={getProvider(providers, order.providerId)}
+          client={user}
+          categoryName={
+            categories.find((category) => category.id == order.categoryId).name
+          }
+        ></ShareNegociations>
+      </GlobalModal>
     </>
-
-
   ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
     // CLIENT EM ANUNCIOS
     <DivCardDashBoard>
@@ -320,12 +324,10 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
 
       <DivDate>
         <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-        <h4></h4>
       </DivDate>
 
       <DivStatus>
         <h4>{order.status}</h4>
-        <h4></h4>
       </DivStatus>
 
       <DivClose>
@@ -350,29 +352,33 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </UserAvatarContainer>
 
         <DivName>
-          <h4>{"Tipo de Serviço:"}</h4>
-          <h4>{`${
+          <h3>{getClient(clients, order.userId).name}</h3>
+          <h4>{`Tipo de Serviço: ${
             categories.find((category) => category.id == order.categoryId).name
           }`}</h4>
         </DivName>
 
         <DivDate>
           <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-          <h4></h4>
         </DivDate>
 
         <DivStatus>
           <h4>{order.status}</h4>
-          <h4></h4>
         </DivStatus>
 
-        <DivClose>
-          <CgCloseO color={"#24FF00"} />
-        </DivClose>
-
-        <DivEdit>
-          <FaEdit color={"#24FF00"} />
-        </DivEdit>
+        <DivNegociatePosts>
+          <ReactWhatsapp
+            className="zap-button"
+            style={{ color: "#24FF00", width: "65px" }}
+            number={"55" + getClient(clients, order.userId).phone}
+            message={`Meu nome é ${user.name}, presto serviços em ${
+              categories.find((category) => category.id == order.categoryId)
+                .name
+            }, posso fazer um orçamento sem compromisso para você? Obrigado fico no aguardo.`}
+          >
+            <ImWhatsapp />
+          </ReactWhatsapp>
+        </DivNegociatePosts>
       </DivCardDashBoard>
     )
   );
