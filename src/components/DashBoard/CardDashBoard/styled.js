@@ -28,6 +28,22 @@ export const UserAvatarContainer = styled.div`
   }
 `;
 
+export const DivAvaliate = styled.div`
+  background-color: transparent;
+
+  button {
+    display: block;
+    font-size: 1rem;
+    background-color:var(--white); 
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    color: var(--blue-400);
+    font-weight: bold;
+    margin: 0 auto;
+    align-self: center;
+  }
+`;
+
 export const ProviderAvatar = styled.img`
   width: 35px;
   height: 35px;
@@ -53,6 +69,35 @@ export const DivCompartilhar = styled.div`
   }
 `;
 
+export const DivOption = styled.div`
+  width:6rem;
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  
+  button {
+    display: block;
+    background-color: transparent;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+  }
+`;
+export const DivCancel = styled.div`
+  width:6rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  
+  button {
+    display: block;
+    background-color: transparent;
+    height: 2rem;
+    width: 2rem;
+    padding: 0;
+  }
+`;
+
 export const DivClose = styled.div`
   button {
     background-color: transparent;
@@ -68,12 +113,14 @@ export const DivNegociatePosts = styled.div`
 export const DivEdit = styled.div``;
 
 export const Accept = styled(ImCheckboxChecked)`
-  margin-left: 0.5rem;
   font-size: 2rem;
   color: #24ff00;
+  width: 2rem;
+  height: 2rem;
 `;
 export const Decline = styled(FaWindowClose)`
-  margin-left: 0.5rem;
   font-size: 2rem;
   color: #eb4d4e;
+  width: 2rem;
+  height: 2rem;
 `;

@@ -134,21 +134,20 @@ const DashBoardNegsPosts = () => {
                 user={user}
                 type={user.type}
                 IsNegociation={IsNegociation}
+                orders={orders}
+                setOrders={setOrders}
               />
             </DashBoardContent>
           ))}
 
         {user.type === "client" && // NEGOCIATION
           IsNegociation &&
-          orders
-            // .filter((order) =>
-            //   order.user.name?.toLowerCase().includes(input.toLowerCase())
-            // )
-            // .sort((a, b) => a.user.name - b.user.name)
-            .map((order, index) => (
+          orders.map((order, index) => (
               <DashBoardContent key={index}>
                 <CardDashBoard
                   order={order}
+                  orders={orders}
+                  setOrders={setOrders}
                   user={user}
                   type={user.type}
                   IsNegociation={IsNegociation}
