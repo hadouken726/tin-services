@@ -53,7 +53,7 @@ const FormInitialRegister = () => {
     let type = isProvider ? "provider" : "client";
     localStorage.setItem(
       "formData",
-      JSON.stringify({ ...data, type })
+      JSON.stringify({ ...data, type, urlAvatar:"https://trello-attachments.s3.amazonaws.com/60831956abd49326298121ee/512x512/e68e440660e0b138f28cc83b21d9e98a/avatarDefault.png" })
     );
     history.push("/completeregister");
   };
