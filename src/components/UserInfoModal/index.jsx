@@ -16,8 +16,8 @@ import {
 import { categories } from "../../utils/categories";
 
 import api from "../../services/api";
-import Stars from "../Stars";
 import { useHistory } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
 
 const UserInfoModal = ({ user, clients, providers }) => {
   const [orders, setOrders] = useState([]);
@@ -106,7 +106,18 @@ const UserInfoModal = ({ user, clients, providers }) => {
                             .name}
                       </p>
                       <p>{avaliation.feedback}</p>
-                      <Stars score={avaliation.score} />
+                        <ReactStars
+                            edit={false}
+                            value={avaliation.score}
+                            color="#444"
+                            count={5}
+                            size={18}
+                            isHalf={false}
+                            emptyIcon={<i className="far fa-star"></i>}
+                            halfIcon={<i className="fa fa-star-half-alt"></i>}
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                        />
                     </article>
                   ) : (
                     <article key={avaliation.id}>
@@ -116,7 +127,18 @@ const UserInfoModal = ({ user, clients, providers }) => {
                             .name}
                       </p>
                       <p>{avaliation.feedback}</p>
-                      <Stars score={avaliation.score} />
+                        <ReactStars
+                            edit={false}
+                            value={avaliation.score}
+                            color="#444"
+                            count={5}
+                            size={18}
+                            isHalf={false}
+                            emptyIcon={<i className="far fa-star"></i>}
+                            halfIcon={<i className="fa fa-star-half-alt"></i>}
+                            fullIcon={<i className="fa fa-star"></i>}
+                            activeColor="#ffd700"
+                        />
                     </article>
                   )
                 )}

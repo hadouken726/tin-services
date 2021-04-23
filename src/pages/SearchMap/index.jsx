@@ -4,7 +4,7 @@ import { getToken, getId } from "../../services/auth";
 import UserMarker from "../../components/UserMarker";
 import Leaflet from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import Stars from "../../components/Stars";
+import ReactStars from "react-rating-stars-component/dist/react-stars";
 import Glass from "../../components/Glass";
 import GlobalModal from "../../components/GlobalModal";
 
@@ -34,6 +34,7 @@ import api from "../../services/api";
 import UserInfoModal from "../../components/UserInfoModal";
 import { getClientsPlusAv, getProvidersPlusAv } from "../../utils/othersInfo";
 import EditUserModal from "../../components/EditUserModal";
+import {grayscale} from "polished";
 
 const SearchMap = () => {
   const token = getToken();
@@ -299,12 +300,21 @@ const SearchMap = () => {
                       <User key={client.id}>
                         <div className="user-avatar">
                           <img src={client.urlAvatar} alt="Avatar" />
-                          <Stars
-                            score={client.avaliations.reduce(
-                              (score, avaliation) => score + avaliation.score,
-                              0
-                            )}
-                          />
+                            <ReactStars
+                                edit={false}
+                                value={client.avaliations.reduce(
+                                            (score, avaliation) => score + avaliation.score,
+                                            0
+                                )}
+                                color="#444"
+                                count={5}
+                                size={18}
+                                isHalf={false}
+                                emptyIcon={<i className="far fa-star"></i>}
+                                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                fullIcon={<i className="fa fa-star"></i>}
+                                activeColor="#ffd700"
+                            />
                         </div>
                         <div className="user-description">
                           <h3>{client.name}</h3>
@@ -321,12 +331,21 @@ const SearchMap = () => {
                       <User key={provider.id}>
                         <div className="user-avatar">
                           <img src={provider.urlAvatar} alt="Avatar" />
-                          <Stars
-                            score={provider.avaliations.reduce(
-                              (score, avaliation) => score + avaliation.score,
-                              0
-                            )}
-                          />
+                            <ReactStars
+                                edit={false}
+                                value={provider.avaliations.reduce(
+                                    (score, avaliation) => score + avaliation.score,
+                                    0
+                                )}
+                                color="#444"
+                                count={5}
+                                size={18}
+                                isHalf={false}
+                                emptyIcon={<i className="far fa-star"></i>}
+                                halfIcon={<i className="fa fa-star-half-alt"></i>}
+                                fullIcon={<i className="fa fa-star"></i>}
+                                activeColor="#ffd700"
+                            />
                         </div>
                         <div className="user-description">
                           <h3>{provider.name}</h3>
