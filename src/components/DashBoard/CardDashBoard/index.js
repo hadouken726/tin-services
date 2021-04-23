@@ -16,22 +16,23 @@ import {
   getClientsPlusAv,
 } from "../../../utils/othersInfo";
 import {
-  DivCardDashBoard,
-  UserAvatarContainer,
-  ProviderAvatar,
-  DivName,
-  DivDate,
-  DivStatus,
-  DivStars,
-  DivCompartilhar,
-  DivClose,
-  DivEdit,
-  Accept,
-  Decline,
-  DivNegociatePosts,
+    DivCardDashBoard,
+    UserAvatarContainer,
+    ProviderAvatar,
+    DivName,
+    DivDate,
+    DivStatus,
+    DivStars,
+    DivCompartilhar,
+    DivOption,
+    DivEdit,
+    DivClose,
+    Accept,
+    Decline,
+    DivNegociatePosts, DivCancel, DivAvaliate,
 } from "./styled";
 
-const CardDashBoard = ({ order, type, IsNegociation, user }) => {
+const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) => {
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
   const [orderState, setOrderState] = useState(order);
@@ -40,6 +41,24 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
   const [isOpen, setIsOpen] = useState(false);
+  const renderStatus = (status) => {
+      switch (status) {
+          case "requested":
+              return "Serviço solicitado"
+                break
+          case "canceled":
+              return "Serviço cancelado"
+          break
+          case "opened":
+              return "Serviço em realização"
+              break
+          case "recused":
+              return "Serviço recusado"
+          break
+          case "done":
+              return "Serviço realizado"
+      }
+  }
 
   const handleCloseShare = () => {
     setIsOpen(false);
@@ -74,6 +93,15 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       console.log(err);
     }
   };
+    const handleDone = async () => {
+        try {
+            const changedOrder = { ...order, status: "done" };
+            const response = await api.patch(`/orders/${order.id}`, changedOrder);
+            setOrderState(response.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
@@ -141,23 +169,23 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </DivDate>
 
         <DivStatus>
-          <h4>{orderState.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
 
         {orderState.status === "requested" ? (
-          <div>
-            <button onClick={handleAcceptRequest}>
+          <DivOption>
+            <button title="Aceitar serviço" onClick={handleAcceptRequest}>
               <Accept />
             </button>
-            <button onClick={handleRecuseRequest}>
+            <button title="Recusar serviço" onClick={handleRecuseRequest}>
               <Decline />
             </button>
-          </div>
+          </DivOption>
         ) : orderState.status === "done" &&
           !orderState.evaluatedBy.includes(orderState.providerId) ? (
-          <div>
+          <DivAvaliate>
             <button onClick={handleOpenModal}>Avaliar cliente</button>
-          </div>
+          </DivAvaliate>
         ) : orderState.status === "done" &&
           orderState.evaluatedBy.includes(orderState.providerId) ? (
           <DivStars>
@@ -233,21 +261,26 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </DivDate>
 
         <DivStatus>
-          <h4>{orderState.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
         {orderState.status === "requested" ? (
-          <div>
-            <button onClick={handleCancelOrder}>Cancelar solicitação</button>
-          </div>
+          <DivCancel>
+            <button onClick={handleCancelOrder}><Decline/></button>
+          </DivCancel>
         ) : orderState.status === "opened" ? (
-          <div>
-            <button onClick={handleCancelOrder}>Cancelar serviço</button>
-          </div>
+            <DivOption>
+                <button title="Definir serviço como concluído" onClick={handleDone}>
+                    <Accept />
+                </button>
+                <button title="Cancelar serviço" onClick={handleCancelOrder}>
+                    <Decline />
+                </button>
+            </DivOption>
         ) : orderState.status === "done" &&
           !orderState.evaluatedBy.includes(orderState.userId) ? (
-          <div>
+          <DivAvaliate>
             <button onClick={handleOpenModal}>Avaliar serviço</button>
-          </div>
+          </DivAvaliate>
         ) : orderState.status === "done" &&
           orderState.evaluatedBy.includes(orderState.userId) ? (
           <DivStars>
@@ -272,13 +305,6 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
             />
           </DivStars>
         ) : null}
-
-        <DivClose>
-          <button onClick={handleCancelOrder}>
-            <CgCloseO size={24} color={"#eb4d4b"} />
-          </button>
-        </DivClose>
-
         <DivCompartilhar>
           <button onClick={handleOpenShare}>
             <MdPermPhoneMsg size={24} color={"#24FF00"} />
@@ -327,7 +353,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
       </DivDate>
 
       <DivStatus>
-        <h4>{order.status}</h4>
+        <h4>{renderStatus(orderState.status)}</h4>
       </DivStatus>
 
       <DivClose>
@@ -363,7 +389,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user }) => {
         </DivDate>
 
         <DivStatus>
-          <h4>{order.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
 
         <DivNegociatePosts>
