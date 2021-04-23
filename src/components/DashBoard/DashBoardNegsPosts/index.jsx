@@ -186,6 +186,7 @@ const DashBoardNegsPosts = () => {
                   IsNegociation={IsNegociation}
                   setIsNegociation={setIsNegociation}
                   setDeleted={setDeleted}
+                  deleted={deleted}
                 />
               </DashBoardContent>
             ))}
