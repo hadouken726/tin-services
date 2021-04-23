@@ -22,6 +22,7 @@ const DashBoardNegsPosts = () => {
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState([]);
   const [IsNegociation, setIsNegociation] = useState(true);
+  const [deleted, setDeleted] = useState(false);
 
   let urlPost = "";
   if (IsNegociation) {
@@ -71,7 +72,7 @@ const DashBoardNegsPosts = () => {
     (async () => {
       getDados();
     })();
-  }, [IsNegociation, user]);
+  }, [IsNegociation, user, deleted]);
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -151,6 +152,7 @@ const DashBoardNegsPosts = () => {
                   user={user}
                   type={user.type}
                   IsNegociation={IsNegociation}
+                  
                 />
               </DashBoardContent>
             ))}
@@ -182,6 +184,9 @@ const DashBoardNegsPosts = () => {
                   user={user}
                   type={user.type}
                   IsNegociation={IsNegociation}
+                  setIsNegociation={setIsNegociation}
+                  setDeleted={setDeleted}
+                  deleted={deleted}
                 />
               </DashBoardContent>
             ))}
