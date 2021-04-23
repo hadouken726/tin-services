@@ -44,6 +44,7 @@ const CardDashBoard = ({
   orders,
   setOrders,
   setDeleted,
+    deleted
 }) => {
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
@@ -77,7 +78,7 @@ const CardDashBoard = ({
     try {
       const response = await api.delete(`/posts/${order.id}`);
       console.log(response.data);
-      setDeleted(true);
+      setDeleted(!deleted);
     } catch (err) {
       console.log(err);
     }
