@@ -52,7 +52,11 @@ export const ProviderAvatar = styled.img`
 `;
 
 export const DivName = styled.div`
-  width: 15rem;
+  width: 20rem;
+`;
+
+export const DivCategory = styled.div`
+  width: 12rem;
 `;
 
 export const DivDate = styled.div`
@@ -101,12 +105,14 @@ export const DivCancel = styled.div`
 export const DivClose = styled.div`
   button {
     background-color: transparent;
+    cursor: pointer;
   }
 `;
 
 export const DivNegociatePosts = styled.div`
   button {
     background-color: transparent;
+    cursor: pointer;
   }
 `;
 
