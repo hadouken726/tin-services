@@ -41,6 +41,24 @@ const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) =
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
   const [isOpen, setIsOpen] = useState(false);
+  const renderStatus = (status) => {
+      switch (status) {
+          case "requested":
+              return "Serviço solicitado"
+                break
+          case "canceled":
+              return "Serviço cancelado"
+          break
+          case "opened":
+              return "Serviço em realização"
+              break
+          case "recused":
+              return "Serviço recusado"
+          break
+          case "done":
+              return "Serviço realizado"
+      }
+  }
 
   const handleCloseShare = () => {
     setIsOpen(false);
@@ -151,7 +169,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) =
         </DivDate>
 
         <DivStatus>
-          <h4>{orderState.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
 
         {orderState.status === "requested" ? (
@@ -243,7 +261,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) =
         </DivDate>
 
         <DivStatus>
-          <h4>{orderState.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
         {orderState.status === "requested" ? (
           <DivCancel>
@@ -335,7 +353,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) =
       </DivDate>
 
       <DivStatus>
-        <h4>{order.status}</h4>
+        <h4>{renderStatus(orderState.status)}</h4>
       </DivStatus>
 
       <DivClose>
@@ -371,7 +389,7 @@ const CardDashBoard = ({ order, type, IsNegociation, user, orders, setOrders}) =
         </DivDate>
 
         <DivStatus>
-          <h4>{order.status}</h4>
+          <h4>{renderStatus(orderState.status)}</h4>
         </DivStatus>
 
         <DivNegociatePosts>
