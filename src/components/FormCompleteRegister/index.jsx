@@ -17,8 +17,8 @@ const FormCompleteRegister = () => {
   const [currentZipCode, setCurrentZipCode] = useState("");
   const [zipCodeError, setZipCodeError] = useState("");
   const [adressData, setAdressData] = useState({});
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
+  const [lat, setLat] = useState(-23.97573);
+  const [lng, setLng] = useState(-46.30715);
   const [adress, setAdress] = useState("");
   const getData = JSON.parse(localStorage.getItem("formData"));
 
@@ -34,11 +34,13 @@ const FormCompleteRegister = () => {
       `https://nominatim.openstreetmap.org/search?q=${adress}&format=json&polygon_geojson=1&addressdetails=1`
     )
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setLat(data[0].lat);
-        setLng(data[0].lon);
-      });
+      .then((response) => {
+          if(JSON.stringify(response.data) !== "[]"){
+              console.log(response.data);
+              setLat(response.data[0].lat);
+              setLng(response.data[0].lon);
+          }
+      }).catch(err=>console.log(err));
   };
 
   useEffect(() => {
