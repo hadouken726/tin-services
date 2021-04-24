@@ -50,6 +50,7 @@ const EditUserModal = ({ user }) => {
           <div className="icon-box">
             <AvatarIcon size={45} />
           </div>
+          <label>URL Avatar:</label>
           <input
             {...register("urlAvatar")}
             name="urlAvater"
@@ -60,6 +61,7 @@ const EditUserModal = ({ user }) => {
               setUrl(e.target.value);
             }}
           />
+          <label>Latitude:</label>
           <input
             {...register("lat")}
             name="lat"
@@ -70,6 +72,7 @@ const EditUserModal = ({ user }) => {
               setLat(e.target.value);
             }}
           />
+          <label>Longitude:</label>
           <input
             {...register("lng")}
             name="lng"

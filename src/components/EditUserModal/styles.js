@@ -16,9 +16,7 @@ export const Container = styled.div`
   }
 
   form {
-    
-
-    margin-top: 2rem;
+    margin-top: 4rem;
 
     section {
       display: flex;
@@ -55,6 +53,17 @@ export const Container = styled.div`
         font-size: 1rem;
         margin-bottom: 1rem;
       }
+
+      label {
+        margin: 0;
+        font-weight: 900;
+        font-size: 0.9rem;
+        position: relative;
+        color: var(--blue-400);
+        width: 96%;
+        background-color: transparent;
+        transform: translate(1, 16px) scale(1);
+      }
     }
 
     p {
@@ -66,7 +75,7 @@ export const Container = styled.div`
     button {
       display: block;
       margin: 0 auto;
-      margin-top: 6rem;
+      margin-top: 10rem;
       background-color: var(--blue-400);
       padding: 1rem 1.5rem;
       border-radius: 2rem;
