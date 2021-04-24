@@ -6,8 +6,13 @@ import { Container, AvatarIcon } from "./styles";
 import { getToken } from "../../services/auth";
 
 import api from "../../services/api";
+import { useState } from "react";
 
 const EditUserModal = ({ user }) => {
+  const [url, setUrl] = useState(user.urlAvatar);
+  const [lat, setLat] = useState(user.lat);
+  const [lng, setLng] = useState(user.lng);
+
   const schema = yup.object().shape({
     urlAvatar: yup.string("Somente texto").url().required("Campo obrigatório"),
   });
@@ -43,25 +48,37 @@ const EditUserModal = ({ user }) => {
       <form onSubmit={handleSubmit(handleData)}>
         <section>
           <div className="icon-box">
-            <AvatarIcon size={45}/>
+            <AvatarIcon size={45} />
           </div>
           <input
             {...register("urlAvatar")}
             name="urlAvater"
+            value={url}
             type="text"
             placeholder="Editar url do avatar:"
+            onChange={(e) => {
+              setUrl(e.target.value);
+            }}
           />
           <input
             {...register("lat")}
             name="lat"
+            value={lat}
             type="text"
             placeholder="Editar a latitude de sua geolocalização"
+            onChange={(e) => {
+              setLat(e.target.value);
+            }}
           />
           <input
             {...register("lng")}
             name="lng"
+            value={lng}
             type="text"
             placeholder="Editar a longitude de sua geolocalização"
+            onChange={(e) => {
+              setLng(e.target.value);
+            }}
           />
         </section>
         <p>{errors.urlAvatar?.message}</p>
