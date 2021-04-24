@@ -11,6 +11,8 @@ import GlobalModal from "../../GlobalModal";
 import ShareNegociations from "../../ShareNegociations";
 import ReactWhatsapp from "react-whatsapp";
 import { ImWhatsapp } from "react-icons/im";
+import EditPosts from "../../EditPosts";
+
 import {
   getProvidersPlusAv,
   getClientsPlusAv,
@@ -44,7 +46,9 @@ const CardDashBoard = ({
   orders,
   setOrders,
   setDeleted,
-    deleted
+  deleted,
+  setEdited,
+  edited
 }) => {
   const [providers, setProviders] = useState([]);
   const [clients, setClients] = useState([]);
@@ -54,6 +58,7 @@ const CardDashBoard = ({
   const [avaliations, setAvaliations] = useState([]);
   const handleOpenModal = () => setShowAvModal(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   const renderStatus = (status) => {
     switch (status) {
@@ -87,6 +92,16 @@ const CardDashBoard = ({
   const handleCloseShare = () => {
     setIsOpen(false);
   };
+
+  const handleCloseEditPosts = () => {
+    setEdited(!edited);
+    setIsEditOpen(false);
+  };
+
+  const handleOpenEditPosts = () => {
+    setIsEditOpen(true);
+  };
+
   const handleOpenShare = () => {
     setIsOpen(true);
   };
@@ -244,7 +259,7 @@ const CardDashBoard = ({
                 .name
             },`}
           >
-            <ImWhatsapp />
+            <ImWhatsapp size={24} />
           </ReactWhatsapp>
         </DivNegociatePosts>
       </DivCardDashBoard>
@@ -333,7 +348,7 @@ const CardDashBoard = ({
         ) : null}
         <DivCompartilhar>
           <button onClick={handleOpenShare}>
-            <MdPermPhoneMsg size={24} color={"#24FF00"} />
+            <MdShare size={24} color={"#24FF00"} />
           </button>
         </DivCompartilhar>
       </DivCardDashBoard>
@@ -362,36 +377,52 @@ const CardDashBoard = ({
     </>
   ) : type === "client" && IsNegociation === false && providers.length > 0 ? (
     // CLIENT EM ANUNCIOS
-    <DivCardDashBoard>
-      <DivCategory>
-        <h3>{"Categoria:"}</h3>
-        <h4>
-          {categories.find((category) => category.id == order.categoryId).name}
-        </h4>
-      </DivCategory>
+    <>
+      <DivCardDashBoard>
+        <DivCategory>
+          <h3>{"Categoria:"}</h3>
+          <h4>
+            {
+              categories.find((category) => category.id == order.categoryId)
+                .name
+            }
+          </h4>
+        </DivCategory>
 
-      <DivName>
-        <h4>{order.desc}</h4>
-      </DivName>
+        <DivName>
+          <h4>{order.desc}</h4>
+        </DivName>
 
-      <DivDate>
-        <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
-      </DivDate>
+        <DivDate>
+          <h4>{new Date(order.changedAt).toLocaleDateString()}</h4>
+        </DivDate>
 
-      <DivStatus>
-        <h4>{renderStatus(orderState.status)}</h4>
-      </DivStatus>
+        <DivStatus>
+          <h4>{renderStatus(orderState.status)}</h4>
+        </DivStatus>
 
-      <DivClose>
-        <button onClick={handleDeletePosts}>
-          <CgCloseO size={24} color={"red"} />
-        </button>
-      </DivClose>
+        <DivClose>
+          <button onClick={handleDeletePosts}>
+            <CgCloseO size={24} color={"red"} />
+          </button>
+        </DivClose>
 
-      <DivEdit>
-        <FaEdit color={"#24FF00"} />
-      </DivEdit>
-    </DivCardDashBoard>
+        <DivEdit>
+          <button onClick={handleOpenEditPosts}>
+            <FaEdit size={24} color={"#24FF00"} />
+          </button>
+        </DivEdit>
+      </DivCardDashBoard>
+
+      <GlobalModal isOpen={isEditOpen} onRequestClose={handleCloseEditPosts}>
+        <EditPosts
+          handleCloseModal={handleCloseEditPosts}
+          orderId={order.id}
+          desc={order.desc}
+          categoryId={order.categoryId}
+        ></EditPosts>
+      </GlobalModal>
+    </>
   ) : (
     // PROVIDER PODE VER POSTS E ENCAMINHAR UMA MENSAGEM AO CLIENTE
     type === "provider" &&
@@ -430,7 +461,7 @@ const CardDashBoard = ({
                 .name
             }, posso fazer um orçamento sem compromisso para você? Obrigado fico no aguardo.`}
           >
-            <ImWhatsapp />
+            <ImWhatsapp size={24} />
           </ReactWhatsapp>
         </DivNegociatePosts>
       </DivCardDashBoard>

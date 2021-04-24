@@ -1,11 +1,8 @@
-// import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import api from "../../../../src/services/api";
 import CardDashBoard from "../CardDashBoard";
-// import { useHistory } from "react-router";
 import { useUser } from "../../../contexts/User";
-import { categories } from "../../../utils/categories";
 import { getId, getToken } from "../../../services/auth";
 
 import {
@@ -23,6 +20,7 @@ const DashBoardNegsPosts = () => {
   const [orders, setOrders] = useState([]);
   const [IsNegociation, setIsNegociation] = useState(true);
   const [deleted, setDeleted] = useState(false);
+  const [edited, setEdited] = useState(false);
 
   let urlPost = "";
   if (IsNegociation) {
@@ -72,7 +70,7 @@ const DashBoardNegsPosts = () => {
     (async () => {
       getDados();
     })();
-  }, [IsNegociation, user, deleted]);
+  }, [IsNegociation, user, deleted, edited]);
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -187,6 +185,8 @@ const DashBoardNegsPosts = () => {
                   setIsNegociation={setIsNegociation}
                   setDeleted={setDeleted}
                   deleted={deleted}
+                  setEdited={setEdited}
+                  edited={edited}
                 />
               </DashBoardContent>
             ))}

@@ -34,7 +34,7 @@ export const DivAvaliate = styled.div`
   button {
     display: block;
     font-size: 1rem;
-    background-color:var(--white); 
+    background-color: var(--white);
     padding: 0.5rem 1rem;
     border-radius: 1rem;
     color: var(--blue-400);
@@ -74,11 +74,11 @@ export const DivCompartilhar = styled.div`
 `;
 
 export const DivOption = styled.div`
-  width:6rem;
+  width: 6rem;
   height: 2rem;
   display: flex;
   justify-content: space-between;
-  
+
   button {
     display: block;
     background-color: transparent;
@@ -88,11 +88,11 @@ export const DivOption = styled.div`
   }
 `;
 export const DivCancel = styled.div`
-  width:6rem;
+  width: 6rem;
   height: 2rem;
   display: flex;
   justify-content: center;
-  
+
   button {
     display: block;
     background-color: transparent;
@@ -116,7 +116,12 @@ export const DivNegociatePosts = styled.div`
   }
 `;
 
-export const DivEdit = styled.div``;
+export const DivEdit = styled.div`
+  button {
+    background-color: transparent;
+    cursor: pointer;
+  }
+`;
 
 export const Accept = styled(ImCheckboxChecked)`
   font-size: 2rem;
