@@ -16,16 +16,21 @@ export const Container = styled.div`
   }
 
   form {
+    
+
     margin-top: 2rem;
 
     section {
       display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+
       height: 3rem;
 
       div.icon-box {
         width: 3rem;
-        height: 3rem;
+        height: 4rem;
         margin-right: 0.5rem;
         border-radius: 50%;
         display: flex;
@@ -35,11 +40,11 @@ export const Container = styled.div`
         border-top: 2px solid rgba(255, 255, 255, 0.5);
         border-left: 2px solid rgba(255, 255, 255, 0.5);
         box-shadow: 0 1px 3px 3px rgba(0, 0, 0, 0.2);
+        margin-bottom: 2rem;
       }
 
       input {
         width: 100%;
-        height: 100%;
         border-radius: 1rem;
         background: var(--glass-bg);
         border-top: 2px solid rgba(255, 255, 255, 0.5);
@@ -48,6 +53,7 @@ export const Container = styled.div`
         padding: 0.5rem 1rem;
         color: var(--blue-400);
         font-size: 1rem;
+        margin-bottom: 1rem;
       }
     }
 
@@ -60,7 +66,7 @@ export const Container = styled.div`
     button {
       display: block;
       margin: 0 auto;
-      margin-top: 2rem;
+      margin-top: 6rem;
       background-color: var(--blue-400);
       padding: 1rem 1.5rem;
       border-radius: 2rem;

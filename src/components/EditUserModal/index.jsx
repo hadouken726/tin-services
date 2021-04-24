@@ -38,15 +38,31 @@ const EditUserModal = ({ user }) => {
   return (
     <Container>
       <h2>Editar perfil</h2>
-      <p>Olá {user.name}</p>
-      <p>Editar url do avatar:</p>
+      <p>Olá {user.name} </p>
 
       <form onSubmit={handleSubmit(handleData)}>
         <section>
           <div className="icon-box">
-            <AvatarIcon />
+            <AvatarIcon size={45}/>
           </div>
-          <input {...register("urlAvatar")} type="text" />
+          <input
+            {...register("urlAvatar")}
+            name="urlAvater"
+            type="text"
+            placeholder="Editar url do avatar:"
+          />
+          <input
+            {...register("lat")}
+            name="lat"
+            type="text"
+            placeholder="Editar a latitude de sua geolocalização"
+          />
+          <input
+            {...register("lng")}
+            name="lng"
+            type="text"
+            placeholder="Editar a longitude de sua geolocalização"
+          />
         </section>
         <p>{errors.urlAvatar?.message}</p>
         <button type="submit">Editar</button>
