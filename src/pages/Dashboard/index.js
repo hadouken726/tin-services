@@ -25,10 +25,14 @@ const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, setUser } = useUser({});
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+    const [IsNegociation, setIsNegociation] = useState(true);
 
   const userId = getId();
 
-  const handleOpenModal = () => setIsModalOpen(true);
+  const handleOpenModal = () => {
+      setIsNegociation(false);
+      setIsModalOpen(true);
+  }
 
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -102,7 +106,7 @@ const Dashboard = () => {
             </GlobalModal>
           </Header>
 
-          <DashBoardNegsPosts />
+          <DashBoardNegsPosts IsNegociation={IsNegociation} setIsNegociation={setIsNegociation} />
 
           {user.type === "client" && (
             <Button onClick={handleOpenModal} className="secondary">
