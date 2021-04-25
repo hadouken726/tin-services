@@ -3,22 +3,15 @@ import { useHistory } from "react-router";
 import Glass from "../../components/Glass";
 import GlobalModal from "../../components/GlobalModal";
 import CreatePosts from "../../components/CreatePosts";
-// import CreateAvaliation from "../../components/CreateAvaliation";
-
 import { useUser } from "../../contexts/User";
 import { getId, getToken } from "../../services/auth";
 
 import {
   Container,
   Header,
-  // Avatar,
-  // Logo,
-  // LogoImage,
-  // LogoAvatar,
   MapIcon,
   HomeIcon,
   OutIcon,
-  UserIcon,
   Button,
 } from "./styles";
 
