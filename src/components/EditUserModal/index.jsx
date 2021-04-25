@@ -86,7 +86,7 @@ const EditUserModal = ({ user }) => {
         </section>
         <p>{errors.urlAvatar?.message}</p>
         <button type="submit">Editar</button>
-        <a target="_blank" href={`https://www.google.com/search?q=${user.street} ${user.number} ${user.district}%2Fsp&oq=ru&aqs=chrome.0.69i59l3j69i57j0i433j46i433j46i131i433j46j46i131i433l2.1753j0j15&sourceid=chrome&ie=UTF-8`}>GoogleMaps</a>
+        <a target="_blank" href={`https://www.google.com/search?q=${user.street} ${user.number} ${user.district} ${user.city} ${user.state}&oq=ru&aqs=chrome.0.69i59l3j69i57j0i433j46i433j46i131i433j46j46i131i433l2.1753j0j15&sourceid=chrome&ie=UTF-8`}>GoogleMaps</a>
       </form>
     </Container>
   );

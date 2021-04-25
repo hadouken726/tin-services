@@ -13,12 +13,11 @@ import {
   DivScrool,
 } from "./styled";
 
-const DashBoardNegsPosts = () => {
+const DashBoardNegsPosts = ({IsNegociation, setIsNegociation}) => {
   const { user, setUser } = useUser({});
   const userId = getId();
   const [input, setInput] = useState("");
   const [orders, setOrders] = useState([]);
-  const [IsNegociation, setIsNegociation] = useState(true);
   const [deleted, setDeleted] = useState(false);
   const [edited, setEdited] = useState(false);
 
