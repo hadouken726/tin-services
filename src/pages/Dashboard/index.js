@@ -18,20 +18,31 @@ import {
 import imgLogo from "../../assets/logo.svg";
 import DashBoardNegsPosts from "../../components/DashBoard/DashBoardNegsPosts";
 import api from "../../services/api";
+import EditUserModal from "../../components/EditUserModal";
 
 const Dashboard = () => {
   const token = getToken();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, setUser } = useUser({});
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+
   const userId = getId();
 
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleCloseModal = () => setIsModalOpen(false);
 
+  const handleOpenEditModal = () => setEditModalOpen(true);
+
+  const handleCloseEditModal = () => setEditModalOpen(false);
+
   const history = useHistory();
 
   const sendTo = (route) => history.push(`/${route}`);
+
+  const handleEditUser = () => {
+    handleOpenEditModal();
+  };
 
   const logOut = () => {
     localStorage.clear();
@@ -74,7 +85,7 @@ const Dashboard = () => {
               <button onClick={() => sendTo("searchmap")}>
                 <MapIcon />
               </button>
-              <button>
+              <button onClick={handleEditUser}>
                 <img src={user.urlAvatar} alt="avatar" />
                 {/* <UserIcon /> */}
               </button>
@@ -82,7 +93,15 @@ const Dashboard = () => {
                 <OutIcon />
               </button>
             </div>
+
+            <GlobalModal
+              isOpen={isEditModalOpen}
+              onRequestClose={handleCloseEditModal}
+            >
+              <EditUserModal user={user} />
+            </GlobalModal>
           </Header>
+
           <DashBoardNegsPosts />
 
           {user.type === "client" && (
@@ -92,6 +111,7 @@ const Dashboard = () => {
           )}
         </Glass>
       </Container>
+
       <GlobalModal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
         <CreatePosts handleCloseModal={handleCloseModal} />
       </GlobalModal>
